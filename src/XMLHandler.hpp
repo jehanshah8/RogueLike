@@ -4,8 +4,9 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <vector>
+#include <memory>
 
+/**
 #include "Dungeon.hpp"
 #include "ObjectDisplayGrid.hpp"
 #include "Displayable.hpp"
@@ -39,6 +40,7 @@
 #include "Actions/ItemActions/ItemAction.hpp"
 #include "Actions/ItemActions/BlessCurseOwner.hpp"
 #include "Actions/ItemActions/Hallucinate.hpp"
+*/
 
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
@@ -50,31 +52,47 @@ class XMLHandler : public xercesc::DefaultHandler{
 private:
     int DEBUG = 1;
     std::string CLASSID = "XMLHandler";
-    std::string data ;
-    std::vector<Student> students;
-    int maxStudents = 0;
-    int studentCount = 0;
-    Student * studentBeingParsed ;
-    Activity * activityBeingParsed ;
-    bool bInstructor = false;
-    bool bCredit = false;
-    bool bName = false;
-    bool bNumber = false;
-    bool bLocation = false;
-    bool bMeetingTime = false;
-    bool bMeetingDay = false;
-    void addStudent(Student student);
+    std::string data;
+
+    //std::unique_ptr<Dungeon> dungeon_ptr; 
+    
+    // Shared among Room, Passage, Monster, Player, Items
+    bool bVisible = false;
+    bool bPosX = false; 
+    bool bPosY = false; 
+
+    // Room only
+    bool bWidth = false; 
+    bool bHeight = false; 
+
+    // Monster & Player
+    bool bHp = false;
+    bool bMaxHit = false;
+
+    // Monster only
+    bool bType = false;
+
+    // Player only
+    bool bHpMoves = false; 
+
+    // Items
+    bool bItemIntValue = false;
+
+    // Actions (common for all Creatures and Items)
+    bool bActionMessage = false; 
+    bool bActionIntValue = false; 
+    bool bActionCharValue = false; 
+
+    //void addStudent(Student student);
 
 public:
-    std::vector<Student>getStudents();
-    StudentXMLHandler();
-    void startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes) ;
-    void endElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName) ;
+    //Dungeon& getDungeon();
+    XMLHandler();
+    void startElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName, const xercesc::Attributes& attributes);
+    void endElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName);
+    void characters(const XMLCh * const ch, const XMLSize_t length );
     void fatalError(const xercesc::SAXParseException&);
-    void characters(const XMLCh * const ch, const XMLSize_t length ) ;
-    std::string toString();
-
-
+    //std::string toString();
 };
 
 #endif /* XMLHANDLER_H_ */

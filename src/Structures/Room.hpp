@@ -1,7 +1,11 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
+#include "../Displayable.hpp"
 #include "Structure.hpp"
+
+#include <iostream>
+#include <string>
 
 class Room : public Structure {
     private:
@@ -11,11 +15,11 @@ class Room : public Structure {
 
     public:
     // Constructors
-    Room(std::string room);
+    Room(std::string _roomID);
 
     // Methods
-    void setId(int room);
-    void setCreature(/**Creature& monster*/);
+    void setId(int roomID);
+    void setCreature(Creature& monster);
     
     // Operators
 
