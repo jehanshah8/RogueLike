@@ -6,8 +6,9 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/util/XMLUni.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
-#include "XMLHandler.hpp"
 #include <exception>
+
+#include "XMLHandler.hpp"
 
 int main(int argc, char* argv[]) {
 

@@ -210,8 +210,8 @@ void XMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, const XM
 
 void XMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, const XMLCh* qName)  {
         std::cout << data << std::endl;
-        char *  qNameStr = xercesc::XMLString::transcode(qName);
-        xercesc::XMLString::release(&qNameStr);
+        //char *  qNameStr = xercesc::XMLString::transcode(qName);
+        //xercesc::XMLString::release(&qNameStr);
 }
 
 void XMLHandler::characters(const XMLCh * const ch, const XMLSize_t length) {
