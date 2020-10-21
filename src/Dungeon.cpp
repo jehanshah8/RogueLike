@@ -20,9 +20,14 @@ void Dungeon::addPassage(const std::shared_ptr<Passage> passage) {
     passages.insert({passage->getId(), passage});
 }
 
-void Dungeon::addCreature(const std::shared_ptr<Creature> creature);
-void Dungeon::addItem(const std::shared_ptr<Item> item);
+void Dungeon::addCreature(const std::shared_ptr<Creature> creature) {
 
+}
+void Dungeon::addItem(const std::shared_ptr<Item> item) {
+
+}
+
+/*
 std::string Dungeon::toString() {
     std::string str = "Dungeon: \n";
     str += "   name: " + name + "\n";
@@ -33,3 +38,4 @@ std::string Dungeon::toString() {
     
     std::cout << str << std::endl;
 }
+*/
