@@ -7,7 +7,7 @@
 #include <memory>
 
 
-#include "Dungeon.hpp"
+//#include "Dungeon.hpp"
 /**
 #include "ObjectDisplayGrid.hpp"
 #include "Displayable.hpp"
@@ -55,7 +55,7 @@ private:
     std::string CLASSID = "XMLHandler";
     std::string data;
 
-    std::shared_ptr<Dungeon> dungeon_ptr; 
+    //std::shared_ptr<Dungeon> dungeon_ptr; 
     
     // Shared among Room, Passage, Monster, Player, Items
     bool bVisible = false;
