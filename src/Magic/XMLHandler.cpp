@@ -77,14 +77,14 @@ void XMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, const XM
             std::cout << "Rooms\n" << std::endl;
         } else if (case_insensitive_match(qNameStr,"Room")) {
             int roomID = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes,"room")));
-            
+
             // printing for parsing and debugging only
             std::string str = "Room: \n";
             str += "   roomID: " + std::to_string(roomID) + "\n";
             std::cout << str << std::endl;
             // end print
         } else if (case_insensitive_match(qNameStr,"Passages")) {
-            std::cout << "Rooms\n" << std::endl;
+            std::cout << "Passages\n" << std::endl;
         } else if (case_insensitive_match(qNameStr,"Passage")) {
             int room1 = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room1")));
             int room2 = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room2")));
@@ -194,7 +194,7 @@ void XMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, const XM
             bType = true;
         } else if (case_insensitive_match(qNameStr,"hpMoves")) {
             bHpMoves = true;
-        } else if (case_insensitive_match(qNameStr,"itemValue")) {
+        } else if (case_insensitive_match(qNameStr,"itemIntValue")) {
             bItemIntValue = true;
         } else if (case_insensitive_match(qNameStr,"actionMessage")) {
             bActionMessage = true;

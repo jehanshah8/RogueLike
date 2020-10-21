@@ -12,22 +12,24 @@ Dungeon::Dungeon(const std::string& _name, const int _width, const int _topHeigh
     std::cout << str << std::endl;
 }
 
-void Dungeon::addRoom(const Room& room) {
-
+void Dungeon::addRoom(const std::shared_ptr<Room> room) {
+    rooms.insert({room->getId(), room});
 }
 
-void Dungeon::addPassage(const Passage& passage) {
-
+void Dungeon::addPassage(const std::shared_ptr<Passage> passage) {
+    passages.insert({passage->getId(), passage});
 }
 
-void Dungeon::addCreature(const Creature& creature) {
-
-}
-
-void Dungeon::addItem(const Item& item) {
-    
-}
+void Dungeon::addCreature(const std::shared_ptr<Creature> creature);
+void Dungeon::addItem(const std::shared_ptr<Item> item);
 
 std::string Dungeon::toString() {
+    std::string str = "Dungeon: \n";
+    str += "   name: " + name + "\n";
+    str += "   width: " + std::to_string(width) + "\n";
+    str += "   topHeight: " + std::to_string(topHeight) + "\n"; 
+    str += "   gameHeight: " + std::to_string(gameHeight) + "\n";
+    str += "   bottomHeight: " + std::to_string(bottomHeight) + "\n";   
     
+    std::cout << str << std::endl;
 }
