@@ -2,7 +2,7 @@
 #define MONSTER_H_
 
 #include "Creature.hpp"
-#include "../Items/Item.hpp"
+//#include "../Items/Item.hpp"
 
 class Monster : public Creature {
     private:
@@ -14,6 +14,7 @@ class Monster : public Creature {
     Monster();
 
     // Methods
+    virtual void setType(char type);
     void setName(std::string name);
     void setID(int room, int serial);
 

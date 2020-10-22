@@ -21,19 +21,19 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
-class Passage : public Structure {
-    private:
+class Passage : public Structure
+{
+private:
     // Fields
+    int room1;
+    int room2;
 
     // Methods
-    public:
+public:
     // Constructors
-    Passage();
-
+    Passage(const int room1, const int room2); 
     // Methods
-    void setName(std::string name);
-    void setID(int room1, int room2);
-    
+
     // Operators
 
     // Destructor

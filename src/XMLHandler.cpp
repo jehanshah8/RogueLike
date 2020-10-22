@@ -19,11 +19,10 @@ XMLHandler::XMLHandler() {
 
 }
 
-/**
-Dungeon& XMLHandler::getDungeon() {
+std::shared_ptr<Dungeon> XMLHandler::getDungeon() {
     return dungeon;
 }
-*/
+
 
 std::string xmlChToString(const XMLCh* xmlChName, int length = -1){
     //Xerces Parses file into XMLCh* string. So use Transcode to allocate a char* buffer

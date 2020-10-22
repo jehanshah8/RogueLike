@@ -3,8 +3,9 @@
 
 #include "Creature.hpp"
 #include "../Items/Item.hpp"
-#include "../Items/Sword.hpp"
+#include "../Items/Scroll.hpp"
 #include "../Items/Armor.hpp"
+#include "../Items/Sword.hpp"
 
 class Player : public Creature {
     private:
@@ -16,6 +17,7 @@ class Player : public Creature {
     Player();
 
     // Methods
+    void setHpMoves(int hpMoves);
     void setWeapon(/**Item& sword*/);
     void setArmor(/**Item& armor*/);
 

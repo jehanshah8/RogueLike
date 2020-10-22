@@ -1,28 +1,33 @@
 #ifndef DISPLAYABLE_H_
 #define DISPLAYABLE_H_
 
-class Displayable {
-    private:
+#include <string>
+
+class Displayable
+{
+protected:
     // Fields
+    std::string name;
+    std::string id;
+    bool isVisible;
+    int posX;
+    int posY;
 
-    // Methods
-    public:
+public:
     // Constructors
-    Displayable();
+    Displayable(const std::string &name);
 
     // Methods
-    void setInvisible();
-    void setVisible();
-    void setMaxHit(int maxHit);
-    void setHpMove(int hpMoves);
-    void setHp(int hp);
-    void setType(char type);
-    void setIntValue(int value);
-    void setPosX(int x);
-    void setPosY(int y);
-    void setWidth(int width);
-    void setHeight(int height);
-
+    virtual std::string getName() const;
+    virtual void setId(const int room = -1, const int serial = -1);
+    virtual std::string getId() const;
+    virtual void setVisibility(const int isVisible);
+    virtual bool getVisibility() const;
+    virtual void setPosX(const int x);
+    virtual int getPosX() const;
+    virtual void setPosY(const int y);
+    virtual int getPosY() const;
+    virtual std::string toString() const;
     // Operators
 
     // Destructor

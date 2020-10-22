@@ -3,14 +3,14 @@
 
 #include "../Action.hpp"
 
-class CreatureAction {
+class CreatureAction : Action{
     private:
     // Fields
 
     // Methods
     public:
     // Constructors
-    CreatureAction(/**Creature& owner*/);
+    //CreatureAction(/**Creature& owner*/);
 
     // Methods
 

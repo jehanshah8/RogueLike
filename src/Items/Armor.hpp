@@ -3,20 +3,18 @@
 
 #include "Item.hpp"
 
-class Armor : public Item {
-    private:
+class Armor : public Item
+{
+private:
     // Fields
 
     // Methods
 
-    public:
+public:
     // Constructors
-    Armor(std::string name);
 
     // Methods
-    void setName(std::string name);
-    void setID(int room, int serial);
-    
+
     // Operators
 
     // Destructor

@@ -7,11 +7,9 @@
 #include <vector>
 #include <unordered_map>
 
-#include "../ObjectDisplayGrid.hpp"
+//#include "../ObjectDisplayGrid.hpp"
 
 #include "../Displayable.hpp"
-
-#include "Structure.hpp"
 
 #include "../Creatures/Creature.hpp"
 #include "../Creatures/Player.hpp"
@@ -22,24 +20,21 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
-class Structure : public Displayable {
-    private:
-    // Fields
-    std::string id; 
+class Structure : public Displayable
+{
+protected:
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
-    std::shared_ptr<Player> player; 
+    std::shared_ptr<Player> player;
     std::unordered_map<std::string, std::shared_ptr<Item>> items;
-    
-    // Methods
-    
-    public:
+
+public:
     // Constructors
+    using Displayable::Displayable;  
 
     // Methods
-    virtual std::string getId();
-    virtual void setId() = 0; 
-
-    
+    virtual void addMonster(const std::shared_ptr<Monster> monster);
+    virtual void addPlayer(const std::shared_ptr<Player> player);
+    virtual void addItem(const std::shared_ptr<Item> item);
 
     // Operators
 
