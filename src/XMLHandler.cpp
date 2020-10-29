@@ -87,13 +87,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "room"));
         structureBeingParsed = std::make_shared<Room>(name);
         dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
-        //std::cout<<"pushing room"<<std::endl; 
         displayablesBeingParsed.push(structureBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Room: \n";
-        //str += "   roomID: " + std::to_string(roomID) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Passages"))
     {
@@ -107,14 +101,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
 
         structureBeingParsed = std::make_shared<Passage>(room1, room2);
         dungeonBeingParsed->addPassage(std::dynamic_pointer_cast<Passage>(structureBeingParsed));
-        //std::cout<<"pushing passage"<<std::endl; 
         displayablesBeingParsed.push(structureBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Passage: \n";
-        //str += "   room1: " + std::to_string(room1) + "\n";
-        //str += "   room2: " + std::to_string(room2) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Monster"))
     {
@@ -123,17 +110,9 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         creatureBeingParsed = std::make_shared<Monster>(name, room, serial);
+        dungeonBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
         structureBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
-
-        //std::cout<<"pushing monster"<<std::endl;
         displayablesBeingParsed.push(creatureBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Monster: \n";
-        //str += "   name: " + name + "\n";
-        //str += "   room: " + std::to_string(room) + "\n";
-        //str += "   serial: " + std::to_string(serial) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Player"))
     {
@@ -142,16 +121,9 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         creatureBeingParsed = std::make_shared<Player>(name, room, serial);
+        dungeonBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
         structureBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
-        //std::cout<<"pushing player"<<std::endl; 
         displayablesBeingParsed.push(creatureBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Player: \n";
-        //str += "   name: " + name + "\n";
-        //str += "   room: " + std::to_string(room) + "\n";
-        //str += "   serial: " + std::to_string(serial) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Scroll"))
     {
@@ -160,16 +132,9 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Scroll>(name, room, serial);
+        dungeonBeingParsed->addItem(itemBeingParsed);
         structureBeingParsed->addItem(itemBeingParsed);
-
         displayablesBeingParsed.push(itemBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Scroll: \n";
-        //str += "   name: " + name + "\n";
-        //str += "   serial: " + std::to_string(room) + "\n";
-        //str += "   serial: " + std::to_string(serial) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Armor"))
     {
@@ -178,16 +143,9 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Armor>(name, room, serial);
+        dungeonBeingParsed->addItem(itemBeingParsed);
         structureBeingParsed->addItem(itemBeingParsed);
-
         displayablesBeingParsed.push(itemBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Armor: \n";
-        //str += "   name: " + name + "\n";
-        //str += "   serial: " + std::to_string(room) + "\n";
-        //str += "   serial: " + std::to_string(serial) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "Sword"))
     {
@@ -196,21 +154,15 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Sword>(name, room, serial);
+        dungeonBeingParsed->addItem(itemBeingParsed);
         structureBeingParsed->addItem(itemBeingParsed);
-
         displayablesBeingParsed.push(itemBeingParsed);
-        // printing for parsing and debugging only
-        //std::string str = "Sword: \n";
-        //str += "   name: " + name + "\n";
-        //str += "   serial: " + std::to_string(room) + "\n";
-        //str += "   serial: " + std::to_string(serial) + "\n";
-        //std::cout << str << std::endl;
-        // end print
     }
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
     {
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
         std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
+        // todo
         /**
         if (name.compare("Print"))
         {
@@ -254,6 +206,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
         std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
 
+        // todo 
         // printing for parsing and debugging only
         //std::string str = "ItemAction: \n";
         //str += "   name: " + name + "\n";
@@ -324,76 +277,65 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
 {
     if (bVisible)
     {
-        //std::cout << "visible" << std::endl;
         displayablesBeingParsed.top()->setVisibility(std::stoi(data));
         bVisible = false;
     }
     else if (bPosX)
     {
-        //std::cout << "posX" << std::endl;
         displayablesBeingParsed.top()->setPosX(std::stoi(data));
         bPosX = false;
     }
     else if (bPosY)
     {
-        //std::cout << "posY" << std::endl;
         displayablesBeingParsed.top()->setPosY(std::stoi(data));
         bPosY = false;
     }
     else if (bWidth)
     {
-        //std::cout << "width" << std::endl;
         std::dynamic_pointer_cast<Room>(structureBeingParsed)->setWidth(std::stoi(data));
         bWidth = false;
     }
     else if (bHeight)
     {
-        //std::cout << "height" << std::endl;
         std::dynamic_pointer_cast<Room>(structureBeingParsed)->setHeight(std::stoi(data));
         bHeight = false;
     }
     else if (bHp)
     {
-        //std::cout << "hp" << std::endl;
         creatureBeingParsed->setHp(std::stoi(data));
         bHp = false;
     }
     else if (bMaxHit)
     {
-        //std::cout << "maxHit" << std::endl;
         creatureBeingParsed->setMaxHit(std::stoi(data));
         bMaxHit = false;
     }
     else if (bType)
     {
-        //std::cout << "type" << std::endl;
-        
         std::dynamic_pointer_cast<Monster>(creatureBeingParsed)->setType(data[0]);
         bType = false;
     }
     else if (bHpMoves)
     {
-        //std::cout << "hpMoves" << std::endl;
         std::dynamic_pointer_cast<Player>(creatureBeingParsed)->setHpMoves(std::stoi(data));
         bHpMoves = false;
     }
     else if (bItemIntValue)
     {
-        //std::cout << "itemValue" << std::endl;
         itemBeingParsed->setItemIntValue(std::stoi(data));
         bItemIntValue = false;
     }
-    else if (bActionMessage)
+    else if (bActionMessage) // todo
     {
         //actionBeingParsed->setMessage(data);
         bActionMessage = false;
     }
-    else if (bActionIntValue)
+    else if (bActionIntValue) // todo 
     {
         //actionBeingParsed->setInValue(std::stoi(data));
         bActionIntValue = false;
     }
-    else if (bActionCharValue)
+    else if (bActionCharValue) // todo
     {
         //actionBeingParsed->setCharValue(std::stoi(data));
         bActionCharValue = false;

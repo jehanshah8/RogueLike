@@ -29,6 +29,7 @@ std::shared_ptr<Player> Dungeon::getPlayer() const
 {
     return player;
 }
+
 void Dungeon::addItem(const std::shared_ptr<Item> item)
 {
     items.insert({item->getName(), item});
