@@ -31,7 +31,7 @@ public:
     Passage(int room1, int room2);
 
     // Methods
-    
+    const std::string toString() const;
     // Operators
 
     // Destructor

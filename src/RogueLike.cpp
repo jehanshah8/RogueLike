@@ -42,8 +42,7 @@ int main(int argc, char* argv[]) {
         XMLCh * fileNameXMLEnc = xercesc::XMLString::transcode(fileName.c_str()); //Encode string as UTF-16, but transcode needs casting as const char * (not std::string)
         parser->parse(fileNameXMLEnc);
         xercesc::XMLString::release(&fileNameXMLEnc);
-
-        //std::unique_ptr<Dungeon> dungeon_ptr = std::move(handler->getDungeon());        
+   
 		delete parser;
 		delete handler;
         /*

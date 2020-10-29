@@ -50,7 +50,7 @@ public:
     virtual std::shared_ptr<Player> getPlayer() const; 
     virtual void addItem(const std::shared_ptr<Item> item);
     virtual const std::string toString() const; 
-    virtual const std::string toStringAll() const; 
+    //virtual const std::string toStringAll() const; 
     // Operators
 
     // Destructor

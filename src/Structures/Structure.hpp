@@ -20,11 +20,17 @@
 
 class Structure : public Displayable
 {
+private: 
+    
 protected:
     GridObject supplementaryDisplayCode; 
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
     std::unordered_map<std::string, std::shared_ptr<Item>> items;
+
+    virtual const std::string toStringPlayer() const;
+    virtual const std::string toStringMonsters() const; 
+    virtual const std::string toStringItems() const; 
 
 public:
     // Constructors

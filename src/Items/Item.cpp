@@ -17,10 +17,14 @@ void Item::setOwner(const std::shared_ptr<Creature> owner)
     this->owner = owner;
 }
 
-const std::string Item::toString() const
+const std::string Item::toString(int indentation) const
 {
-    std::string str = Displayable::toString();
-    str += "   itemIntValue: " + std::to_string(itemIntValue) + "\n";
+    std::string str = Displayable::toString(indentation);
+    if (indentation == 4)
+    {
+        str += "\t"; 
+    }
+    str += "\t\t\titemIntValue: " + std::to_string(itemIntValue) + "\n";
     
     //std::cout << str << std::endl;
     return str;

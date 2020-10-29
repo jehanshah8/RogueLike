@@ -43,6 +43,8 @@ protected:
     std::vector<std::shared_ptr<CreatureAction>> deathActions;
     std::vector<std::shared_ptr<CreatureAction>> hitActions;
 
+    virtual const std::string toStringItems() const; 
+
 public:
     // Constructors
     Creature(const std::string &name, int room = -1, int serial = -1);

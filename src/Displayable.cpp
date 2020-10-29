@@ -73,13 +73,30 @@ void Displayable::initializeDisplay()
 }
 */
 
-const std::string Displayable::toString() const
+const std::string Displayable::toString(int indentation) const
 {
-    std::string str = "   name: " + name + "\n";
+    std::string str;
+    for (int i = 0; i < indentation; i++) 
+    {
+        str += "\t"; 
+    }
+    str += "name: " + name + "\n";
     //str += "   id: " + id + "\n";
-    str += "   isVisible: " + std::to_string(isVisible) + "\n";
-    str += "   posX: " + std::to_string(posX) + "\n";
-    str += "   posY: " + std::to_string(posY) + "\n";
+    for (int i = 0; i < indentation; i++) 
+    {
+        str += "\t"; 
+    }
+    str += "isVisible: " + std::to_string(isVisible) + "\n";
+    for (int i = 0; i < indentation; i++) 
+    {
+        str += "\t"; 
+    }
+    str += "posX: " + std::to_string(posX) + "\n";
+    for (int i = 0; i < indentation; i++) 
+    {
+        str += "\t"; 
+    }
+    str += "posY: " + std::to_string(posY) + "\n";
 
     return str;
 }

@@ -38,7 +38,7 @@ public:
     //virtual void setDisplayGrid(std::shared_ptr<ObjectDisplayGrid> grid); 
     //virtual void initializeDisplay(); 
      
-    virtual const std::string toString() const;
+    virtual const std::string toString(int indentation = 0) const;
     // Operators
 
     // Destructor

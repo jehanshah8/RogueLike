@@ -30,22 +30,58 @@ const GridObject &Structure::getSupplementaryDisplayCode() const
     return supplementaryDisplayCode;
 }
 
+const std::string Structure::toStringPlayer() const
+{
+    std::string str;
+    if (player != nullptr)
+    {
+        str += player->toString() + "\n";
+    }
+    else
+    {
+        str += "\t\t\tno player here\n";
+    }
+    return str;
+}
+
+const std::string Structure::toStringMonsters() const
+{
+    std::string str;
+    if (monsters.empty())
+    {
+        str += "\t\t\tno monsters here\n";
+    }
+    else
+    {
+        for (auto &it : monsters)
+        {
+            str += it.second->toString() + "\n";
+        }
+    }
+
+    return str;
+}
+
+const std::string Structure::toStringItems() const
+{
+    std::string str;
+    if (items.empty())
+    {
+        str += "\t\t\tno items here\n";
+    }
+    else
+    {
+        for (auto &it : items)
+        {
+            str += it.second->toString() + "\n";
+        }
+    }
+
+    return str;
+}
+
 const std::string Structure::toString() const
 {
-    std::string str = Displayable::toString();
-    str += "   player: \n"; 
-    str += player->toString() + "\n";
-
-    str += "   monsters: \n";
-    for (auto &it : monsters)
-    {
-        str += it.second->toString() + "\n";
-    }
-
-    str += "   items: \n";
-    for (auto &it : items)
-    {
-        str += it.second->toString() + "\n";
-    }
+    std::string str = Displayable::toString(2);
     return str;
 }

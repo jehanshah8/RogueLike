@@ -15,7 +15,10 @@ const std::string Player::toString() const
 {
     std::string str = Creature::toString();
 
-    str += "   hpMoves: " + std::to_string(hpMoves) + "\n";
+    str += "\t\t\thpMoves: " + std::to_string(hpMoves) + "\n";
+
+    str += "\n\t\t\tplayer items: \n";
+    str += toStringItems(); 
 
     //std::cout << str << std::endl;
     return str;

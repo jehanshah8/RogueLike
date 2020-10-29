@@ -1,6 +1,6 @@
 #include "Room.hpp"
 
-Room::Room(const std::string &name) : Structure(name)
+Room::Room(const std::string &name) : Structure("room" + name)
 {
     //std::cout << "creating room" << std::endl;
     displayCode.setDisplayCode('.');
@@ -50,9 +50,15 @@ void Room::initializeDisplay()
 
 const std::string Room::toString() const
 {
-    std::cout << "works" << std::endl;
     std::string str = Structure::toString();
-    str += "   height: " + std::to_string(height) + "\n";
-    str += "   width: " + std::to_string(width) + "\n";
+    str += "\t\theight: " + std::to_string(height) + "\n";
+    str += "\t\twidth: " + std::to_string(width) + "\n";
+    str += "\n\t\tplayer in the room: \n";
+    str += toStringPlayer();
+    str += "\n\t\tmonsters in the room: \n";
+    str += toStringMonsters();
+    str += "\n\t\titems in the room: \n";
+    str += toStringItems();
+
     return str;
 }

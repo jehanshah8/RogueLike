@@ -15,7 +15,7 @@ const std::string Monster::toString() const
 {
     std::string str = Creature::toString();
 
-    str += "   type: "; 
+    str += "\t\t\ttype: "; 
     str +=  type; 
     str += "\n"; 
 

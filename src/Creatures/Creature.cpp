@@ -27,18 +27,30 @@ void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
     hitActions.push_back(hitAction);
 }
 
-const std::string Creature::toString() const
+
+const std::string Creature::toStringItems() const
 {
-    std::string str = Displayable::toString();
-    str += "   hp: " + std::to_string(hp) + "\n";
-    str += "   maxHit: " + std::to_string(maxHit) + "\n";
-    
-    str += "   items: \n";
-    for (auto &it : items)
+    std::string str;
+    if (items.empty())
     {
-        str += it.second->toString() + "\n";
+        str += "\t\t\t\tno items here\n";
+    }
+    else
+    {
+        for (auto &it : items)
+        {
+            str += it.second->toString(4) + "\n";
+        }
     }
 
-    //std::cout << str << std::endl;
+    return str;
+}
+
+const std::string Creature::toString() const
+{
+    std::string str = Displayable::toString(3);
+    str += "\t\t\thp: " + std::to_string(hp) + "\n";
+    str += "\t\t\tmaxHit: " + std::to_string(maxHit) + "\n";
+    
     return str;
 }
