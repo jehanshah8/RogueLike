@@ -6,11 +6,12 @@
 #include <string>
 #include <memory>
 
+#include "Dungeon.hpp"
 #include "ObjectDisplayGrid.hpp"
+
 #include "Displayable.hpp"
 
 #include "Structures/Structure.hpp"
-#include "Structures/Dungeon.hpp"
 #include "Structures/Room.hpp"
 #include "Structures/Passage.hpp"
 
@@ -53,7 +54,12 @@ private:
     std::string CLASSID = "XMLHandler";
     std::string data;
 
-    std::shared_ptr<Dungeon> dungeon;
+    std::shared_ptr<Dungeon> dungeonBeingParsed;
+    std::shared_ptr<Displayable> displayableBeingParsed;
+    std::shared_ptr<Structure> structureBeingParsed;
+    std::shared_ptr<Creature> creatureBeingParsed;
+    std::shared_ptr<Item> itemBeingParsed;
+    std::shared_ptr<Action> actionBeingParsed;
 
     // Shared among Room, Passage, Monster, Player, Items
     bool bVisible = false;
@@ -83,7 +89,6 @@ private:
     bool bActionCharValue = false;
 
 public:
-    XMLHandler();
     virtual std::shared_ptr<Dungeon> getDungeon();
     void startElement(const XMLCh *uri, const XMLCh *localName, const XMLCh *qName, const xercesc::Attributes &attributes);
     void endElement(const XMLCh *uri, const XMLCh *localName, const XMLCh *qName);

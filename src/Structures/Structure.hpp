@@ -7,8 +7,6 @@
 #include <vector>
 #include <unordered_map>
 
-//#include "../ObjectDisplayGrid.hpp"
-
 #include "../Displayable.hpp"
 
 #include "../Creatures/Creature.hpp"
@@ -23,18 +21,23 @@
 class Structure : public Displayable
 {
 protected:
+    GridObject supplementaryDisplayCode; 
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
     std::unordered_map<std::string, std::shared_ptr<Item>> items;
 
 public:
     // Constructors
-    using Displayable::Displayable;  
+    Structure(const std::string &name);
 
     // Methods
     virtual void addMonster(const std::shared_ptr<Monster> monster);
     virtual void addPlayer(const std::shared_ptr<Player> player);
+    virtual std::shared_ptr<Player> getPlayer() const; 
     virtual void addItem(const std::shared_ptr<Item> item);
+    virtual const GridObject& getSupplementaryDisplayCode() const; 
+    
+    virtual const std::string& toString() const;
 
     // Operators
 

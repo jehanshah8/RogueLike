@@ -4,10 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <unordered_map>
 
-//#include "../ObjectDisplayGrid.hpp"
 #include "../Displayable.hpp"
 
 #include "Structure.hpp"
@@ -31,9 +28,10 @@ private:
     // Methods
 public:
     // Constructors
-    Passage(const int room1, const int room2); 
-    // Methods
+    Passage(int room1, int room2);
 
+    // Methods
+    
     // Operators
 
     // Destructor

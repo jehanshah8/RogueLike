@@ -13,7 +13,8 @@ CXXFLAGS=-std=c++11 -Wall -g -I $(INCLUDE)
 CLASSES = XMLHandler.cpp Displayable.cpp \
 	Creature.cpp Monster.cpp Player.cpp \
 	Item.cpp Scroll.cpp Armor.cpp Sword.cpp \
-	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp
+	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp \
+	GridObject.cpp 
 
 #XMLHandler.cpp ObjectDisplayGrid.cpp GridChar.cpp KeyboardListeners.cpp \
 	Displayable.cpp \

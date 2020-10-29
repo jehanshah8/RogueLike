@@ -5,10 +5,18 @@
 #include <iostream>
 #include <string>
 
-//#include "../ObjectDisplayGrid.hpp"
 #include "../Displayable.hpp"
 
 #include "Structure.hpp"
+
+#include "../Creatures/Creature.hpp"
+#include "../Creatures/Player.hpp"
+#include "../Creatures/Monster.hpp"
+
+#include "../Items/Item.hpp"
+#include "../Items/Scroll.hpp"
+#include "../Items/Armor.hpp"
+#include "../Items/Sword.hpp"
 
 class Room : public Structure
 {
@@ -21,11 +29,19 @@ private:
 
 public:
     // Constructors
-    using Structure::Structure; 
+    //using Structure::Structure;
+    Room(const std::string &name);
 
     // Methods
-    virtual void setWidth(int width);
+    virtual int getHeight() const;
     virtual void setHeight(int height);
+
+    virtual int getWidth() const;
+    virtual void setWidth(int width);
+
+    //void Room::initializeDisplay();
+
+    virtual const std::string &toString() const;
 
     // Operators
 

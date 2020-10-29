@@ -1,22 +1,34 @@
 #ifndef MONSTER_H_
 #define MONSTER_H_
 
-#include "Creature.hpp"
-//#include "../Items/Item.hpp"
+#include <memory>
+#include <iostream>
+#include <string>
 
-class Monster : public Creature {
-    private:
+#include "../Displayable.hpp"
+
+#include "Creature.hpp"
+#include "../Items/Item.hpp"
+#include "../Items/Scroll.hpp"
+#include "../Items/Armor.hpp"
+#include "../Items/Sword.hpp"
+
+class Monster : public Creature
+{
+private:
     // Fields
+    char type;
 
     // Methods
-    public:
-    // Constructors
-    Monster();
 
+public:
+    // Constructors
+    using Creature::Creature; 
+    
     // Methods
     virtual void setType(char type);
-    void setName(std::string name);
-    void setID(int room, int serial);
+
+    virtual const std::string &toString() const;
 
     // Operators
 
