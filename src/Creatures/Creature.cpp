@@ -4,6 +4,7 @@ Creature::Creature(const std::string &name, int room, int serial) : Displayable(
                                                                     room(room),
                                                                     serial(serial)
 {
+    //std::cout << "creating creature" << std::endl; 
 }
 
 void Creature::setHp(int hp)
@@ -30,7 +31,7 @@ const std::string Creature::toString() const
 {
     std::string str = Displayable::toString();
     str += "   hp: " + std::to_string(hp) + "\n";
-    str += "   maxHit: " + std::to_string(hp) + "\n";
+    str += "   maxHit: " + std::to_string(maxHit) + "\n";
     
     str += "   items: \n";
     for (auto &it : items)

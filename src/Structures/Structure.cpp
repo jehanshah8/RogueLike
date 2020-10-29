@@ -33,7 +33,8 @@ const GridObject &Structure::getSupplementaryDisplayCode() const
 const std::string Structure::toString() const
 {
     std::string str = Displayable::toString();
-    str += "   player: " + player->toString() + "\n";
+    str += "   player: \n"; 
+    str += player->toString() + "\n";
 
     str += "   monsters: \n";
     for (auto &it : monsters)

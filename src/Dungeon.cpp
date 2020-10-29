@@ -7,7 +7,15 @@ Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int game
 
 void Dungeon::addRoom(const std::shared_ptr<Room> room)
 {
+    //std::cout<<"adding room"<<std::endl;
     rooms.insert({room->getName(), room});
+
+    /*
+    for (auto &it : rooms)
+    {
+        std::cout<<it.second->toString() << std::endl;
+    }
+    */
 }
 
 void Dungeon::addPassage(const std::shared_ptr<Passage> passage)
@@ -67,7 +75,7 @@ const std::string Dungeon::toStringAll() const
     //str += "   gameWidth: " + std::to_string(grid->getGameWidth()) + "\n";
     //str += "   topHeight: " + std::to_string(grid->getTopHeight()) + "\n";
     //str += "   bottomHeight: " + std::to_string(grid->getBottomHeight()) + "\n";
-
+    /*
     str += "   rooms: \n";
     for (auto &it : rooms)
     {
@@ -79,9 +87,9 @@ const std::string Dungeon::toStringAll() const
     {
         str += it.second->toString() + "\n";
     }
-
+    
     str += "   player: " + player->toString() + "\n";
-
+    
     str += "   monsters: \n";
     for (auto &it : monsters)
     {
@@ -93,7 +101,7 @@ const std::string Dungeon::toStringAll() const
     {
         str += it.second->toString() + "\n";
     }
-
+    */
     //std::cout << str << std::endl;
     return str;
 }

@@ -1,8 +1,14 @@
 #include "Player.hpp"
 
-void Player::setHpMoves(int hpMoves) 
+Player::Player(const std::string &name, int room, int serial) : Creature(name, room, serial),
+                                                                hpMoves(-1)
 {
-    this->hpMoves = hpMoves; 
+    //std::cout << "creating player" << std::endl;
+}
+
+void Player::setHpMoves(int hpMoves)
+{
+    this->hpMoves = hpMoves;
 }
 
 const std::string Player::toString() const
@@ -14,4 +20,3 @@ const std::string Player::toString() const
     //std::cout << str << std::endl;
     return str;
 }
-

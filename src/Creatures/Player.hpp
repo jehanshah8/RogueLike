@@ -23,7 +23,8 @@ private:
 
 public:
     // Constructors
-    using Creature::Creature; 
+    Player(const std::string &name, int room = -1, int serial = -1);
+
     // Methods
     void setHpMoves(int hpMoves);
 

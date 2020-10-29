@@ -23,7 +23,7 @@ private:
 
 public:
     // Constructors
-    using Creature::Creature; 
+    Monster(const std::string &name, int room = -1, int serial = -1);  
     
     // Methods
     virtual void setType(char type);

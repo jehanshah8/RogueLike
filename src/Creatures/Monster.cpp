@@ -1,15 +1,23 @@
 #include "Monster.hpp"
 
-void Monster::setType(char type) 
+Monster::Monster(const std::string &name, int room, int serial) : Creature(name, room, serial),
+                                                                  type('?')
 {
-    this->type = type; 
+    //std::cout << "creating monster" << std::endl; 
+}
+
+void Monster::setType(char type)
+{
+    this->type = type;
 }
 
 const std::string Monster::toString() const
 {
     std::string str = Creature::toString();
 
-    str += "   type: " + std::to_string(type) + "\n";
+    str += "   type: "; 
+    str +=  type; 
+    str += "\n"; 
 
     //std::cout << str << std::endl;
     return str;

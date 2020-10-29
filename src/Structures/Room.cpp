@@ -2,6 +2,7 @@
 
 Room::Room(const std::string &name) : Structure(name)
 {
+    //std::cout << "creating room" << std::endl;
     displayCode.setDisplayCode('.');
     supplementaryDisplayCode.setDisplayCode('X');
 }
@@ -49,6 +50,7 @@ void Room::initializeDisplay()
 
 const std::string Room::toString() const
 {
+    std::cout << "works" << std::endl;
     std::string str = Structure::toString();
     str += "   height: " + std::to_string(height) + "\n";
     str += "   width: " + std::to_string(width) + "\n";

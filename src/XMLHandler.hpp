@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <string>
 #include <memory>
+#include <stack>
 
 #include "Dungeon.hpp"
 #include "ObjectDisplayGrid.hpp"
@@ -55,7 +56,7 @@ private:
     std::string data;
 
     std::shared_ptr<Dungeon> dungeonBeingParsed;
-    std::shared_ptr<Displayable> displayableBeingParsed;
+    std::stack<std::shared_ptr<Displayable>> displayablesBeingParsed;
     std::shared_ptr<Structure> structureBeingParsed;
     std::shared_ptr<Creature> creatureBeingParsed;
     std::shared_ptr<Item> itemBeingParsed;

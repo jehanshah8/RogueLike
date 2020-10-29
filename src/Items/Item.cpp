@@ -2,7 +2,8 @@
 
 Item::Item(const std::string &name, int room, int serial) : Displayable(name),
                                                             room(room),
-                                                            serial(serial)
+                                                            serial(serial), 
+                                                            itemIntValue(0)
 {
 }
 

@@ -40,7 +40,8 @@ CURSES=-lncurses
 	./$(EXECUTABLE) $@
 
 $(EXECUTABLE) : $(OBJECTS)
-	$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) $(CURSES) -lxerces-c 
+	$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) -lxerces-c 
+	#$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) $(CURSES) -lxerces-c 
 
 VPATH = src src/Structures src/Creatures src/Items src/Magic src/Actions src/Actions/CreateActions src/Actions/ItemActions
 

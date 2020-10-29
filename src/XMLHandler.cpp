@@ -87,8 +87,8 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "room"));
         structureBeingParsed = std::make_shared<Room>(name);
         dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
-
-        displayableBeingParsed = structureBeingParsed;
+        //std::cout<<"pushing room"<<std::endl; 
+        displayablesBeingParsed.push(structureBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Room: \n";
         //str += "   roomID: " + std::to_string(roomID) + "\n";
@@ -107,8 +107,8 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
 
         structureBeingParsed = std::make_shared<Passage>(room1, room2);
         dungeonBeingParsed->addPassage(std::dynamic_pointer_cast<Passage>(structureBeingParsed));
-
-        displayableBeingParsed = structureBeingParsed;
+        //std::cout<<"pushing passage"<<std::endl; 
+        displayablesBeingParsed.push(structureBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Passage: \n";
         //str += "   room1: " + std::to_string(room1) + "\n";
@@ -125,7 +125,8 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         creatureBeingParsed = std::make_shared<Monster>(name, room, serial);
         structureBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
 
-        displayableBeingParsed = creatureBeingParsed;
+        //std::cout<<"pushing monster"<<std::endl;
+        displayablesBeingParsed.push(creatureBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Monster: \n";
         //str += "   name: " + name + "\n";
@@ -142,8 +143,8 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
 
         creatureBeingParsed = std::make_shared<Player>(name, room, serial);
         structureBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
-
-        displayableBeingParsed = creatureBeingParsed;
+        //std::cout<<"pushing player"<<std::endl; 
+        displayablesBeingParsed.push(creatureBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Player: \n";
         //str += "   name: " + name + "\n";
@@ -161,7 +162,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         itemBeingParsed = std::make_shared<Scroll>(name, room, serial);
         structureBeingParsed->addItem(itemBeingParsed);
 
-        displayableBeingParsed = itemBeingParsed;
+        displayablesBeingParsed.push(itemBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Scroll: \n";
         //str += "   name: " + name + "\n";
@@ -179,7 +180,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         itemBeingParsed = std::make_shared<Armor>(name, room, serial);
         structureBeingParsed->addItem(itemBeingParsed);
 
-        displayableBeingParsed = itemBeingParsed;
+        displayablesBeingParsed.push(itemBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Armor: \n";
         //str += "   name: " + name + "\n";
@@ -197,7 +198,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         itemBeingParsed = std::make_shared<Sword>(name, room, serial);
         structureBeingParsed->addItem(itemBeingParsed);
 
-        displayableBeingParsed = itemBeingParsed;
+        displayablesBeingParsed.push(itemBeingParsed);
         // printing for parsing and debugging only
         //std::string str = "Sword: \n";
         //str += "   name: " + name + "\n";
@@ -314,8 +315,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
     }
     else
     {
-        //std::cout <<"Unknown qname: " << qNameStr << std::endl;
-        ;
+        std::cout << "Unknown qname: " << qNameStr << std::endl;
     }
     xercesc::XMLString::release(&qNameStr);
 }
@@ -324,51 +324,62 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
 {
     if (bVisible)
     {
-        displayableBeingParsed->setVisibility(std::stoi(data));
+        //std::cout << "visible" << std::endl;
+        displayablesBeingParsed.top()->setVisibility(std::stoi(data));
         bVisible = false;
     }
     else if (bPosX)
     {
-        displayableBeingParsed->setPosX(std::stoi(data));
+        //std::cout << "posX" << std::endl;
+        displayablesBeingParsed.top()->setPosX(std::stoi(data));
         bPosX = false;
     }
     else if (bPosY)
     {
-        displayableBeingParsed->setPosY(std::stoi(data));
+        //std::cout << "posY" << std::endl;
+        displayablesBeingParsed.top()->setPosY(std::stoi(data));
         bPosY = false;
     }
     else if (bWidth)
     {
+        //std::cout << "width" << std::endl;
         std::dynamic_pointer_cast<Room>(structureBeingParsed)->setWidth(std::stoi(data));
         bWidth = false;
     }
     else if (bHeight)
     {
+        //std::cout << "height" << std::endl;
         std::dynamic_pointer_cast<Room>(structureBeingParsed)->setHeight(std::stoi(data));
         bHeight = false;
     }
     else if (bHp)
     {
+        //std::cout << "hp" << std::endl;
         creatureBeingParsed->setHp(std::stoi(data));
         bHp = false;
     }
     else if (bMaxHit)
     {
+        //std::cout << "maxHit" << std::endl;
         creatureBeingParsed->setMaxHit(std::stoi(data));
         bMaxHit = false;
     }
     else if (bType)
     {
-        std::dynamic_pointer_cast<Monster>(creatureBeingParsed)->setType(std::stoi(data));
+        //std::cout << "type" << std::endl;
+        
+        std::dynamic_pointer_cast<Monster>(creatureBeingParsed)->setType(data[0]);
         bType = false;
     }
     else if (bHpMoves)
     {
+        //std::cout << "hpMoves" << std::endl;
         std::dynamic_pointer_cast<Player>(creatureBeingParsed)->setHpMoves(std::stoi(data));
         bHpMoves = false;
     }
     else if (bItemIntValue)
     {
+        //std::cout << "itemValue" << std::endl;
         itemBeingParsed->setItemIntValue(std::stoi(data));
         bItemIntValue = false;
     }
@@ -391,53 +402,54 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     char *qNameStr = xercesc::XMLString::transcode(qName);
     if (case_insensitive_match(qNameStr, "Dungeon"))
     {
-        std::cout << dungeonBeingParsed->toStringAll() << std::endl; 
+        std::cout << dungeonBeingParsed->toStringAll() << std::endl;
         dungeonBeingParsed = nullptr;
     }
     else if (case_insensitive_match(qNameStr, "Room"))
     {
         structureBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        //std::cout<<"popping room"<<std::endl; 
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Passage"))
     {
         structureBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        //std::cout<<"popping passage"<<std::endl;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Monster"))
     {
         creatureBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        //std::cout<<"popping monster"<<std::endl;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Player"))
     {
         creatureBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Scroll"))
     {
         itemBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Armor"))
     {
         itemBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "Sword"))
     {
         itemBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
+        displayablesBeingParsed.pop(); 
     }
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
     {
         actionBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
     }
     else if (case_insensitive_match(qNameStr, "ItemAction"))
     {
         actionBeingParsed = nullptr;
-        displayableBeingParsed = nullptr;
     }
 
     xercesc::XMLString::release(&qNameStr);
