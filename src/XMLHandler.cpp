@@ -374,17 +374,17 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     }
     else if (bActionMessage)
     {
-        actionBeingParsed->setMessage(data);
+        //actionBeingParsed->setMessage(data);
         bActionMessage = false;
     }
     else if (bActionIntValue)
     {
-        actionBeingParsed->setInValue(std::stoi(data));
+        //actionBeingParsed->setInValue(std::stoi(data));
         bActionIntValue = false;
     }
     else if (bActionCharValue)
     {
-        actionBeingParsed->setCharValue(std::stoi(data));
+        //actionBeingParsed->setCharValue(std::stoi(data));
         bActionCharValue = false;
     }
 

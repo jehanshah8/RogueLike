@@ -30,7 +30,7 @@ const GridObject &Structure::getSupplementaryDisplayCode() const
     return supplementaryDisplayCode;
 }
 
-const std::string &Structure::toString() const
+const std::string Structure::toString() const
 {
     std::string str = Displayable::toString();
     str += "   player: " + player->toString() + "\n";

@@ -56,7 +56,7 @@ int Displayable::getPosY() const
     return posY;
 }
 
-const GridObject &Displayable::getDisplayCode() const
+const GridObject Displayable::getDisplayCode() const
 {
     return displayCode;
 }
@@ -73,7 +73,7 @@ void Displayable::initializeDisplay()
 }
 */
 
-const std::string &Displayable::toString() const
+const std::string Displayable::toString() const
 {
     std::string str = "   name: " + name + "\n";
     //str += "   id: " + id + "\n";

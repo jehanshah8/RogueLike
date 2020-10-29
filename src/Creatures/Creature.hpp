@@ -53,7 +53,7 @@ public:
     virtual void addDeathAction(const std::shared_ptr<CreatureAction> deathAction);
     virtual void addHitAction(const std::shared_ptr<CreatureAction> hitAction);
 
-    virtual const std::string& toString() const; 
+    virtual const std::string toString() const; 
     // Operators
 
     // Destructor

@@ -12,6 +12,7 @@ private:
 
 public:
     // Constructors
+    using Item::Item; 
 
     // Methods
 

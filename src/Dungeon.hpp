@@ -26,7 +26,7 @@ class Dungeon
 private:
     // Fields
     std::string name;
-    std::shared_ptr<ObjectDisplayGrid> grid;
+    //std::shared_ptr<ObjectDisplayGrid> grid;
     std::unordered_map<std::string, std::shared_ptr<Room>> rooms;
     std::unordered_map<std::string, std::shared_ptr<Passage>> passages;
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
@@ -49,8 +49,8 @@ public:
     virtual void addPlayer(const std::shared_ptr<Player> player);
     virtual std::shared_ptr<Player> getPlayer() const; 
     virtual void addItem(const std::shared_ptr<Item> item);
-    virtual const std::string& toString() const; 
-    virtual const std::string& toStringAll() const; 
+    virtual const std::string toString() const; 
+    virtual const std::string toStringAll() const; 
     // Operators
 
     // Destructor

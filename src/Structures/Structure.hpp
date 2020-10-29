@@ -37,7 +37,7 @@ public:
     virtual void addItem(const std::shared_ptr<Item> item);
     virtual const GridObject& getSupplementaryDisplayCode() const; 
     
-    virtual const std::string& toString() const;
+    virtual const std::string toString() const;
 
     // Operators
 

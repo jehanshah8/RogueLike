@@ -41,7 +41,7 @@ public:
 
     //void Room::initializeDisplay();
 
-    virtual const std::string &toString() const;
+    virtual const std::string toString() const;
 
     // Operators
 

@@ -47,7 +47,7 @@ void Room::initializeDisplay()
 }
 */
 
-const std::string &Room::toString() const
+const std::string Room::toString() const
 {
     std::string str = Structure::toString();
     str += "   height: " + std::to_string(height) + "\n";

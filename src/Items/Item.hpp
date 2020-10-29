@@ -4,16 +4,13 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
 #include "../Displayable.hpp"
-#include "../Actions/Action.hpp"
-#include "../Actions/ItemActions/ItemAction.hpp"
-#include "../Actions/ItemActions/BlessCurseOwner.hpp"
-#include "../Actions/ItemActions/Hallucinate.hpp"
-
-//#include "../Creatures/Creature.hpp"
-//#include "../Creatures/Player.hpp"
-//#include "../Creatures/Monster.hpp"
+//#include "../Actions/Action.hpp"
+//#include "../Actions/ItemActions/ItemAction.hpp"
+//#include "../Actions/ItemActions/BlessCurseOwner.hpp"
+//#include "../Actions/ItemActions/Hallucinate.hpp"
 
 class Creature;
 class Player;
@@ -32,12 +29,13 @@ private:
 
 public:
     // Constructors
-    Item(const std::string &name, const int room, const int serial);
+    Item(const std::string &name, int room = -1, int serial = -1);
 
     // Methods
     virtual void setItemIntValue(const int value);
     virtual void setOwner(const std::shared_ptr<Creature> owner);
 
+    virtual const std::string toString() const; 
     // Operators
 
     // Destructor

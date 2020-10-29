@@ -27,7 +27,7 @@ public:
     // Methods
     void setHpMoves(int hpMoves);
 
-    virtual const std::string &toString() const;
+    virtual const std::string toString() const;
 
     // Operators
 

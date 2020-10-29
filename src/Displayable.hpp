@@ -33,11 +33,11 @@ public:
     virtual int getPosX() const;
     virtual void setPosY(int y);
     virtual int getPosY() const;
-    virtual const GridObject& getDisplayCode() const; 
+    virtual const GridObject getDisplayCode() const; 
     //virtual void setDisplayGrid(std::shared_ptr<ObjectDisplayGrid> grid); 
     //virtual void initializeDisplay(); 
      
-    virtual const std::string& toString() const;
+    virtual const std::string toString() const;
     // Operators
 
     // Destructor

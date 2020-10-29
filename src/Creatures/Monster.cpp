@@ -5,7 +5,7 @@ void Monster::setType(char type)
     this->type = type; 
 }
 
-const std::string &Monster::toString() const
+const std::string Monster::toString() const
 {
     std::string str = Creature::toString();
 

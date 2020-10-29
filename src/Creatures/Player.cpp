@@ -5,7 +5,7 @@ void Player::setHpMoves(int hpMoves)
     this->hpMoves = hpMoves; 
 }
 
-const std::string &Player::toString() const
+const std::string Player::toString() const
 {
     std::string str = Creature::toString();
 

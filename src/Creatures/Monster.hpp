@@ -28,7 +28,7 @@ public:
     // Methods
     virtual void setType(char type);
 
-    virtual const std::string &toString() const;
+    virtual const std::string toString() const;
 
     // Operators
 

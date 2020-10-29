@@ -26,7 +26,7 @@ void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
     hitActions.push_back(hitAction);
 }
 
-const std::string &Creature::toString() const
+const std::string Creature::toString() const
 {
     std::string str = Displayable::toString();
     str += "   hp: " + std::to_string(hp) + "\n";
