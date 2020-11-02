@@ -7,7 +7,7 @@ Structure::Structure(const std::string &name, char displayCode, char supplementa
 
 std::vector<std::shared_ptr<Monster>> Structure::getMonsters() const
 {
-    return monsters; 
+    return monsters;
 }
 
 void Structure::addMonster(const std::shared_ptr<Monster> monster)
@@ -27,7 +27,7 @@ void Structure::addPlayer(const std::shared_ptr<Player> player)
 
 std::vector<std::shared_ptr<Item>> Structure::getItems() const
 {
-    return items; 
+    return items;
 }
 
 void Structure::addItem(const std::shared_ptr<Item> item)
@@ -38,6 +38,27 @@ void Structure::addItem(const std::shared_ptr<Item> item)
 const char Structure::getSupplementaryDisplayCode() const
 {
     return supplementaryDisplayCode;
+}
+
+void Structure::initializeDisplay() const
+{
+    if (player != nullptr)
+    {
+        player->setObjectDisplayGrid(grid);
+        player->initializeDisplay();
+    }
+
+    for (auto &it : monsters)
+    {
+        it->setObjectDisplayGrid(grid);
+        it->initializeDisplay();
+    }
+
+    for (auto &it : items)
+    {
+        it->setObjectDisplayGrid(grid);
+        it->initializeDisplay();
+    }
 }
 
 const std::string Structure::toStringPlayer() const

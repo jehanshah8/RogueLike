@@ -35,8 +35,10 @@ public:
     virtual int getPosX() const;
     virtual void setPosY(int y);
     virtual int getPosY() const;
-    
+
     const std::string toString() const;
+
+    virtual void initializeDisplay() const;
 
     // Operators
 

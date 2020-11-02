@@ -1,9 +1,18 @@
 #include "Dungeon.hpp"
 
-Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int gameHeight, int bottomHeight) : name(name)
+Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int gameHeight, int bottomHeight) : name(name),
+                                                                                                            gameHeight(gameHeight),
+                                                                                                            gameWidth(gameWidth),
+                                                                                                            topHeight(topHeight),
+                                                                                                            bottomHeight(bottomHeight)
 {
-    //grid = std::make_shared<ObjectDisplayGrid>(gameHeight, gameWidth, topHeight, bottomHeight);
+    grid = std::make_shared<ObjectDisplayGrid>(gameHeight, gameWidth, topHeight, bottomHeight);
 }
+
+int Dungeon::getGameHeight() const { return gameHeight; }
+int Dungeon::getGameWidth() const { return gameWidth; }
+int Dungeon::getTopHeight() const { return topHeight; }
+int Dungeon::getBottomHeight() const { return bottomHeight; }
 
 void Dungeon::addRoom(const std::shared_ptr<Room> room)
 {
@@ -35,14 +44,35 @@ void Dungeon::addItem(const std::shared_ptr<Item> item)
     items.push_back(item);
 }
 
+void Dungeon::initializeGrid()
+{
+    //player->setObjectDisplayGrid(grid);
+    //player->initializeDisplay();
+
+    for (auto &it : rooms)
+    {
+        it->setObjectDisplayGrid(grid);
+        it->initializeDisplay();
+    }
+    
+    for (auto &it : passages)
+    {
+        it->setObjectDisplayGrid(grid);
+        it->initializeDisplay();
+    }
+    runDisplay();
+    //std::thread displayThread(Dungeon::runDisplay);
+    //displayThread.join();
+}
+
 const std::string Dungeon::toString() const
 {
     std::string str = "\tDungeon: \n";
     str += "\tname: " + name + "\n";
-    //str += "   gameHeight: " + std::to_string(grid->getGameHeight()) + "\n";
-    //str += "   gameWidth: " + std::to_string(grid->getGameWidth()) + "\n";
-    //str += "   topHeight: " + std::to_string(grid->getTopHeight()) + "\n";
-    //str += "   bottomHeight: " + std::to_string(grid->getBottomHeight()) + "\n";
+    str += "\tgameHeight: " + std::to_string(gameHeight) + "\n";
+    str += "\tgameWidth: " + std::to_string(gameWidth) + "\n";
+    str += "\ttopHeight: " + std::to_string(topHeight) + "\n";
+    str += "\tbottomHeight: " + std::to_string(bottomHeight) + "\n";
 
     str += "\trooms in the dungeon: \n";
     for (auto &it : rooms)
@@ -59,44 +89,23 @@ const std::string Dungeon::toString() const
     return str;
 }
 
-/*
-const std::string Dungeon::getSummary() const
+std::atomic_bool Dungeon::isRunning(true);
+
+void Dungeon::runDisplay()
 {
-    std::string str = "Dungeon: \n";
-    str += "   name: " + name + "\n";
-    //str += "   gameHeight: " + std::to_string(grid->getGameHeight()) + "\n";
-    //str += "   gameWidth: " + std::to_string(grid->getGameWidth()) + "\n";
-    //str += "   topHeight: " + std::to_string(grid->getTopHeight()) + "\n";
-    //str += "   bottomHeight: " + std::to_string(grid->getBottomHeight()) + "\n";
-    
-    std::cout <<"here" << std::endl; 
-    str += "   rooms: \n";
-    for (auto &it : rooms)
-    {
-        str += it.second->toString() + "\n";
-    }
-    
-    str += "   passages: \n";
-    for (auto &it : passages)
-    {
-        str += it.second->toString() + "\n";
-    }
-    
-    str += "   player: " + player->toString() + "\n";
-    
-    str += "   monsters: \n";
-    for (auto &it : monsters)
-    {
-        str += it.second->toString() + "\n";
-    }
 
-    str += "   items: \n";
-    for (auto &it : items)
+    // loop over each step, doubling each time
+    // stop loop if isRunning is swapped to false
+    while (isRunning)
     {
-        str += it.second->toString() + "\n";
-    }
+        // update the grid
+        grid->update();
 
-    //std::cout << str << std::endl;
-    return str;
+        // wait a bit to rejoin
+        // wait in a few steps to update faster on keypress
+        for (int i = 0; (isRunning && i < 5); i++)
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(400));
+        }
+    }
 }
-*/

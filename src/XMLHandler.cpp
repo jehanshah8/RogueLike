@@ -332,8 +332,8 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     char *qNameStr = xercesc::XMLString::transcode(qName);
     if (case_insensitive_match(qNameStr, "Dungeon"))
     {
-        std::cout << dungeonBeingParsed->toString() << std::endl;
-        dungeonBeingParsed = nullptr;
+        //std::cout << dungeonBeingParsed->toString() << std::endl;
+        //dungeonBeingParsed = nullptr;
     }
     else if (case_insensitive_match(qNameStr, "Room"))
     {

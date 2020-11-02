@@ -50,6 +50,8 @@ public:
 
     virtual const std::string toString() const;
 
+    virtual void initializeDisplay() const;
+
     // Operators
 
     // Destructor

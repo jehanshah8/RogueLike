@@ -21,6 +21,13 @@ void Passage::setPosY(int y)
     path.back()[1] = y;
 }
 
+void Passage::initializeDisplay() const
+{
+    Structure::initializeDisplay();
+
+    grid->addObjectToDisplay(path[0][0], path[0][1], supplementaryDisplayCode);
+}
+
 const std::string Passage::toString() const
 {
     //std::string str = Structure::toString();

@@ -25,26 +25,30 @@ void Room::setWidth(int width)
     this->width = width;
 }
 
-/**
-void Room::initializeDisplay()
+void Room::initializeDisplay() const
 {
-    for (int row = posY; row < posY + height; row++)
+    for (int x = posX; x < posX + width; x++)
     {
-        if (row == posY || row == posY + height - 1)
+        for (int y = posY; y < posY + height; y++)
         {
-            for (int col = posX; col < posX + width; col++)
+            if (x == posX || x == posX + width - 1)
             {
-                grid->addObjectToDisplay(row, col, supplementaryDisplayCode);
+                grid->addObjectToDisplay(x, y, supplementaryDisplayCode);
+                //grid->addObjectToDisplay(x + width - 1, y, supplementaryDisplayCode);
+            }
+            else if (y == posY || y == posY + height - 1)
+            {
+                grid->addObjectToDisplay(x, y, supplementaryDisplayCode);
+                //grid->addObjectToDisplay(x, y + height - 1, supplementaryDisplayCode);
+            }
+            else
+            {
+                grid->addObjectToDisplay(x, y, displayCode);
             }
         }
-        else
-        {
-            grid->addObjectToDisplay(row, posX, supplementaryDisplayCode);
-            grid->addObjectToDisplay(row, posX + width - 1, supplementaryDisplayCode);
-        }
     }
+    Structure::initializeDisplay();
 }
-*/
 
 const std::string Room::toString() const
 {

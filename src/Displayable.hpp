@@ -5,20 +5,19 @@
 #include <memory>
 #include <iostream>
 
-//#include "ObjectDisplayGrid.hpp"
+#include "ObjectDisplayGrid.hpp"
 //#include "GridChar.hpp"
 
-class Displayable
+class Displayable : public std::enable_shared_from_this<Displayable>
 {
 protected:
     // Fields 
     char displayCode;
     std::string name;
-    //std::string id;
     bool isVisible;
     int posX;
     int posY;
-    //std::shared_ptr<ObjectDisplayGrid> grid;  
+    std::shared_ptr<ObjectDisplayGrid> grid; 
 
 public:
     // Constructors
@@ -26,8 +25,6 @@ public:
 
     // Methods
     virtual const std::string& getName() const;
-    //virtual void setId(int room = -1, int serial = -1);
-    //virtual const std::string& getId() const;
     virtual void setVisibility(int isVisible);
     virtual bool getVisibility() const;
     virtual void setPosX(int x);
@@ -35,9 +32,10 @@ public:
     virtual void setPosY(int y);
     virtual int getPosY() const;
     virtual const char getDisplayCode() const; 
-    //virtual void setDisplayGrid(std::shared_ptr<ObjectDisplayGrid> grid); 
-    //virtual void initializeDisplay(); 
-     
+    virtual void initializeDisplay(); 
+
+    const std::shared_ptr<ObjectDisplayGrid> getObjectDisplayGrid(); 
+    void setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid);  
     virtual const std::string toString(int indentation = 0) const;
     // Operators
 
