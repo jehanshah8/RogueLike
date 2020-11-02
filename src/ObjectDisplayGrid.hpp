@@ -33,8 +33,8 @@ public:
     virtual void addObjectToDisplay(const int row, const int col, const char gridChar); 
     //virtual char getDisplayable(const int row, const int col) const; 
     //virtual void removeObjectFromDisplay(const int row, const int col);
-    //virtual void setTopMessage(const int hitPoints, const int score); 
-    //virtual void setBottomMessage(const std::string& inventory, const std::string& message);
+    virtual void setTopMessage(const int hitPoints = 0, const int score = 0); 
+    virtual void setBottomMessage(const std::string& inventory = "none", const std::string& message = "hello");
     virtual void update();
     //virtual int getGameHeight() const; 
     //virtual int getGameWidth() const; 

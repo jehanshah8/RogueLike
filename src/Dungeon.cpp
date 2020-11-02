@@ -48,7 +48,8 @@ void Dungeon::initializeGrid()
 {
     //player->setObjectDisplayGrid(grid);
     //player->initializeDisplay();
-
+    grid->setTopMessage();
+    grid->setBottomMessage();
     for (auto &it : rooms)
     {
         it->setObjectDisplayGrid(grid);

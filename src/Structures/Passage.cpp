@@ -23,9 +23,46 @@ void Passage::setPosY(int y)
 
 void Passage::initializeDisplay() const
 {
+    for (unsigned int i = 1; i < path.size(); i++)
+    {
+        if (path[i - 1][1] == path[i][1])
+        {
+            if (path[i][0] > path[i - 1][0])
+            {
+                for (int j = 0; j < path[i][0] - path[i - 1][0]; j++)
+                {
+                    grid->addObjectToDisplay(path[i - 1][0] + j, path[i - 1][1], displayCode);
+                }
+            }
+            else
+            {
+                for (int j = 0; j < path[i - 1][0] - path[i][0]; j++)
+                {
+                    grid->addObjectToDisplay(path[i - 1][0] - j, path[i - 1][1], displayCode);
+                }
+            }
+        }
+        else
+        {
+            if (path[i][1] > path[i - 1][1])
+            {
+                for (int k = 0; k < path[i][1] - path[i - 1][1]; k++)
+                {
+                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] + k, displayCode);
+                }
+            }
+            else
+            {
+                for (int k = 0; k < path[i - 1][1] - path[i][1]; k++)
+                {
+                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] - k, displayCode);
+                }
+            }
+        }
+    }
+    grid->addObjectToDisplay(path.front()[0], path.front()[1], supplementaryDisplayCode);
+    grid->addObjectToDisplay(path.back()[0], path.back()[1], supplementaryDisplayCode);
     Structure::initializeDisplay();
-
-    grid->addObjectToDisplay(path[0][0], path[0][1], supplementaryDisplayCode);
 }
 
 const std::string Passage::toString() const
