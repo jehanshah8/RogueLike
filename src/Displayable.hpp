@@ -6,13 +6,13 @@
 #include <iostream>
 
 //#include "ObjectDisplayGrid.hpp"
-#include "GridObject.hpp"
+//#include "GridChar.hpp"
 
 class Displayable
 {
 protected:
     // Fields 
-    GridObject displayCode;
+    char displayCode;
     std::string name;
     //std::string id;
     bool isVisible;
@@ -22,7 +22,7 @@ protected:
 
 public:
     // Constructors
-    Displayable(const std::string &name);
+    Displayable(const std::string &name, char displayCode = ' ');
 
     // Methods
     virtual const std::string& getName() const;
@@ -34,7 +34,7 @@ public:
     virtual int getPosX() const;
     virtual void setPosY(int y);
     virtual int getPosY() const;
-    virtual const GridObject getDisplayCode() const; 
+    virtual const char getDisplayCode() const; 
     //virtual void setDisplayGrid(std::shared_ptr<ObjectDisplayGrid> grid); 
     //virtual void initializeDisplay(); 
      

@@ -1,11 +1,11 @@
 #include "Displayable.hpp"
 
-Displayable::Displayable(const std::string &name) : displayCode(' '),
-                                                    name(name),
-                                                    //id("-1/-1"),
-                                                    isVisible(-1),
-                                                    posX(-1),
-                                                    posY(-1)
+Displayable::Displayable(const std::string &name, char displayCode) : displayCode(displayCode),
+                                                                      name(name),
+                                                                      //id("-1/-1"),
+                                                                      isVisible(-1),
+                                                                      posX(-1),
+                                                                      posY(-1)
 
 {
 }
@@ -56,7 +56,7 @@ int Displayable::getPosY() const
     return posY;
 }
 
-const GridObject Displayable::getDisplayCode() const
+const char Displayable::getDisplayCode() const
 {
     return displayCode;
 }
@@ -76,25 +76,25 @@ void Displayable::initializeDisplay()
 const std::string Displayable::toString(int indentation) const
 {
     std::string str;
-    for (int i = 0; i < indentation; i++) 
+    for (int i = 0; i < indentation; i++)
     {
-        str += "\t"; 
+        str += "\t";
     }
     str += "name: " + name + "\n";
     //str += "   id: " + id + "\n";
-    for (int i = 0; i < indentation; i++) 
+    for (int i = 0; i < indentation; i++)
     {
-        str += "\t"; 
+        str += "\t";
     }
     str += "isVisible: " + std::to_string(isVisible) + "\n";
-    for (int i = 0; i < indentation; i++) 
+    for (int i = 0; i < indentation; i++)
     {
-        str += "\t"; 
+        str += "\t";
     }
     str += "posX: " + std::to_string(posX) + "\n";
-    for (int i = 0; i < indentation; i++) 
+    for (int i = 0; i < indentation; i++)
     {
-        str += "\t"; 
+        str += "\t";
     }
     str += "posY: " + std::to_string(posY) + "\n";
 

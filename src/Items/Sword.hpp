@@ -12,7 +12,7 @@ private:
 
 public:
     // Constructors
-    using Item::Item;
+    Sword(const std::string &name, int room = -1, int serial = -1);
 
     // Methods
 

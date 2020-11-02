@@ -24,14 +24,20 @@ private:
     // Fields
     int room1;
     int room2;
-
+    std::vector<std::array<int, 2>> path; 
     // Methods
 public:
     // Constructors
     Passage(int room1, int room2);
 
     // Methods
+    virtual void setPosX(int x);
+    virtual int getPosX() const;
+    virtual void setPosY(int y);
+    virtual int getPosY() const;
+    
     const std::string toString() const;
+
     // Operators
 
     // Destructor

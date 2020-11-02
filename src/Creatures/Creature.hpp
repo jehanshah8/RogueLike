@@ -39,15 +39,14 @@ protected:
     int serial;
     int hp;
     int maxHit;
-    std::unordered_map<std::string, std::shared_ptr<Item>> items;
+    
+    //std::unordered_map<std::string, std::shared_ptr<Item>> items;
     std::vector<std::shared_ptr<CreatureAction>> deathActions;
     std::vector<std::shared_ptr<CreatureAction>> hitActions;
 
-    virtual const std::string toStringItems() const; 
-
 public:
     // Constructors
-    Creature(const std::string &name, int room = -1, int serial = -1);
+    Creature(const std::string &name, char displayCode, int room = -1, int serial = -1);
 
     // Methods
     virtual void setHp(int hp);

@@ -1,10 +1,10 @@
 #include "Creature.hpp"
 
-Creature::Creature(const std::string &name, int room, int serial) : Displayable(name),
-                                                                    room(room),
-                                                                    serial(serial)
+Creature::Creature(const std::string &name, char displayCode, int room, int serial) : Displayable(name, displayCode),
+                                                                                      room(room),
+                                                                                      serial(serial)
 {
-    //std::cout << "creating creature" << std::endl; 
+    //std::cout << "creating creature" << std::endl;
 }
 
 void Creature::setHp(int hp)
@@ -27,30 +27,13 @@ void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
     hitActions.push_back(hitAction);
 }
 
-
-const std::string Creature::toStringItems() const
-{
-    std::string str;
-    if (items.empty())
-    {
-        str += "\t\t\t\tno items here\n";
-    }
-    else
-    {
-        for (auto &it : items)
-        {
-            str += it.second->toString(4) + "\n";
-        }
-    }
-
-    return str;
-}
-
 const std::string Creature::toString() const
 {
     std::string str = Displayable::toString(3);
+    str += "\t\t\troom: " + std::to_string(room) + "\n";
+    str += "\t\t\tserial: " + std::to_string(serial) + "\n";
     str += "\t\t\thp: " + std::to_string(hp) + "\n";
     str += "\t\t\tmaxHit: " + std::to_string(maxHit) + "\n";
-    
+
     return str;
 }

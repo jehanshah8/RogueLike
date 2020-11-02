@@ -29,7 +29,7 @@ private:
 
 public:
     // Constructors
-    Item(const std::string &name, int room = -1, int serial = -1);
+    Item(const std::string &name, char displayCode, int room = -1, int serial = -1);
 
     // Methods
     virtual void setItemIntValue(const int value);

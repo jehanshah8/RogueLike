@@ -17,7 +17,6 @@ class Monster : public Creature
 {
 private:
     // Fields
-    char type;
 
     // Methods
 

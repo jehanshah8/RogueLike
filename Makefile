@@ -14,7 +14,7 @@ CLASSES = XMLHandler.cpp Displayable.cpp \
 	Creature.cpp Monster.cpp Player.cpp \
 	Item.cpp Scroll.cpp Armor.cpp Sword.cpp \
 	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp \
-	GridObject.cpp #ObjectDisplayGrid
+	#GridChar.cpp #ObjectDisplayGrid
 
 #XMLHandler.cpp ObjectDisplayGrid.cpp GridChar.cpp KeyboardListeners.cpp \
 	Displayable.cpp \

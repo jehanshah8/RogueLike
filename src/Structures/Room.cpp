@@ -1,10 +1,8 @@
 #include "Room.hpp"
 
-Room::Room(const std::string &name) : Structure("room" + name)
+Room::Room(const std::string &name) : Structure("room" + name, '.', 'X')
 {
     //std::cout << "creating room" << std::endl;
-    displayCode.setDisplayCode('.');
-    supplementaryDisplayCode.setDisplayCode('X');
 }
 
 int Room::getHeight() const

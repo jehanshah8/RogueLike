@@ -60,7 +60,7 @@ const std::string Dungeon::toString() const
 }
 
 /*
-const std::string Dungeon::toStringAll() const
+const std::string Dungeon::getSummary() const
 {
     std::string str = "Dungeon: \n";
     str += "   name: " + name + "\n";

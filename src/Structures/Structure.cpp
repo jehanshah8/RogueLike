@@ -1,7 +1,7 @@
 #include "Structure.hpp"
 
-Structure::Structure(const std::string &name) : Displayable(name),
-                                                supplementaryDisplayCode(' ')
+Structure::Structure(const std::string &name, char displayCode, char supplementaryDisplayCode) : Displayable(name, displayCode),
+                                                                                                 supplementaryDisplayCode(supplementaryDisplayCode)
 {
 }
 
@@ -22,10 +22,10 @@ std::shared_ptr<Player> Structure::getPlayer() const
 
 void Structure::addItem(const std::shared_ptr<Item> item)
 {
-    items.insert({item->getName(), item});
+    items.push_back(item);
 }
 
-const GridObject &Structure::getSupplementaryDisplayCode() const
+const char Structure::getSupplementaryDisplayCode() const
 {
     return supplementaryDisplayCode;
 }
@@ -73,7 +73,7 @@ const std::string Structure::toStringItems() const
     {
         for (auto &it : items)
         {
-            str += it.second->toString() + "\n";
+            str += it->toString() + "\n";
         }
     }
 

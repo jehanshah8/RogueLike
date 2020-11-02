@@ -20,29 +20,29 @@
 
 class Structure : public Displayable
 {
-private: 
-    
+private:
 protected:
-    GridObject supplementaryDisplayCode; 
+    char supplementaryDisplayCode;
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
-    std::unordered_map<std::string, std::shared_ptr<Item>> items;
+    std::vector<std::shared_ptr<Item>> items;
+    //std::unordered_map<std::string, std::shared_ptr<Item>> items;
 
     virtual const std::string toStringPlayer() const;
-    virtual const std::string toStringMonsters() const; 
-    virtual const std::string toStringItems() const; 
+    virtual const std::string toStringMonsters() const;
+    virtual const std::string toStringItems() const;
 
 public:
     // Constructors
-    Structure(const std::string &name);
+    Structure(const std::string &name, char displayCode, char supplementaryDisplayCode);
 
     // Methods
     virtual void addMonster(const std::shared_ptr<Monster> monster);
     virtual void addPlayer(const std::shared_ptr<Player> player);
-    virtual std::shared_ptr<Player> getPlayer() const; 
+    virtual std::shared_ptr<Player> getPlayer() const;
     virtual void addItem(const std::shared_ptr<Item> item);
-    virtual const GridObject& getSupplementaryDisplayCode() const; 
-    
+    virtual const char getSupplementaryDisplayCode() const;
+
     virtual const std::string toString() const;
 
     // Operators

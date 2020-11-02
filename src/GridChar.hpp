@@ -1,7 +1,7 @@
-#ifndef GRID_OBJECT_H_
-#define GRID_OBJECT_H_
+#ifndef GRID_CHAR_H_
+#define GRID_CHAR_H_
 
-class GridObject
+class GridChar
 {
 private:
 	// Fields
@@ -10,7 +10,7 @@ private:
 	// Methods
 public:
 	// Constructors
-	GridObject(char displayCode);
+	GridChar(char displayCode);
 
 	// Methods
 	virtual const char getDisplayCode() const;
@@ -20,4 +20,4 @@ public:
 
 	// Destructor
 };
-#endif /* GRID_OBJECT_H_ */
+#endif /* GRID_CHAR_H_ */

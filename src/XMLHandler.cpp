@@ -86,7 +86,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
     {
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "room"));
         structureBeingParsed = std::make_shared<Room>(name);
-        dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
         displayablesBeingParsed.push(structureBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Passages"))
@@ -100,7 +99,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int room2 = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "room2")));
 
         structureBeingParsed = std::make_shared<Passage>(room1, room2);
-        dungeonBeingParsed->addPassage(std::dynamic_pointer_cast<Passage>(structureBeingParsed));
         displayablesBeingParsed.push(structureBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Monster"))
@@ -110,8 +108,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         creatureBeingParsed = std::make_shared<Monster>(name, room, serial);
-        dungeonBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
-        structureBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
         displayablesBeingParsed.push(creatureBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Player"))
@@ -121,8 +117,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         creatureBeingParsed = std::make_shared<Player>(name, room, serial);
-        dungeonBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
-        structureBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
         displayablesBeingParsed.push(creatureBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Scroll"))
@@ -132,8 +126,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Scroll>(name, room, serial);
-        dungeonBeingParsed->addItem(itemBeingParsed);
-        structureBeingParsed->addItem(itemBeingParsed);
         displayablesBeingParsed.push(itemBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Armor"))
@@ -143,8 +135,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Armor>(name, room, serial);
-        dungeonBeingParsed->addItem(itemBeingParsed);
-        structureBeingParsed->addItem(itemBeingParsed);
         displayablesBeingParsed.push(itemBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "Sword"))
@@ -154,8 +144,6 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         int serial = std::stoi(xmlChToString(getXMLChAttributeFromString(attributes, "serial")));
 
         itemBeingParsed = std::make_shared<Sword>(name, room, serial);
-        dungeonBeingParsed->addItem(itemBeingParsed);
-        structureBeingParsed->addItem(itemBeingParsed);
         displayablesBeingParsed.push(itemBeingParsed);
     }
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
@@ -206,7 +194,7 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
         std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
 
-        // todo 
+        // todo
         // printing for parsing and debugging only
         //std::string str = "ItemAction: \n";
         //str += "   name: " + name + "\n";
@@ -330,7 +318,7 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
         //actionBeingParsed->setMessage(data);
         bActionMessage = false;
     }
-    else if (bActionIntValue) // todo 
+    else if (bActionIntValue) // todo
     {
         //actionBeingParsed->setInValue(std::stoi(data));
         bActionIntValue = false;
@@ -349,41 +337,50 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     }
     else if (case_insensitive_match(qNameStr, "Room"))
     {
+        dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
         structureBeingParsed = nullptr;
-        //std::cout<<"popping room"<<std::endl; 
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Passage"))
     {
+        dungeonBeingParsed->addPassage(std::dynamic_pointer_cast<Passage>(structureBeingParsed));
         structureBeingParsed = nullptr;
-        //std::cout<<"popping passage"<<std::endl;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Monster"))
     {
+        dungeonBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
+        structureBeingParsed->addMonster(std::dynamic_pointer_cast<Monster>(creatureBeingParsed));
         creatureBeingParsed = nullptr;
-        //std::cout<<"popping monster"<<std::endl;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Player"))
     {
+        dungeonBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
+        structureBeingParsed->addPlayer(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
         creatureBeingParsed = nullptr;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Scroll"))
     {
+        dungeonBeingParsed->addItem(itemBeingParsed);
+        structureBeingParsed->addItem(itemBeingParsed);
         itemBeingParsed = nullptr;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Armor"))
     {
+        dungeonBeingParsed->addItem(itemBeingParsed);
+        structureBeingParsed->addItem(itemBeingParsed);
         itemBeingParsed = nullptr;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Sword"))
     {
+        dungeonBeingParsed->addItem(itemBeingParsed);
+        structureBeingParsed->addItem(itemBeingParsed);
         itemBeingParsed = nullptr;
-        displayablesBeingParsed.pop(); 
+        displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
     {

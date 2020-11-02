@@ -31,8 +31,6 @@ private:
     std::unordered_map<std::string, std::shared_ptr<Passage>> passages;
     std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
-    //std::unordered_map<std::string, std::shared_ptr<Structure>> structures;
-    //std::unordered_map<std::string, std::shared_ptr<Creature>> creatures;
     std::unordered_map<std::string, std::shared_ptr<Item>> items;
 
 
@@ -50,7 +48,7 @@ public:
     virtual std::shared_ptr<Player> getPlayer() const; 
     virtual void addItem(const std::shared_ptr<Item> item);
     virtual const std::string toString() const; 
-    //virtual const std::string toStringAll() const; 
+    //virtual const std::string getSummary() const; 
     // Operators
 
     // Destructor

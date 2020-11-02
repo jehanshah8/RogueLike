@@ -18,8 +18,10 @@ class Player : public Creature
 private:
     // Fields
     int hpMoves;
+    std::vector<std::shared_ptr<Item>> items;
 
     // Methods
+    virtual const std::string toStringItems() const; 
 
 public:
     // Constructors
@@ -27,8 +29,9 @@ public:
 
     // Methods
     void setHpMoves(int hpMoves);
-
+    virtual void addItem(const std::shared_ptr<Item> item);
     virtual const std::string toString() const;
+    
 
     // Operators
 

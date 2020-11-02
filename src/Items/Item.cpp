@@ -1,9 +1,9 @@
 #include "Item.hpp"
 
-Item::Item(const std::string &name, int room, int serial) : Displayable(name),
-                                                            room(room),
-                                                            serial(serial), 
-                                                            itemIntValue(0)
+Item::Item(const std::string &name, char displayCode, int room, int serial) : Displayable(name, displayCode),
+                                                                              room(room),
+                                                                              serial(serial),
+                                                                              itemIntValue(0)
 {
 }
 
@@ -22,10 +22,10 @@ const std::string Item::toString(int indentation) const
     std::string str = Displayable::toString(indentation);
     if (indentation == 4)
     {
-        str += "\t"; 
+        str += "\t";
     }
     str += "\t\t\titemIntValue: " + std::to_string(itemIntValue) + "\n";
-    
+
     //std::cout << str << std::endl;
     return str;
 }
