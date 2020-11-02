@@ -12,7 +12,7 @@ void Item::setItemIntValue(const int value)
     itemIntValue = value;
 }
 
-void Item::setOwner(const std::shared_ptr<Creature> owner)
+void Item::setOwner(const std::shared_ptr<Player> owner)
 {
     this->owner = owner;
 }

@@ -371,14 +371,31 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     else if (case_insensitive_match(qNameStr, "Armor"))
     {
         dungeonBeingParsed->addItem(itemBeingParsed);
-        structureBeingParsed->addItem(itemBeingParsed);
+        if (creatureBeingParsed != nullptr && creatureBeingParsed->getDisplayCode() == '@')
+        {
+            std::dynamic_pointer_cast<Player>(creatureBeingParsed)->addItem(itemBeingParsed);
+            itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
+        }
+        else
+        {
+            structureBeingParsed->addItem(itemBeingParsed);
+        }
         itemBeingParsed = nullptr;
         displayablesBeingParsed.pop();
     }
     else if (case_insensitive_match(qNameStr, "Sword"))
     {
         dungeonBeingParsed->addItem(itemBeingParsed);
-        structureBeingParsed->addItem(itemBeingParsed);
+        if (creatureBeingParsed != nullptr && creatureBeingParsed->getDisplayCode() == '@')
+        {
+            std::dynamic_pointer_cast<Player>(creatureBeingParsed)->addItem(itemBeingParsed);
+            itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
+        }
+        else
+        {
+            structureBeingParsed->addItem(itemBeingParsed);
+        }
+        //structureBeingParsed->addItem(itemBeingParsed);
         itemBeingParsed = nullptr;
         displayablesBeingParsed.pop();
     }

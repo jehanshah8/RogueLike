@@ -14,6 +14,8 @@ void Player::setHpMoves(int hpMoves)
 void Player::addItem(const std::shared_ptr<Item> item)
 {
     items.push_back(item);
+    item->setPosX(posX);
+    item->setPosY(posY);
 }
 
 const std::string Player::toStringItems() const

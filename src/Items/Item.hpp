@@ -12,9 +12,8 @@
 //#include "../Actions/ItemActions/BlessCurseOwner.hpp"
 //#include "../Actions/ItemActions/Hallucinate.hpp"
 
-class Creature;
+
 class Player;
-class Monster;
 
 class Item : public Displayable
 {
@@ -23,7 +22,7 @@ private:
     int room;
     int serial;
     int itemIntValue;
-    std::shared_ptr<Creature> owner;
+    std::shared_ptr<Player> owner;
 
     // Methods
 
@@ -33,7 +32,7 @@ public:
 
     // Methods
     virtual void setItemIntValue(const int value);
-    virtual void setOwner(const std::shared_ptr<Creature> owner);
+    virtual void setOwner(const std::shared_ptr<Player> owner);
 
     virtual const std::string toString(int indentation = 3) const; 
     // Operators
