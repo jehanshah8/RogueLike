@@ -338,6 +338,21 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     else if (case_insensitive_match(qNameStr, "Room"))
     {
         dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
+        if (structureBeingParsed->getPlayer() != nullptr)
+        {
+            structureBeingParsed->getPlayer()->setPosX(structureBeingParsed->getPosX() + structureBeingParsed->getPlayer()->getPosX());
+            structureBeingParsed->getPlayer()->setPosY(structureBeingParsed->getPosY() + structureBeingParsed->getPlayer()->getPosY());
+        }
+        for (auto &it : structureBeingParsed->getMonsters())
+        {
+            it->setPosX(structureBeingParsed->getPosX() + it->getPosX());
+            it->setPosY(structureBeingParsed->getPosY() + it->getPosY());
+        }
+        for (auto &it : structureBeingParsed->getItems())
+        {
+            it->setPosX(structureBeingParsed->getPosX() + it->getPosX());
+            it->setPosY(structureBeingParsed->getPosY() + it->getPosY());
+        }
         structureBeingParsed = nullptr;
         displayablesBeingParsed.pop();
     }

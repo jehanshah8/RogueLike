@@ -27,11 +27,11 @@ private:
     // Fields
     std::string name;
     //std::shared_ptr<ObjectDisplayGrid> grid;
-    std::unordered_map<std::string, std::shared_ptr<Room>> rooms;
-    std::unordered_map<std::string, std::shared_ptr<Passage>> passages;
-    std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
+    std::vector<std::shared_ptr<Room>> rooms;
+    std::vector<std::shared_ptr<Passage>> passages;
+    std::vector<std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
-    std::unordered_map<std::string, std::shared_ptr<Item>> items;
+    std::vector<std::shared_ptr<Item>> items;
 
 
     // Methods

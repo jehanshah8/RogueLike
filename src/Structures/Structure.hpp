@@ -5,7 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <unordered_map>
+//#include <unordered_map>
 
 #include "../Displayable.hpp"
 
@@ -23,7 +23,7 @@ class Structure : public Displayable
 private:
 protected:
     char supplementaryDisplayCode;
-    std::unordered_map<std::string, std::shared_ptr<Monster>> monsters;
+    std::vector<std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
     std::vector<std::shared_ptr<Item>> items;
     //std::unordered_map<std::string, std::shared_ptr<Item>> items;
@@ -37,10 +37,15 @@ public:
     Structure(const std::string &name, char displayCode, char supplementaryDisplayCode);
 
     // Methods
+    virtual std::vector<std::shared_ptr<Monster>> getMonsters() const;
     virtual void addMonster(const std::shared_ptr<Monster> monster);
-    virtual void addPlayer(const std::shared_ptr<Player> player);
+
     virtual std::shared_ptr<Player> getPlayer() const;
+    virtual void addPlayer(const std::shared_ptr<Player> player);
+
+    virtual std::vector<std::shared_ptr<Item>> getItems() const;
     virtual void addItem(const std::shared_ptr<Item> item);
+
     virtual const char getSupplementaryDisplayCode() const;
 
     virtual const std::string toString() const;

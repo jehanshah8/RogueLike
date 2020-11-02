@@ -25,7 +25,16 @@ const std::string Item::toString(int indentation) const
         str += "\t";
     }
     str += "\t\t\titemIntValue: " + std::to_string(itemIntValue) + "\n";
-
+    if (indentation == 4)
+    {
+        str += "\t";
+    }
+    str += "\t\t\troom: " + std::to_string(room) + "\n";
+    if (indentation == 4)
+    {
+        str += "\t";
+    }
+    str += "\t\t\tserial: " + std::to_string(serial) + "\n";
     //std::cout << str << std::endl;
     return str;
 }

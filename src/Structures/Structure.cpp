@@ -5,9 +5,19 @@ Structure::Structure(const std::string &name, char displayCode, char supplementa
 {
 }
 
+std::vector<std::shared_ptr<Monster>> Structure::getMonsters() const
+{
+    return monsters; 
+}
+
 void Structure::addMonster(const std::shared_ptr<Monster> monster)
 {
-    monsters.insert({monster->getName(), monster});
+    monsters.push_back(monster);
+}
+
+std::shared_ptr<Player> Structure::getPlayer() const
+{
+    return player;
 }
 
 void Structure::addPlayer(const std::shared_ptr<Player> player)
@@ -15,9 +25,9 @@ void Structure::addPlayer(const std::shared_ptr<Player> player)
     this->player = player;
 }
 
-std::shared_ptr<Player> Structure::getPlayer() const
+std::vector<std::shared_ptr<Item>> Structure::getItems() const
 {
-    return player;
+    return items; 
 }
 
 void Structure::addItem(const std::shared_ptr<Item> item)
@@ -55,7 +65,7 @@ const std::string Structure::toStringMonsters() const
     {
         for (auto &it : monsters)
         {
-            str += it.second->toString() + "\n";
+            str += it->toString() + "\n";
         }
     }
 

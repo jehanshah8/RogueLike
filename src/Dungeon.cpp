@@ -7,17 +7,17 @@ Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int game
 
 void Dungeon::addRoom(const std::shared_ptr<Room> room)
 {
-    rooms.insert({room->getName(), room});
+    rooms.push_back(room);
 }
 
 void Dungeon::addPassage(const std::shared_ptr<Passage> passage)
 {
-    passages.insert({passage->getName(), passage});
+    passages.push_back(passage);
 }
 
 void Dungeon::addMonster(const std::shared_ptr<Monster> monster)
 {
-    monsters.insert({monster->getName(), monster});
+    monsters.push_back(monster);
 }
 
 void Dungeon::addPlayer(const std::shared_ptr<Player> player)
@@ -32,7 +32,7 @@ std::shared_ptr<Player> Dungeon::getPlayer() const
 
 void Dungeon::addItem(const std::shared_ptr<Item> item)
 {
-    items.insert({item->getName(), item});
+    items.push_back(item);
 }
 
 const std::string Dungeon::toString() const
@@ -47,13 +47,13 @@ const std::string Dungeon::toString() const
     str += "\trooms in the dungeon: \n";
     for (auto &it : rooms)
     {
-        str += it.second->toString() + "\n";
+        str += it->toString() + "\n";
     }
 
     str += "\tpassages in the dungeon: \n";
     for (auto &it : passages)
     {
-        str += it.second->toString() + "\n";
+        str += it->toString() + "\n";
     }
 
     return str;
