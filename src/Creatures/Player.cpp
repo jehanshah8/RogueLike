@@ -48,3 +48,11 @@ const std::string Player::toString() const
     //std::cout << str << std::endl;
     return str;
 }
+
+void Player::initializeDisplay() 
+{
+    grid->setTopMessage(hp, 0);
+    grid->setBottomMessagePack("Empty");
+    grid->setBottomMessageInfo("Welcome");
+    grid->addObjectToDisplay(posX, posY, displayCode); 
+}

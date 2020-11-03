@@ -332,27 +332,55 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     char *qNameStr = xercesc::XMLString::transcode(qName);
     if (case_insensitive_match(qNameStr, "Dungeon"))
     {
+        // convert structs to global pos
+        for (auto &structure_it : dungeonBeingParsed->getRooms())
+        {
+            structure_it->setPosY(structure_it->getPosY() + dungeonBeingParsed->getTopHeight());
+            // convert things in structs to global pos
+            if (structure_it->getPlayer() != nullptr)
+            {
+                structure_it->getPlayer()->setPosX(structure_it->getPosX() + structure_it->getPlayer()->getPosX());
+                structure_it->getPlayer()->setPosY(structure_it->getPosY() + structure_it->getPlayer()->getPosY());
+            }
+            for (auto &monster_it : structure_it->getMonsters())
+            {
+                monster_it->setPosX(monster_it->getPosX() + structure_it->getPosX());
+                monster_it->setPosY(monster_it->getPosY() + structure_it->getPosY());
+            }
+            for (auto &item_it : structure_it->getItems())
+            {
+                item_it->setPosX(item_it->getPosX() + structure_it->getPosX());
+                item_it->setPosY(item_it->getPosY() + structure_it->getPosY());
+            }
+        }
+        for (auto &structure_it : dungeonBeingParsed->getPassages())
+        {
+            structure_it->shiftPosY(dungeonBeingParsed->getTopHeight());
+            
+            // convert things in structs to global pos
+            if (structure_it->getPlayer() != nullptr)
+            {
+                structure_it->getPlayer()->setPosX(structure_it->getPosX() + structure_it->getPlayer()->getPosX());
+                structure_it->getPlayer()->setPosY(structure_it->getPosY() + structure_it->getPlayer()->getPosY());
+            }
+            for (auto &monster_it : structure_it->getMonsters())
+            {
+                monster_it->setPosX(monster_it->getPosX() + structure_it->getPosX());
+                monster_it->setPosY(monster_it->getPosY() + structure_it->getPosY());
+            }
+            for (auto &item_it : structure_it->getItems())
+            {
+                item_it->setPosX(item_it->getPosX() + structure_it->getPosX());
+                item_it->setPosY(item_it->getPosY() + structure_it->getPosY());
+            }
+        }
+
         //std::cout << dungeonBeingParsed->toString() << std::endl;
         //dungeonBeingParsed = nullptr;
     }
     else if (case_insensitive_match(qNameStr, "Room"))
     {
         dungeonBeingParsed->addRoom(std::dynamic_pointer_cast<Room>(structureBeingParsed));
-        if (structureBeingParsed->getPlayer() != nullptr)
-        {
-            structureBeingParsed->getPlayer()->setPosX(structureBeingParsed->getPosX() + structureBeingParsed->getPlayer()->getPosX());
-            structureBeingParsed->getPlayer()->setPosY(structureBeingParsed->getPosY() + structureBeingParsed->getPlayer()->getPosY());
-        }
-        for (auto &it : structureBeingParsed->getMonsters())
-        {
-            it->setPosX(structureBeingParsed->getPosX() + it->getPosX());
-            it->setPosY(structureBeingParsed->getPosY() + it->getPosY());
-        }
-        for (auto &it : structureBeingParsed->getItems())
-        {
-            it->setPosX(structureBeingParsed->getPosX() + it->getPosX());
-            it->setPosY(structureBeingParsed->getPosY() + it->getPosY());
-        }
         structureBeingParsed = nullptr;
         displayablesBeingParsed.pop();
     }

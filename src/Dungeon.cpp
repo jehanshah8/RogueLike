@@ -4,7 +4,8 @@ Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int game
                                                                                                             gameHeight(gameHeight),
                                                                                                             gameWidth(gameWidth),
                                                                                                             topHeight(topHeight),
-                                                                                                            bottomHeight(bottomHeight)
+                                                                                                            bottomHeight(bottomHeight),
+                                                                                                            isRunning(true)
 {
     grid = std::make_shared<ObjectDisplayGrid>(gameHeight, gameWidth, topHeight, bottomHeight);
 }
@@ -14,9 +15,19 @@ int Dungeon::getGameWidth() const { return gameWidth; }
 int Dungeon::getTopHeight() const { return topHeight; }
 int Dungeon::getBottomHeight() const { return bottomHeight; }
 
+const std::vector<std::shared_ptr<Room>> Dungeon::getRooms() const
+{
+    return rooms;
+}
+
 void Dungeon::addRoom(const std::shared_ptr<Room> room)
 {
     rooms.push_back(room);
+}
+
+const std::vector<std::shared_ptr<Passage>> Dungeon::getPassages() const
+{
+    return passages;
 }
 
 void Dungeon::addPassage(const std::shared_ptr<Passage> passage)
@@ -44,28 +55,6 @@ void Dungeon::addItem(const std::shared_ptr<Item> item)
     items.push_back(item);
 }
 
-void Dungeon::initializeGrid()
-{
-    //player->setObjectDisplayGrid(grid);
-    //player->initializeDisplay();
-    grid->setTopMessage();
-    grid->setBottomMessage();
-    for (auto &it : rooms)
-    {
-        it->setObjectDisplayGrid(grid);
-        it->initializeDisplay();
-    }
-    
-    for (auto &it : passages)
-    {
-        it->setObjectDisplayGrid(grid);
-        it->initializeDisplay();
-    }
-    runDisplay();
-    //std::thread displayThread(Dungeon::runDisplay);
-    //displayThread.join();
-}
-
 const std::string Dungeon::toString() const
 {
     std::string str = "\tDungeon: \n";
@@ -90,14 +79,12 @@ const std::string Dungeon::toString() const
     return str;
 }
 
-std::atomic_bool Dungeon::isRunning(true);
-
 void Dungeon::runDisplay()
 {
 
     // loop over each step, doubling each time
     // stop loop if isRunning is swapped to false
-    while (isRunning)
+    for (;;)
     {
         // update the grid
         grid->update();
@@ -109,4 +96,26 @@ void Dungeon::runDisplay()
             std::this_thread::sleep_for(std::chrono::milliseconds(400));
         }
     }
+}
+
+void Dungeon::initializeGrid()
+{
+    Displayable::setObjectDisplayGrid(grid);
+    for (auto &it : rooms)
+    {
+        it->initializeDisplay();
+    }
+
+    for (auto &it : passages)
+    {
+        it->initializeDisplay();
+    }
+    runDisplay();
+    //std::thread displayThread(Dungeon::runDisplay);
+    //displayThread.join();
+}
+
+void Dungeon::startGame()
+{
+    initializeGrid();
 }

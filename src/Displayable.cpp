@@ -1,6 +1,6 @@
 #include "Displayable.hpp"
 
-//std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
+std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
 
 Displayable::Displayable(const std::string &name, char displayCode) : displayCode(displayCode),
                                                                       name(name),
@@ -92,10 +92,10 @@ const std::string Displayable::toString(int indentation) const
     return str;
 }
 
-const std::shared_ptr<ObjectDisplayGrid> Displayable::getObjectDisplayGrid() 
-{
-    return grid; 
-}
+//const std::shared_ptr<ObjectDisplayGrid> Displayable::getObjectDisplayGrid() 
+//{
+//    return grid; 
+//}
 
 void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> _grid) 
 {

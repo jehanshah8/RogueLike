@@ -40,31 +40,35 @@ private:
     std::shared_ptr<Player> player;
     std::vector<std::shared_ptr<Item>> items;
     std::shared_ptr<ObjectDisplayGrid> grid;
-
-    static std::atomic_bool isRunning;
+    std::atomic_bool isRunning;
 
 
     // Methods
+    virtual void initializeGrid();
+    void runDisplay();
 
 public:
     // Constructors
     Dungeon(const std::string &name, int gameWidth, int topHeight, int gameHeight, int bottomHeight);
 
     // Methods
+    virtual void startGame(); 
     virtual int getGameHeight() const; 
     virtual int getGameWidth() const;
     virtual int getTopHeight() const;
     virtual int getBottomHeight() const;
+
+    virtual const std::vector<std::shared_ptr<Room>> getRooms() const; 
     virtual void addRoom(const std::shared_ptr<Room> room);
+
+    virtual const std::vector<std::shared_ptr<Passage>> getPassages() const; 
     virtual void addPassage(const std::shared_ptr<Passage> passage);
+
     virtual void addMonster(const std::shared_ptr<Monster> monster);
     virtual void addPlayer(const std::shared_ptr<Player> player);
     virtual std::shared_ptr<Player> getPlayer() const; 
     virtual void addItem(const std::shared_ptr<Item> item);
     virtual const std::string toString() const; 
-    
-    virtual void initializeGrid();
-    void runDisplay(); 
 
     // Operators
 

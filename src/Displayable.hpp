@@ -17,7 +17,7 @@ protected:
     bool isVisible;
     int posX;
     int posY;
-    std::shared_ptr<ObjectDisplayGrid> grid; 
+    static std::shared_ptr<ObjectDisplayGrid> grid; 
 
 public:
     // Constructors
@@ -34,8 +34,8 @@ public:
     virtual const char getDisplayCode() const; 
     virtual void initializeDisplay(); 
 
-    const std::shared_ptr<ObjectDisplayGrid> getObjectDisplayGrid(); 
-    void setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid);  
+    //const std::shared_ptr<ObjectDisplayGrid> getObjectDisplayGrid(); 
+    static void setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid);  
     virtual const std::string toString(int indentation = 0) const;
     // Operators
 

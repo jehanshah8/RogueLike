@@ -12,13 +12,26 @@ void Passage::setPosX(int x)
     path.push_back({x, -1});
 }
 
-int Passage::getPosX() const { return -1; }
-
-int Passage::getPosY() const { return -1; }
-
 void Passage::setPosY(int y)
 {
     path.back()[1] = y;
+}
+
+int Passage::getPosX() const { return path.front()[0]; }
+
+int Passage::getPosY() const { return path.front()[1]; }
+
+const std::vector<std::array<int, 2>> Passage::getPath() const
+{
+    return path; 
+}
+
+void Passage::shiftPosY(int shift) 
+{
+    for (auto &it : path)
+    {
+        it[1] += shift; 
+    }
 }
 
 void Passage::initializeDisplay() const

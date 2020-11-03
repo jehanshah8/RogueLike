@@ -4,8 +4,17 @@ ObjectDisplayGrid::ObjectDisplayGrid(const int gameHeight, const int gameWidth, 
 																															   gameWidth(gameWidth),
 																															   topHeight(topHeight),
 																															   bottomHeight(bottomHeight),
-																															   grid(gameWidth, std::vector<std::stack<char>>('D'))
+																															   grid(gameWidth, std::vector<std::stack<char>>(gameHeight + topHeight + bottomHeight, std::stack<char>()))
 {
+	std::cout << grid.size() << std::endl;
+	std::cout << grid[0].size() << std::endl;
+	//for(auto &it : grid)
+	//{
+	//	for(auto &it2 : it)
+	//	{
+	//		it2.push('D');
+	//	}
+	//}
 	// initializes ncurses
 	initscr();
 	// makes characters typed immediately available, instead of waiting for enter to be pressed
@@ -20,15 +29,29 @@ void ObjectDisplayGrid::addObjectToDisplay(const int x, const int y, const char 
 {
 	if ((0 <= x) && (x < gameWidth))
 	{
-		// y between 0 and height
 		if ((0 <= y) && (y < gameHeight))
 		{
-			// add new character to the internal character list
 			grid[x][y].push(gridChar);
-			// draws the character on the screen, note it is relative to 0,0 of the terminal
 			mvaddch(y, x, gridChar);
 		}
 	}
+}
+
+void ObjectDisplayGrid::removeObjectFromDisplay(const int x, const int y)
+{
+	if ((0 <= x) && (x < gameWidth))
+	{
+		if ((0 <= y) && (y < gameHeight))
+		{
+			grid[x][y].pop();
+		}
+	}
+}
+
+void ObjectDisplayGrid::update()
+{
+	// refreshes ncurses
+	refresh();
 }
 
 //char ObjectDisplayGrid::getDisplayable(const int row, const int col) const
@@ -36,29 +59,30 @@ void ObjectDisplayGrid::addObjectToDisplay(const int x, const int y, const char 
 //	return grid[row][col].top();
 //}
 //
-//void ObjectDisplayGrid::removeObjectFromDisplay(const int row, const int col)
-//{
-//	grid[row][col].pop();
-//}
 
-void ObjectDisplayGrid::setTopMessage(const int hitPoints, const int score)
+void ObjectDisplayGrid::setTopMessage(int hitPoints, int score)
 {
-	std::string topMessage = std::to_string(hitPoints) + "\n" + std::to_string(score) + "\n";
-	mvaddstr(topHeight, 0, topMessage.c_str());
+	std::string topMessage;
+	topMessage += "HP: " + std::to_string(hitPoints);
+	topMessage += "\tScore: " + std::to_string(score) + "\n";
+	mvaddstr(0, 0, topMessage.c_str());
 	clrtoeol();
 }
 
-void ObjectDisplayGrid::setBottomMessage(const std::string &inventory, const std::string &message)
+void ObjectDisplayGrid::setBottomMessagePack(const std::string &inventory)
 {
-	std::string bottomMessage = message + "\n" + inventory + "\n";
-	mvaddstr(topHeight + gameHeight + bottomHeight, 0, bottomMessage.c_str());
+	std::string bottomMessage = "pack: "; //+ inventory + "\n";
+	mvaddstr(topHeight + gameHeight, 0, bottomMessage.c_str());
+	//topHeight + gameHeight + bottomHeight
 	clrtoeol();
 }
 
-void ObjectDisplayGrid::update()
+void ObjectDisplayGrid::setBottomMessageInfo(const std::string &message)
 {
-	// refreshes ncurses
-	refresh();
+	std::string bottomMessage = "info: "; // + message + "\n";
+	mvaddstr(topHeight + gameHeight + bottomHeight / 2, 0, bottomMessage.c_str());
+	//topHeight + gameHeight + bottomHeight
+	clrtoeol();
 }
 
 ObjectDisplayGrid::~ObjectDisplayGrid()

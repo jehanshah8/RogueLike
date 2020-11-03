@@ -36,6 +36,9 @@ public:
     virtual void setPosY(int y);
     virtual int getPosY() const;
 
+    virtual void shiftPosY(int shift); 
+    virtual const std::vector<std::array<int, 2>> getPath() const;
+
     const std::string toString() const;
 
     virtual void initializeDisplay() const;
