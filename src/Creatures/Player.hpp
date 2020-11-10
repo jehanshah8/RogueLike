@@ -31,6 +31,7 @@ public:
     void setHpMoves(int hpMoves);
     virtual void addItem(const std::shared_ptr<Item> item);
     virtual const std::string toString() const;
+    
     virtual void initializeDisplay();
     
 

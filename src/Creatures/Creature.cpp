@@ -27,6 +27,11 @@ void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
     hitActions.push_back(hitAction);
 }
 
+void Creature::initializeDisplay() 
+{ 
+    Displayable::initializeDisplay();
+}
+
 const std::string Creature::toString() const
 {
     std::string str = Displayable::toString(3);

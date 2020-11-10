@@ -18,6 +18,8 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
+//class ObjectDisplayGrid; 
+
 class Room : public Structure
 {
 private:

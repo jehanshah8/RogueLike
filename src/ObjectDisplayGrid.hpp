@@ -8,9 +8,7 @@
 #include <memory>
 
 #include <curses.h>
-
-//#include "Displayable.hpp"
-//class Displayable;
+#include "Displayable.hpp"
 
 class ObjectDisplayGrid
 {
@@ -20,9 +18,9 @@ private:
     int gameWidth;
     int topHeight;
     int bottomHeight;
-    std::vector<std::vector<std::stack<char>>> grid;
-    //std::vector<std::vector<char>> grid;
-
+    //std::vector<std::vector<std::stack<char>>> charGrid;
+    std::vector<std::vector<std::stack<std::shared_ptr<Displayable>>>> objectGrid; 
+    bool keepRunning; 
     // Methods
 
 public:
@@ -30,13 +28,15 @@ public:
     ObjectDisplayGrid(const int gameHeight, const int gameWidth, const int topHeight, const int bottomHeight);
 
     // Methods
-
-    virtual void addObjectToDisplay(const int row, const int col, const char gridChar);
-    virtual void removeObjectFromDisplay(const int row, const int col);
+    //virtual void subscribe(std::weak_ptr<Displayable>);
+    //virtual void addObjectToDisplay(const int row, const int col, const char gridChar);
+    virtual void addObjectToDisplay(int x, int y, const std::shared_ptr<Displayable> displayable);
+    virtual void removeObjectFromDisplay(int x, int y);
     virtual void update();
     virtual void setTopMessage(int hitPoints = 0, int score = 0);
     virtual void setBottomMessagePack(const std::string &inventory = "none");
     virtual void setBottomMessageInfo(const std::string &message = "hello");
+
     //virtual char getDisplayable(const int row, const int col) const;
     //virtual int getGameHeight() const;
     //virtual int getGameWidth() const;

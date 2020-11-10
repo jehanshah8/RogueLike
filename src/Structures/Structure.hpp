@@ -22,7 +22,9 @@ class Structure : public Displayable
 {
 private:
 protected:
-    char supplementaryDisplayCode;
+    //char supplementaryDisplayCode;
+    std::shared_ptr<Displayable> floor;
+    std::shared_ptr<Displayable> other;
     std::vector<std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
     std::vector<std::shared_ptr<Item>> items;
@@ -46,7 +48,7 @@ public:
     virtual std::vector<std::shared_ptr<Item>> getItems() const;
     virtual void addItem(const std::shared_ptr<Item> item);
 
-    virtual const char getSupplementaryDisplayCode() const;
+    //virtual const char getSupplementaryDisplayCode() const;
 
     virtual const std::string toString() const;
 

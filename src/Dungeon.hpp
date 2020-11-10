@@ -8,6 +8,9 @@
 #include <atomic> 
 #include <thread>
 
+#include "Observer.hpp"
+#include "KeyboardListener.hpp"
+
 #include "ObjectDisplayGrid.hpp"
 
 #include "Structures/Structure.hpp"
@@ -23,7 +26,7 @@
 #include "Items/Armor.hpp"
 #include "Items/Sword.hpp"
 
-class Dungeon
+class Dungeon : public std::enable_shared_from_this<Dungeon>, public Observer
 {
 
 private:
@@ -39,13 +42,19 @@ private:
     std::vector<std::shared_ptr<Monster>> monsters;
     std::shared_ptr<Player> player;
     std::vector<std::shared_ptr<Item>> items;
+
+    std::shared_ptr<KeyboardListener> keyboardListener;
     std::shared_ptr<ObjectDisplayGrid> grid;
-    std::atomic_bool isRunning;
+    //std::atomic_bool isRunning;
 
 
     // Methods
-    virtual void initializeGrid();
-    void runDisplay();
+    void initializeGrid();
+    //void runDisplay();
+    void initializeKeyboardListener();
+    //void runKeyboardListener();
+    //void initializePlayer();
+    //void runPlayer();
 
 public:
     // Constructors
@@ -58,6 +67,8 @@ public:
     virtual int getTopHeight() const;
     virtual int getBottomHeight() const;
 
+    virtual void update(char input); 
+
     virtual const std::vector<std::shared_ptr<Room>> getRooms() const; 
     virtual void addRoom(const std::shared_ptr<Room> room);
 
@@ -65,9 +76,14 @@ public:
     virtual void addPassage(const std::shared_ptr<Passage> passage);
 
     virtual void addMonster(const std::shared_ptr<Monster> monster);
+
+    virtual std::shared_ptr<Player> getPlayer() const;
     virtual void addPlayer(const std::shared_ptr<Player> player);
-    virtual std::shared_ptr<Player> getPlayer() const; 
+
     virtual void addItem(const std::shared_ptr<Item> item);
+
+    virtual void endGame();
+
     virtual const std::string toString() const; 
 
     // Operators

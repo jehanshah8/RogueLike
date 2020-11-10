@@ -54,6 +54,8 @@ public:
     virtual void addDeathAction(const std::shared_ptr<CreatureAction> deathAction);
     virtual void addHitAction(const std::shared_ptr<CreatureAction> hitAction);
 
+    virtual void initializeDisplay();
+    
     virtual const std::string toString() const; 
     // Operators
 

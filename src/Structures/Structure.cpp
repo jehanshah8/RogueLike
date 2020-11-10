@@ -1,8 +1,9 @@
 #include "Structure.hpp"
 
-Structure::Structure(const std::string &name, char displayCode, char supplementaryDisplayCode) : Displayable(name, displayCode),
-                                                                                                 supplementaryDisplayCode(supplementaryDisplayCode)
+Structure::Structure(const std::string &name, char displayCode, char supplementaryDisplayCode) : Displayable(name, '$')
 {
+    floor = std::make_shared<Displayable> ("floor", displayCode);
+    other = std::make_shared<Displayable> ("other", supplementaryDisplayCode);
 }
 
 std::vector<std::shared_ptr<Monster>> Structure::getMonsters() const
@@ -35,11 +36,12 @@ void Structure::addItem(const std::shared_ptr<Item> item)
     items.push_back(item);
 }
 
+/*
 const char Structure::getSupplementaryDisplayCode() const
 {
     return supplementaryDisplayCode;
 }
-
+*/
 void Structure::initializeDisplay() const
 {
     if (player != nullptr)

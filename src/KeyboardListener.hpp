@@ -1,35 +1,39 @@
 #ifndef KEYBOARD_LISTENER_H_
 #define KEYBOARD_LISTENER_H_
 
+#include <sstream>
 #include <iostream>
+#include <stdio.h>
 #include <string>
 #include <memory>
+#include <thread>
+#include <unordered_set>
+#include <queue>
 
-#include "ObjectDisplayGrid.hpp"
-#include "Displayable.hpp"
+#include "Subject.hpp"
+#include "Observer.hpp"
 
-#include "Structures/Structure.hpp"
-#include "Structures/Dungeon.hpp"
-#include "Structures/Room.hpp"
-#include "Structures/Passage.hpp"
-
-#include "Creatures/Creature.hpp"
-#include "Creatures/Player.hpp"
-
-class KeyboardListener {
+class KeyboardListener //: public Subject
+{
 private:
     // Fields
-    std::shared_ptr<ObjectDisplayGrid> grid;
-    bool isRunning = false;
-    
-    // Methods
+    std::vector<std::shared_ptr<Observer>> observers;
+    //std::unordered_set<std::shared_ptr<Observer>> observers;
+    std::queue<char> commandHistory;
+    bool keepRunning;
 
+    // Methods
+    //void getInput();
 public:
     // Constructors
-    KeyboardListener(const std::shared_ptr<ObjectDisplayGrid> grid, const std::shared_ptr<Dungeon> dungeon);
-    
+    KeyboardListener();
+
     // Methods
-    void run();
+    virtual void registerObserver(std::shared_ptr<Observer> observer);
+    virtual void removeObserver(std::shared_ptr<Observer> observer);
+    virtual void notifyObservers();
+    virtual void run();
+    virtual void kill();
 
     // Operators
 

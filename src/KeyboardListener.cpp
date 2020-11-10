@@ -1,21 +1,58 @@
 #include "KeyboardListener.hpp"
+//#include "Dungeon.hpp"
 
-#include <sstream>
-#include <iostream>
-#include <stdio.h>
-
-KeyboardListener::KeyboardListener(const std::shared_ptr<ObjectDisplayGrid> grid, const std::shared_ptr<Dungeon> dungeon) : grid(grid),
-																															dungeon(dungeon),
-																															player(dungeon->getPlayer())
+KeyboardListener::KeyboardListener() : //Subject(),
+									   keepRunning(true)
 {
+}
+
+void KeyboardListener::registerObserver(std::shared_ptr<Observer> observer)
+{
+	observers.push_back(observer);
+	//observers.insert(observer);
+	//std::cout << "added obs" << std::endl;
+}
+
+void KeyboardListener::removeObserver(std::shared_ptr<Observer> observer)
+{
+	//	//std::unordered_set<std::shared_ptr<Observer>>::const_iterator it = observers.find(observer);
+	//	observer.reset();
+	//observers.erase(observer);
+}
+
+void KeyboardListener::notifyObservers()
+{
+	for (auto &it : observers)
+	{
+		it->update(commandHistory.front());
+	}
+	commandHistory.pop();
 }
 
 void KeyboardListener::run()
 {
-	grid->writeLine(0, "Press 'x' to exit");
-	isRunning = true;
 	char input;
-	do
+	while (keepRunning)
+	//for(int i = 0; i < 10; i++)
+	{
+		input = getchar();
+		//std::cout<<input<<std::endl;
+		//commandHistory.push(input);
+		//notifyObservers();
+		for (auto &it : observers)
+		{
+			it->update(input);
+		}
+	}
+}
+
+void KeyboardListener::kill()
+{
+	keepRunning = false;
+}
+
+/**
+do
 	{
 		input = getchar();
 		    switch (input)
@@ -100,4 +137,4 @@ void KeyboardListener::run()
 		}
 		//grid->update(const char input);
 	} while (isRunning && input != EOF);
-}
+	*/

@@ -1,4 +1,5 @@
 #include "Room.hpp"
+#include "../ObjectDisplayGrid.hpp"
 
 Room::Room(const std::string &name) : Structure("room" + name, '.', 'X')
 {
@@ -33,17 +34,18 @@ void Room::initializeDisplay() const
         {
             if (x == posX || x == posX + width - 1)
             {
-                grid->addObjectToDisplay(x, y, supplementaryDisplayCode);
+
+                grid->addObjectToDisplay(x, y, other);
                 //grid->addObjectToDisplay(x + width - 1, y, supplementaryDisplayCode);
             }
             else if (y == posY || y == posY + height - 1)
             {
-                grid->addObjectToDisplay(x, y, supplementaryDisplayCode);
+                grid->addObjectToDisplay(x, y, other);
                 //grid->addObjectToDisplay(x, y + height - 1, supplementaryDisplayCode);
             }
             else
             {
-                grid->addObjectToDisplay(x, y, displayCode);
+                grid->addObjectToDisplay(x, y, floor);
             }
         }
     }

@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "../ObjectDisplayGrid.hpp"
 
 Player::Player(const std::string &name, int room, int serial) : Creature(name, '@',room, serial),
                                                                 hpMoves(-1)
@@ -53,6 +54,7 @@ void Player::initializeDisplay()
 {
     grid->setTopMessage(hp, 0);
     grid->setBottomMessagePack("Empty");
-    grid->setBottomMessageInfo("Welcome");
-    grid->addObjectToDisplay(posX, posY, displayCode); 
+    //grid->setBottomMessageInfo("Welcome");
+    //grid->addObjectToDisplay(posX, posY, displayCode); 
+    Creature::initializeDisplay();
 }

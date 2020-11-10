@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
         // Finished parsing, intialising display
         std::shared_ptr<Dungeon> dungeon = handler->getDungeon();
         //std::cout << dungeon->toString() << std::endl;
-    
+
+
         dungeon->startGame();        
         delete parser;
         delete handler;

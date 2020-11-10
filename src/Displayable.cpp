@@ -1,4 +1,5 @@
 #include "Displayable.hpp"
+#include "ObjectDisplayGrid.hpp"
 
 std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
 
@@ -18,17 +19,6 @@ const std::string &Displayable::getName() const
     return name;
 }
 
-/**
-void Displayable::setId(int room, int serial)
-{
-    id = std::to_string(room) + "/" + std::to_string(serial);
-}
-
-const std::string &Displayable::getId() const
-{
-    return id;
-}
-*/
 void Displayable::setVisibility(int isVisible)
 {
     this->isVisible = isVisible;
@@ -59,7 +49,7 @@ int Displayable::getPosY() const
     return posY;
 }
 
-const char Displayable::getDisplayCode() const
+char Displayable::getDisplayCode() const
 {
     return displayCode;
 }
@@ -92,11 +82,6 @@ const std::string Displayable::toString(int indentation) const
     return str;
 }
 
-//const std::shared_ptr<ObjectDisplayGrid> Displayable::getObjectDisplayGrid() 
-//{
-//    return grid; 
-//}
-
 void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> _grid) 
 {
     grid = _grid; 
@@ -104,5 +89,6 @@ void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> 
 
 void Displayable::initializeDisplay() 
 {
-    grid->addObjectToDisplay(posX, posY, displayCode); 
+    //grid->subscribe();
+    grid->addObjectToDisplay(posX, posY, shared_from_this()); 
 }

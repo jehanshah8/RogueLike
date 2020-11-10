@@ -1,4 +1,5 @@
 #include "Passage.hpp"
+#include "../ObjectDisplayGrid.hpp"
 
 Passage::Passage(int room1, int room2) : Structure("passage" + std::to_string(room1) + "--" + std::to_string(room2), '#', '+'),
                                          room1(room1),
@@ -44,14 +45,14 @@ void Passage::initializeDisplay() const
             {
                 for (int j = 0; j < path[i][0] - path[i - 1][0]; j++)
                 {
-                    grid->addObjectToDisplay(path[i - 1][0] + j, path[i - 1][1], displayCode);
+                    grid->addObjectToDisplay(path[i - 1][0] + j, path[i - 1][1], floor);
                 }
             }
             else
             {
                 for (int j = 0; j < path[i - 1][0] - path[i][0]; j++)
                 {
-                    grid->addObjectToDisplay(path[i - 1][0] - j, path[i - 1][1], displayCode);
+                    grid->addObjectToDisplay(path[i - 1][0] - j, path[i - 1][1], floor);
                 }
             }
         }
@@ -61,20 +62,20 @@ void Passage::initializeDisplay() const
             {
                 for (int k = 0; k < path[i][1] - path[i - 1][1]; k++)
                 {
-                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] + k, displayCode);
+                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] + k, floor);
                 }
             }
             else
             {
                 for (int k = 0; k < path[i - 1][1] - path[i][1]; k++)
                 {
-                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] - k, displayCode);
+                    grid->addObjectToDisplay(path[i - 1][0], path[i - 1][1] - k, floor);
                 }
             }
         }
     }
-    grid->addObjectToDisplay(path.front()[0], path.front()[1], supplementaryDisplayCode);
-    grid->addObjectToDisplay(path.back()[0], path.back()[1], supplementaryDisplayCode);
+    grid->addObjectToDisplay(path.front()[0], path.front()[1], other);
+    grid->addObjectToDisplay(path.back()[0], path.back()[1], other);
     Structure::initializeDisplay();
 }
 
