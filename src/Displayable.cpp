@@ -87,6 +87,7 @@ void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> 
 void Displayable::initializeDisplay() 
 {
     grid->addObjectToDisplay(posX, posY, shared_from_this()); 
+    grid->update();
 }
 
 //Displayable::~Displayable()

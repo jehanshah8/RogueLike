@@ -43,13 +43,18 @@ private:
     std::shared_ptr<Player> player;
     std::vector<std::shared_ptr<Item>> items;
 
+    std::unordered_map<char, std::string> commandInfo; 
+    std::queue<char> commandHistory;
     std::shared_ptr<KeyboardListener> keyboardListener;
-    std::shared_ptr<ObjectDisplayGrid> grid;
-    //std::atomic_bool isRunning;
 
+    std::shared_ptr<ObjectDisplayGrid> grid;
 
     // Methods
     void initializeGrid();
+
+    virtual void getAllCommands();
+    virtual void getHelpOnCommand(char command);
+    virtual void endGame();
 
 public:
     // Constructors
@@ -61,8 +66,6 @@ public:
     virtual int getGameWidth() const;
     virtual int getTopHeight() const;
     virtual int getBottomHeight() const;
-
-    virtual void update(char input); 
 
     virtual const std::vector<std::shared_ptr<Room>> getRooms() const; 
     virtual void addRoom(const std::shared_ptr<Room> room);
@@ -77,7 +80,7 @@ public:
 
     virtual void addItem(const std::shared_ptr<Item> item);
 
-    virtual void endGame();
+    virtual void update(char input);
 
     virtual const std::string toString() const; 
 

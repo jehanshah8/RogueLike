@@ -64,7 +64,7 @@ void ObjectDisplayGrid::setTopMessage(int hitPoints, int score)
 
 void ObjectDisplayGrid::setBottomMessagePack(const std::string &inventory)
 {
-	std::string bottomMessage = "pack: "; //+ inventory + "\n";
+	std::string bottomMessage = "pack: " + inventory;
 	mvaddstr(topHeight + gameHeight, 0, bottomMessage.c_str());
 	clrtoeol();
 }
@@ -76,7 +76,7 @@ void ObjectDisplayGrid::setBottomMessageInfo(const std::string &message)
 	clrtoeol();
 }
 
-void ObjectDisplayGrid::removeAll()
+void ObjectDisplayGrid::removeAllObjects()
 {
 	for (auto &it1 : objectGrid)
 	{

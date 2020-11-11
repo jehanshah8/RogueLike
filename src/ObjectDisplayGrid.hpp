@@ -32,10 +32,10 @@ public:
     //virtual void removeObjectFromDisplay(int x, int y);
     virtual void update();
     virtual void setTopMessage(int hitPoints = 0, int score = 0);
-    virtual void setBottomMessagePack(const std::string &inventory = "none");
-    virtual void setBottomMessageInfo(const std::string &message = "hello");
+    virtual void setBottomMessagePack(const std::string &inventory = "");
+    virtual void setBottomMessageInfo(const std::string &message = "");
 
-    virtual void removeAll();
+    virtual void removeAllObjects();
     
     virtual const std::shared_ptr<Displayable> getDisplayable(int x, int y) const;
     //virtual int getGameHeight() const;

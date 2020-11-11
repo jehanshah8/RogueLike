@@ -10,6 +10,19 @@ Dungeon::Dungeon(const std::string &name, int gameWidth, int topHeight, int game
 {
     grid = std::make_shared<ObjectDisplayGrid>(gameHeight, gameWidth, topHeight, bottomHeight);
     keyboardListener = std::make_shared<KeyboardListener>();
+
+    commandInfo['h'] = "Move left 1 space.";
+    commandInfo['l'] = "Move right 1 space.";
+    commandInfo['k'] = "Move up 1 space.";
+    commandInfo['j'] = "Move down 1 space.";
+    commandInfo['i'] = "Inventory--show pack contents.";
+    commandInfo['c'] = "Take off/change armor.";
+    commandInfo['d'] = "Drop <item number> item from pack.";
+    commandInfo['d'] = "Drop <item number> item from pack.";
+    commandInfo['p'] = "Pick up item under player and put into the pack.";
+    commandInfo['r'] = "Read the scroll which is item number <item number> in pack.";
+    commandInfo['t'] = "Take out <item number> weapon from pack";
+    commandInfo['w'] = "Wear <item number> armor from pack.";
 }
 
 int Dungeon::getGameHeight() const { return gameHeight; }
@@ -94,7 +107,7 @@ void Dungeon::initializeGrid()
         it->setObjectDisplayGrid(grid);
         it->initializeDisplay();
     }
-    grid->setBottomMessageInfo("Welcome");
+    grid->setBottomMessageInfo("Game On!");
     grid->update();
 }
 
@@ -102,11 +115,47 @@ void Dungeon::startGame()
 {
     // Initialize the gird
     initializeGrid();
-    
+
     keyboardListener->registerObserver(shared_from_this());
-    std::thread keyboardListenerThread (&KeyboardListener::run, keyboardListener);
+
+    std::thread keyboardListenerThread(&KeyboardListener::run, keyboardListener);
 
     keyboardListenerThread.join();
+}
+
+void Dungeon::getAllCommands()
+{
+    std::string str;
+    for (auto &it : commandInfo)
+    {
+        str += it.first;
+        str += ", ";
+    }
+    str.pop_back();
+    str.pop_back();
+
+    grid->setBottomMessageInfo(str);
+    grid->update();
+}
+
+void Dungeon::getHelpOnCommand(char command)
+{
+    std::string str;
+    std::unordered_map<char, std::string>::const_iterator it = commandInfo.find(command);
+
+    if (it == commandInfo.end())
+    {
+        str = "No command '";
+        str += command;
+        str += "'. Press '?' to see a list of all commands";
+    }
+    else
+    {
+        str = it->second;
+    }
+
+    grid->setBottomMessageInfo(str);
+    grid->update();
 }
 
 void Dungeon::endGame()
@@ -115,37 +164,53 @@ void Dungeon::endGame()
     grid->update();
 
     keyboardListener->kill();
-
-    grid->removeAll();
+    grid->removeAllObjects();
 }
 
 void Dungeon::update(char input)
 {
-    
     std::string str;
     str += input;
     grid->setBottomMessageInfo(str);
     grid->update();
-    //keyboardListener->kill();
-    switch (input)
+
+    commandHistory.push(input);
+
+    switch (commandHistory.front())
     {
     case '?':
         // Help: ‘?’: show the different commands in the info section of the display
-        //etHelp();
+        getAllCommands();
+        std::cout << "stuck";
+        commandHistory.pop();
         break;
     case 'H':
         // Help ‘H’ <command>give more detailed information about the specified
         //command in the info section ofthe display.
-        //getHelp(std::tolower(getchar()));
+        if (commandHistory.size() == 2)
+        {
+            commandHistory.pop();
+            getHelpOnCommand(commandHistory.front());
+            commandHistory.pop();
+        }
         break;
     case 'E':
-        //bool confirm = std::tolower(getchar()) == 'y';
-        //if (confirm)
-        //{
-        //    endGame();
-        //}
-        
-        endGame();
+        if (commandHistory.size() == 2)
+        {
+            commandHistory.pop();
+            if (commandHistory.front() == 'y' || 'Y')
+            {
+                endGame();
+                commandHistory.pop();
+            }
+        }
+        else
+        {
+            grid->setBottomMessageInfo("Press 'Y' or 'y' to confirm.");
+            grid->update();
+        }
         break;
+    default:
+        commandHistory.pop();
     }
 }

@@ -34,14 +34,11 @@ void Room::initializeDisplay() const
         {
             if (x == posX || x == posX + width - 1)
             {
-
                 grid->addObjectToDisplay(x, y, other);
-                //grid->addObjectToDisplay(x + width - 1, y, supplementaryDisplayCode);
             }
             else if (y == posY || y == posY + height - 1)
             {
                 grid->addObjectToDisplay(x, y, other);
-                //grid->addObjectToDisplay(x, y + height - 1, supplementaryDisplayCode);
             }
             else
             {

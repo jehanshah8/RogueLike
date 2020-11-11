@@ -1,4 +1,5 @@
 #include "Structure.hpp"
+#include "../ObjectDisplayGrid.hpp"
 
 Structure::Structure(const std::string &name, char displayCode, char supplementaryDisplayCode) : Displayable(name, '$')
 {
@@ -61,6 +62,7 @@ void Structure::initializeDisplay() const
         it->setObjectDisplayGrid(grid);
         it->initializeDisplay();
     }
+    grid->update();
 }
 
 const std::string Structure::toStringPlayer() const
