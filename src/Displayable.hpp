@@ -4,10 +4,10 @@
 #include <string>
 #include <memory>
 #include <iostream>
-
+#include "inheritable_enable_shared_from_this.hpp"
 class ObjectDisplayGrid; 
 
-class Displayable : public std::enable_shared_from_this<Displayable>
+class Displayable : public inheritable_enable_shared_from_this<Displayable>
 {
 protected:
     // Fields 

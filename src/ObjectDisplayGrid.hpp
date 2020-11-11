@@ -29,7 +29,8 @@ public:
 
     // Methods
     virtual void addObjectToDisplay(int x, int y, const std::shared_ptr<Displayable> displayable);
-    //virtual void removeObjectFromDisplay(int x, int y);
+    virtual void removeObjectFromDisplay(int x, int y);
+    virtual const std::shared_ptr<Displayable> getDisplayable(int x, int y) const;
     virtual void update();
     virtual void setTopMessage(int hitPoints = 0, int score = 0);
     virtual void setBottomMessagePack(const std::string &inventory = "");
@@ -37,7 +38,7 @@ public:
 
     virtual void removeAllObjects();
     
-    virtual const std::shared_ptr<Displayable> getDisplayable(int x, int y) const;
+    
     //virtual int getGameHeight() const;
     //virtual int getGameWidth() const;
     //virtual int getTopHeight() const;

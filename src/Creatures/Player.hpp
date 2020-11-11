@@ -4,8 +4,12 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <queue>
 
 #include "../Displayable.hpp"
+
+#include "../Observer.hpp"
+#include "../KeyboardListener.hpp"
 
 #include "Creature.hpp"
 #include "../Items/Item.hpp"
@@ -13,15 +17,18 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
-class Player : public Creature
+class Player : public Creature, public Observer
 {
 private:
     // Fields
     int hpMoves;
     std::vector<std::shared_ptr<Item>> items;
+    std::queue<char> commandHistory;
+    std::shared_ptr<KeyboardListener> keyboardListener;
 
     // Methods
     virtual const std::string toStringItems() const; 
+    virtual void move(int dx, int dy);
 
 public:
     // Constructors
@@ -33,7 +40,9 @@ public:
     virtual const std::string toString() const;
     
     virtual void initializeDisplay();
-    
+    virtual void run(std::shared_ptr<KeyboardListener> keyboardListener); 
+
+    virtual void update(char input); 
 
     // Operators
 

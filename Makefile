@@ -14,7 +14,8 @@ CLASSES = XMLHandler.cpp Displayable.cpp Observer.cpp Subject.cpp \
 	Creature.cpp Monster.cpp Player.cpp \
 	Item.cpp Scroll.cpp Armor.cpp Sword.cpp \
 	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp \
-	ObjectDisplayGrid.cpp KeyboardListener.cpp
+	ObjectDisplayGrid.cpp KeyboardListener.cpp \
+	MultipleInheritableEnableSharedFromThis.cpp inheritable_enable_shared_from_this.cpp
 
 HEADERS = $(CLASSES:%.cpp=%.hpp) 
 SOURCES = RogueLike.cpp $(CLASSES)

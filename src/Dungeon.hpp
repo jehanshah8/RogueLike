@@ -9,6 +9,7 @@
 #include <thread>
 
 #include "Observer.hpp"
+
 #include "KeyboardListener.hpp"
 
 #include "ObjectDisplayGrid.hpp"
@@ -26,7 +27,7 @@
 #include "Items/Armor.hpp"
 #include "Items/Sword.hpp"
 
-class Dungeon : public std::enable_shared_from_this<Dungeon>, public Observer
+class Dungeon : public Observer//, public inheritable_enable_shared_from_this<Dungeon>
 {
 
 private:

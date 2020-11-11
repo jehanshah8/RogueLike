@@ -30,17 +30,21 @@ void ObjectDisplayGrid::addObjectToDisplay(int x, int y, const std::shared_ptr<D
 	}
 }
 
-//void ObjectDisplayGrid::removeObjectFromDisplay(int x, int y)
-//{
-//	if ((0 <= x) && (x < gameWidth))
-//	{
-//		if ((0 <= y) && (y < gameHeight))
-//		{
-//			objectGrid[x][y].top().reset();
-//			objectGrid[x][y].pop();
-//		}
-//	}
-//}
+void ObjectDisplayGrid::removeObjectFromDisplay(int x, int y)
+{
+	if ((0 <= x) && (x < gameWidth))
+	{
+		if ((0 <= y) && (y < gameHeight))
+		{
+			if (!objectGrid[x][y].empty())
+			{
+				objectGrid[x][y].top().reset();
+				objectGrid[x][y].pop();
+				mvaddch(y, x, objectGrid[x][y].top()->getDisplayCode());
+			}
+		}
+	}
+}
 
 void ObjectDisplayGrid::update()
 {
@@ -50,6 +54,10 @@ void ObjectDisplayGrid::update()
 
 const std::shared_ptr<Displayable> ObjectDisplayGrid::getDisplayable(int x, int y) const
 {
+	if (objectGrid[x][y].empty())
+    {
+		return nullptr;
+	}
 	return objectGrid[x][y].top();
 }
 

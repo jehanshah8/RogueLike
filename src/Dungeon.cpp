@@ -111,18 +111,6 @@ void Dungeon::initializeGrid()
     grid->update();
 }
 
-void Dungeon::startGame()
-{
-    // Initialize the gird
-    initializeGrid();
-
-    keyboardListener->registerObserver(shared_from_this());
-
-    std::thread keyboardListenerThread(&KeyboardListener::run, keyboardListener);
-
-    keyboardListenerThread.join();
-}
-
 void Dungeon::getAllCommands()
 {
     std::string str;
@@ -181,7 +169,6 @@ void Dungeon::update(char input)
     case '?':
         // Help: ‘?’: show the different commands in the info section of the display
         getAllCommands();
-        std::cout << "stuck";
         commandHistory.pop();
         break;
     case 'H':
@@ -198,11 +185,11 @@ void Dungeon::update(char input)
         if (commandHistory.size() == 2)
         {
             commandHistory.pop();
-            if (commandHistory.front() == 'y' || 'Y')
+            if (commandHistory.front() == 'y' || commandHistory.front() == 'Y')
             {
                 endGame();
-                commandHistory.pop();
             }
+            commandHistory.pop();
         }
         else
         {
@@ -213,4 +200,16 @@ void Dungeon::update(char input)
     default:
         commandHistory.pop();
     }
+}
+
+void Dungeon::startGame()
+{
+    // Initialize the gird
+    initializeGrid();
+
+    keyboardListener->registerObserver(Observer::downcasted_shared_from_this<Dungeon>());
+    player->run(keyboardListener);
+    std::thread keyboardListenerThread(&KeyboardListener::run, keyboardListener);
+
+    keyboardListenerThread.join();
 }
