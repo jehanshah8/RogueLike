@@ -1,17 +1,15 @@
 #include "Displayable.hpp"
 #include "ObjectDisplayGrid.hpp"
 
-std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
+//std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
 
 Displayable::Displayable(const std::string &name, char displayCode) : displayCode(displayCode),
                                                                       name(name),
-                                                                      //id("-1/-1"),
                                                                       isVisible(-1),
                                                                       posX(-1),
                                                                       posY(-1)
 
 {
-
 }
 
 const std::string &Displayable::getName() const
@@ -62,7 +60,6 @@ const std::string Displayable::toString(int indentation) const
         str += "\t";
     }
     str += "name: " + name + "\n";
-    //str += "   id: " + id + "\n";
     for (int i = 0; i < indentation; i++)
     {
         str += "\t";
@@ -82,13 +79,17 @@ const std::string Displayable::toString(int indentation) const
     return str;
 }
 
-void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> _grid) 
+void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid) 
 {
-    grid = _grid; 
+    this->grid = grid; 
 }
 
 void Displayable::initializeDisplay() 
 {
-    //grid->subscribe();
     grid->addObjectToDisplay(posX, posY, shared_from_this()); 
 }
+
+//Displayable::~Displayable()
+//{
+//    grid->removeObjectFromDisplay(posX, posY);
+//}

@@ -8,9 +8,6 @@ ObjectDisplayGrid::ObjectDisplayGrid(const int gameHeight, const int gameWidth, 
 																															   objectGrid(gameWidth, std::vector<std::stack<std::shared_ptr<Displayable>>>(gameHeight + topHeight + bottomHeight, std::stack<std::shared_ptr<Displayable>>())),
 																															   keepRunning(true)
 {
-	//std::cout << grid.size() << std::endl;
-	//std::cout << grid[0].size() << std::endl;
-
 	// initializes ncurses
 	initscr();
 	// makes characters typed immediately available, instead of waiting for enter to be pressed
@@ -20,31 +17,6 @@ ObjectDisplayGrid::ObjectDisplayGrid(const int gameHeight, const int gameWidth, 
 	// clears the screen to start
 	clear();
 }
-
-/**
-void ObjectDisplayGrid::addObjectToDisplay(const int x, const int y, const char gridChar)
-{
-	if ((0 <= x) && (x < gameWidth))
-	{
-		if ((0 <= y) && (y < gameHeight))
-		{
-			charGrid[x][y].push(gridChar);
-			mvaddch(y, x, gridChar);
-		}
-	}
-}
-
-void ObjectDisplayGrid::removeObjectFromDisplay(const int x, const int y)
-{
-	if ((0 <= x) && (x < gameWidth))
-	{
-		if ((0 <= y) && (y < gameHeight))
-		{
-			charGrid[x][y].pop();
-		}
-	}
-}
-*/
 
 void ObjectDisplayGrid::addObjectToDisplay(int x, int y, const std::shared_ptr<Displayable> displayable)
 {
@@ -58,17 +30,17 @@ void ObjectDisplayGrid::addObjectToDisplay(int x, int y, const std::shared_ptr<D
 	}
 }
 
-void ObjectDisplayGrid::removeObjectFromDisplay(int x, int y)
-{
-	if ((0 <= x) && (x < gameWidth))
-	{
-		if ((0 <= y) && (y < gameHeight))
-		{
-			objectGrid[x][y].top().reset();
-			objectGrid[x][y].pop();
-		}
-	}
-}
+//void ObjectDisplayGrid::removeObjectFromDisplay(int x, int y)
+//{
+//	if ((0 <= x) && (x < gameWidth))
+//	{
+//		if ((0 <= y) && (y < gameHeight))
+//		{
+//			objectGrid[x][y].top().reset();
+//			objectGrid[x][y].pop();
+//		}
+//	}
+//}
 
 void ObjectDisplayGrid::update()
 {
@@ -76,11 +48,10 @@ void ObjectDisplayGrid::update()
 	refresh();
 }
 
-//char ObjectDisplayGrid::getDisplayable(const int row, const int col) const
-//{
-//	return grid[row][col].top();
-//}
-//
+const std::shared_ptr<Displayable> ObjectDisplayGrid::getDisplayable(int x, int y) const
+{
+	return objectGrid[x][y].top();
+}
 
 void ObjectDisplayGrid::setTopMessage(int hitPoints, int score)
 {
@@ -95,7 +66,6 @@ void ObjectDisplayGrid::setBottomMessagePack(const std::string &inventory)
 {
 	std::string bottomMessage = "pack: "; //+ inventory + "\n";
 	mvaddstr(topHeight + gameHeight, 0, bottomMessage.c_str());
-	//topHeight + gameHeight + bottomHeight
 	clrtoeol();
 }
 
@@ -103,8 +73,25 @@ void ObjectDisplayGrid::setBottomMessageInfo(const std::string &message)
 {
 	std::string bottomMessage = "info: " + message;
 	mvaddstr(topHeight + gameHeight + bottomHeight / 2, 0, bottomMessage.c_str());
-	//topHeight + gameHeight + bottomHeight
 	clrtoeol();
+}
+
+void ObjectDisplayGrid::removeAll()
+{
+	for (auto &it1 : objectGrid)
+	{
+		for (auto &it2 : it1)
+		{
+			while (!it2.empty())
+			{
+				it2.top().reset();
+				it2.pop();
+			}
+		}
+		it1.clear();
+	}
+	objectGrid.clear();
+	objectGrid.shrink_to_fit();
 }
 
 ObjectDisplayGrid::~ObjectDisplayGrid()

@@ -57,6 +57,7 @@ public:
     // Operators
 
     // Destructor
+    //virtual ~Structure();
 };
 
 #endif /* STRUCTURE_H_ */

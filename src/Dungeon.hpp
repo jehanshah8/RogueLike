@@ -50,11 +50,6 @@ private:
 
     // Methods
     void initializeGrid();
-    //void runDisplay();
-    void initializeKeyboardListener();
-    //void runKeyboardListener();
-    //void initializePlayer();
-    //void runPlayer();
 
 public:
     // Constructors

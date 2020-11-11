@@ -10,7 +10,6 @@ void KeyboardListener::registerObserver(std::shared_ptr<Observer> observer)
 {
 	observers.push_back(observer);
 	//observers.insert(observer);
-	//std::cout << "added obs" << std::endl;
 }
 
 void KeyboardListener::removeObserver(std::shared_ptr<Observer> observer)
@@ -22,27 +21,37 @@ void KeyboardListener::removeObserver(std::shared_ptr<Observer> observer)
 
 void KeyboardListener::notifyObservers()
 {
-	for (auto &it : observers)
+	while (keepRunning)
 	{
-		it->update(commandHistory.front());
+		if (!commandHistory.empty())
+		{
+			for (auto &it : observers)
+			{
+				it->update(commandHistory.front());
+			}
+			commandHistory.pop();
+		}
 	}
-	commandHistory.pop();
+}
+
+void KeyboardListener::getInput()
+{
+	while (keepRunning)
+	{
+		commandHistory.push(getchar());
+	}
 }
 
 void KeyboardListener::run()
 {
-	char input;
-	while (keepRunning)
-	//for(int i = 0; i < 10; i++)
+	std::thread inputListener(&KeyboardListener::getInput, this);
+	std::thread notifier(&KeyboardListener::notifyObservers, this);
+	inputListener.join();
+	notifier.join();
+
+	for (auto &it : observers)
 	{
-		input = getchar();
-		//std::cout<<input<<std::endl;
-		//commandHistory.push(input);
-		//notifyObservers();
-		for (auto &it : observers)
-		{
-			it->update(input);
-		}
+		it.reset();
 	}
 }
 

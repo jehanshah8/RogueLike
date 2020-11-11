@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include <thread>
+#include <atomic>
 #include <unordered_set>
 #include <queue>
 
@@ -20,10 +21,12 @@ private:
     std::vector<std::shared_ptr<Observer>> observers;
     //std::unordered_set<std::shared_ptr<Observer>> observers;
     std::queue<char> commandHistory;
-    bool keepRunning;
+    std::atomic_bool keepRunning;
 
     // Methods
-    //void getInput();
+    virtual void getInput();
+    virtual void notifyObservers();
+
 public:
     // Constructors
     KeyboardListener();
@@ -31,7 +34,6 @@ public:
     // Methods
     virtual void registerObserver(std::shared_ptr<Observer> observer);
     virtual void removeObserver(std::shared_ptr<Observer> observer);
-    virtual void notifyObservers();
     virtual void run();
     virtual void kill();
 

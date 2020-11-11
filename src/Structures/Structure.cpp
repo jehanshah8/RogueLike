@@ -46,19 +46,19 @@ void Structure::initializeDisplay() const
 {
     if (player != nullptr)
     {
-        //player->setObjectDisplayGrid(grid);
+        player->setObjectDisplayGrid(grid);
         player->initializeDisplay();
     }
 
     for (auto &it : monsters)
     {
-        //it->setObjectDisplayGrid(grid);
+        it->setObjectDisplayGrid(grid);
         it->initializeDisplay();
     }
 
     for (auto &it : items)
     {
-        //it->setObjectDisplayGrid(grid);
+        it->setObjectDisplayGrid(grid);
         it->initializeDisplay();
     }
 }
@@ -118,3 +118,4 @@ const std::string Structure::toString() const
     std::string str = Displayable::toString(2);
     return str;
 }
+
