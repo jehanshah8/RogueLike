@@ -29,6 +29,9 @@ private:
     // Methods
     virtual const std::string toStringItems() const; 
     virtual void move(int dx, int dy);
+    virtual void showPackContents();
+    virtual void pickUpItem();
+    virtual void dropItem(char itemNum);
 
 public:
     // Constructors

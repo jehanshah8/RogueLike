@@ -33,7 +33,7 @@ public:
     // Methods
     virtual void setItemIntValue(const int value);
     virtual void setOwner(const std::shared_ptr<Player> owner);
-
+    
     virtual const std::string toString(int indentation = 3) const; 
     // Operators
 

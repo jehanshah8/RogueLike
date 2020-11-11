@@ -97,7 +97,8 @@ do
 			player->moveDown();
 			break;
 		case 'i':
-			// show pack contents
+			// The ‘I’ (inventory) command should display, at the bottom of the display, the contents of the pack, and
+			// an identifying number that can be used to refer to the item when it is dropped.
 			player->getInventory();
 			break;
 		case 'c':
