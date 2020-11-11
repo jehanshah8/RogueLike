@@ -4,7 +4,6 @@
         "/opt/ros/foxy/lib/python3.8/site-packages"
     ],
     "files.associations": {
-        "string": "cpp",
         "cctype": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
@@ -28,6 +27,7 @@
         "deque": "cpp",
         "list": "cpp",
         "unordered_map": "cpp",
+        "unordered_set": "cpp",
         "vector": "cpp",
         "exception": "cpp",
         "algorithm": "cpp",
@@ -41,6 +41,7 @@
         "random": "cpp",
         "ratio": "cpp",
         "set": "cpp",
+        "string": "cpp",
         "string_view": "cpp",
         "system_error": "cpp",
         "tuple": "cpp",

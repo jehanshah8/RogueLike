@@ -3,19 +3,19 @@
 
 #include "Item.hpp"
 
-class Scroll : public Item {
-    private:
+class Scroll : public Item
+{
+private:
     // Fields
 
     // Methods
 
-    public:
+public:
     // Constructors
-    Scroll(std::string name);
+    Scroll(const std::string &name, int room = -1, int serial = -1); 
 
     // Methods
-    void setID(int room, int serial);
-    
+
     // Operators
 
     // Destructor

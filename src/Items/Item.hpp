@@ -1,26 +1,40 @@
 #ifndef ITEM_H_
 #define ITEM_H_
 
-#include "../Displayable.hpp"
-#include "../Creatures/Creature.hpp"
-#include "../Creatures/Player.hpp"
-#include "../Creatures/Monster.hpp"
-
+#include <memory>
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
-class Item : public Displayable {
-    private:
+#include "../Displayable.hpp"
+//#include "../Actions/Action.hpp"
+//#include "../Actions/ItemActions/ItemAction.hpp"
+//#include "../Actions/ItemActions/BlessCurseOwner.hpp"
+//#include "../Actions/ItemActions/Hallucinate.hpp"
+
+
+class Player;
+
+class Item : public Displayable
+{
+private:
     // Fields
+    int room;
+    int serial;
+    int itemIntValue;
+    std::shared_ptr<Player> owner;
 
     // Methods
-    public:
+
+public:
     // Constructors
-    Item();
+    Item(const std::string &name, char displayCode, int room = -1, int serial = -1);
 
     // Methods
-    void setOwner(Creature& owner);
+    virtual void setItemIntValue(const int value);
+    virtual void setOwner(const std::shared_ptr<Player> owner);
 
+    virtual const std::string toString(int indentation = 3) const; 
     // Operators
 
     // Destructor

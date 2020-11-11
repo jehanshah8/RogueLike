@@ -1,26 +1,52 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
-#include "../Displayable.hpp"
-#include "Structure.hpp"
-
+#include <memory>
 #include <iostream>
 #include <string>
 
-class Room : public Structure {
-    private:
+#include "../Displayable.hpp"
+
+#include "Structure.hpp"
+
+#include "../Creatures/Creature.hpp"
+#include "../Creatures/Player.hpp"
+#include "../Creatures/Monster.hpp"
+
+#include "../Items/Item.hpp"
+#include "../Items/Scroll.hpp"
+#include "../Items/Armor.hpp"
+#include "../Items/Sword.hpp"
+
+//class ObjectDisplayGrid; 
+
+class Room : public Structure
+{
+private:
     // Fields
+    int width;
+    int height;
 
     // Methods
 
-    public:
+public:
     // Constructors
-    Room(std::string _roomID);
+    //using Structure::Structure;
+    Room(const std::string &name);
 
     // Methods
-    void setId(int roomID);
-    void setCreature(Creature& monster);
-    
+    virtual int getHeight() const;
+    virtual void setHeight(int height);
+
+    virtual int getWidth() const;
+    virtual void setWidth(int width);
+
+    //void Room::initializeDisplay();
+
+    virtual const std::string toString() const;
+
+    virtual void initializeDisplay() const;
+
     // Operators
 
     // Destructor

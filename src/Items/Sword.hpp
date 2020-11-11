@@ -3,19 +3,19 @@
 
 #include "Item.hpp"
 
-class Sword : public Item {
-    private:
+class Sword : public Item
+{
+private:
     // Fields
 
     // Methods
 
-    public:
+public:
     // Constructors
-    Sword(std::string name);
+    Sword(const std::string &name, int room = -1, int serial = -1);
 
     // Methods
-    void setID(int room, int serial);
-    
+
     // Operators
 
     // Destructor

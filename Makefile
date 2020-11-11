@@ -1,27 +1,54 @@
-# suffix rules don't allow pre-requisites to be used and are deprecated for
-# this reason.  The right way to do this is to use patterns.  The "%" pattern
-# allows any file to be matched.
-OBJS = RogueLike.o XMLHanlder.o
-CC = g++ -std=c++11 
+SHELL = /bin/sh
+
+srcdir = .
+
+.SUFFIXES:
+.SUFFIXES: .hpp .cpp .o
+CXX=g++ -O
+
+LIBS = /home/jehanshah8/xerces-c-3.1.1-x86_64-linux-gcc-3.4/lib/
 INCLUDE = /home/jehanshah8/xerces-c-3.1.1-x86_64-linux-gcc-3.4/include/
-LIBS = /home/jehanshah8/xerces-c-3.1.1-x86_64-linux-gcc-3.4/lib/ 
-CFLAGS = -Wall -g
+
+CXXFLAGS=-std=c++11 -Wall -g -pthread -I $(INCLUDE)
+CLASSES = XMLHandler.cpp Displayable.cpp Observer.cpp Subject.cpp \
+	Creature.cpp Monster.cpp Player.cpp \
+	Item.cpp Scroll.cpp Armor.cpp Sword.cpp \
+	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp \
+	ObjectDisplayGrid.cpp KeyboardListener.cpp
+
+HEADERS = $(CLASSES:%.cpp=%.hpp) 
+SOURCES = RogueLike.cpp $(CLASSES)
+OBJDIR = bin
+OBJECTS = $(SOURCES:%.cpp=$(OBJDIR)/%.o)
 EXECUTABLE = RogueLike
-COMMANDLINE = ../xmlfiles/badScroll.xml
-OUT=RogueLike
 
-.PHONY : run
-run : $(EXECUTABLE)
-	./$(EXECUTABLE) $(COMMANDLINE)
+CURSES=-lncurses
+	
+	# running -f means it does not error on missing files
+RM=rm -f
 
-cleanmake : clean $(EXECUTABLE)
 
-.PHONY : $(EXECUTABLE)
-$(EXECUTABLE) :  $(OBJS)
-	$(CC) $(CFLAGS) -o $(EXECUTABLE) $(OBJS) -I $(INCLUDE) -L $(LIBS) -lxerces-c
+%.xml : $(EXECUTABLE)
+	./$(EXECUTABLE) $@
 
-%.o : %.c 
-	$(CC) $(CFLAGS) -I $(INCLUDE) -L $(LIBS) -c $@  -lxerces-c
+$(EXECUTABLE) : $(OBJECTS)
+	#$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) -lxerces-c 
+	$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) $(CURSES) -lxerces-c 
 
-clean :
-	rm $(EXECUTABLE) ${OBJS} 
+VPATH = src src/Structures src/Creatures src/Items src/Magic src/Actions src/Actions/CreateActions src/Actions/ItemActions
+
+$(OBJDIR)/%.o : %.cpp $(HEADERS)
+	$(CXX) -c $(CXXFLAGS) $< -o $@
+
+# Clean the project
+.PHONY: clean
+clean:
+	$(RM) *.o 
+	$(RM) $(OBJDIR)/*.o 
+	$(RM) $(EXECUTABLE)
+	$(RM) $(EXECUTABLE).exe
+	$(RM) $(EXECUTABLE).zip
+
+# Clean then build
+.PHONY: rebuild
+rebuild: clean $(EXECUTABLE)
