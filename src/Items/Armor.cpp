@@ -4,3 +4,8 @@ Armor::Armor(const std::string &name, int room, int serial) : Item(name, ']', ro
 {
     //std::cout << "creating armor" << std::endl;
 }
+
+void Armor::equip()
+{
+    isEquipped = 'a';
+}

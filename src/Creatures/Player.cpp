@@ -3,7 +3,10 @@
 
 Player::Player(const std::string &name, int room, int serial) : Creature(name, '@', room, serial),
                                                                 Observer(),
-                                                                hpMoves(-1)
+                                                                hpMoves(-1),
+                                                                swordBonus(0),
+                                                                armorBonus(0),
+                                                                moveCount(0)
 {
     //std::cout << "creating player" << std::endl;
 }
@@ -18,6 +21,7 @@ void Player::addItem(const std::shared_ptr<Item> item)
     items.push_back(item);
     item->setPosX(posX);
     item->setPosY(posY);
+    item->setOwner(Displayable::downcasted_shared_from_this<Player>());
 }
 
 const std::string Player::toStringItems() const
@@ -53,28 +57,69 @@ const std::string Player::toString() const
 
 void Player::initializeDisplay()
 {
+    for (auto &it : items)
+    {
+        it->setObjectDisplayGrid(grid);
+    }
+
     grid->setTopMessage(hp, 0);
-    grid->setBottomMessagePack();
+    grid->setBottomMessage1("Pack: ");
     Creature::initializeDisplay();
+}
+
+void Player::getHit(const std::shared_ptr<Creature> attacker, int damage)
+{
+    hp -= damage;
+    std::string str = "Info: Got hit. Damage: " + std::to_string(damage);
+    grid->setBottomMessage2(str);
+    grid->update();
+
+    if (hp < 0)
+    {
+        //grid->removeObjectFromDisplay(posX, posY);
+        grid->setBottomMessage2("Info: Player Killed. Game Over!");
+        grid->update();
+        endGame();
+    }
 }
 
 void Player::move(int dx, int dy)
 {
     std::shared_ptr<Displayable> temp = grid->getDisplayable(posX + dx, posY + dy);
-
+    std::shared_ptr<Creature> tempCreature = std::dynamic_pointer_cast<Creature>(temp);
     // Is traversable?
     if (temp != nullptr && temp->getDisplayCode() != 'X')
     {
-        grid->removeObjectFromDisplay(posX, posY);
-        posX += dx;
-        posY += dy;
-        Creature::initializeDisplay();
+        if (tempCreature != nullptr)
+        {
+            int damage = (rand() % (maxHit + 1)) + swordBonus;
+            tempCreature->getHit(Displayable::downcasted_shared_from_this<Player>(), damage);
+            grid->setTopMessage(hp, 0);
+            grid->update();
+        }
+        else
+        {
+            grid->removeObjectFromDisplay(posX, posY);
+            posX += dx;
+            posY += dy;
+            Creature::initializeDisplay();
+            moveCount++;
+            if (moveCount % hpMoves == 0)
+            {
+                //hp++;
+            }
+        }
+    }
+    else
+    {
+        grid->setBottomMessage2("Info: Cannot move there!");
+        grid->update();
     }
 }
 
 void Player::showPackContents()
 {
-    std::string str;
+    std::string str = "Pack: ";
     if (items.empty())
     {
         str += "No items here";
@@ -83,12 +128,12 @@ void Player::showPackContents()
     {
         for (long unsigned int i = 0; i < items.size(); i++)
         {
-            str += std::to_string(i) + ": " + items[i]->getName() + ", ";
+            str += std::to_string(i) + ": " + items[i]->getName() + items[i]->getIsEquipped() + ", ";
         }
         str.pop_back();
         str.pop_back();
     }
-    grid->setBottomMessagePack(str);
+    grid->setBottomMessage1(str);
     grid->update();
 }
 
@@ -104,6 +149,11 @@ void Player::pickUpItem()
         items.push_back(temp);
         grid->removeObjectFromDisplay(posX, posY);
     }
+    else
+    {
+        grid->setBottomMessage2("Info: Nothing item here.");
+        grid->update();
+    }
     Creature::initializeDisplay();
 }
 
@@ -114,22 +164,37 @@ void Player::dropItem(char itemNum)
     {
         items[i]->setPosX(posX);
         items[i]->setPosY(posY);
+        items[i]->unequip();
         items[i]->setOwner(nullptr);
-
         grid->removeObjectFromDisplay(posX, posY);
         items[i]->initializeDisplay();
         items.erase(items.begin() + i);
         Creature::initializeDisplay();
     }
+    else
+    {
+        grid->setBottomMessage2("Info: Invalid item number.");
+        grid->update();
+    }
+}
+
+void Player::releaseAllItems()
+{
+    for (auto &it : items)
+    {
+        it->setOwner(nullptr);
+    }
+}
+
+void Player::endGame()
+{
+    keyboardListener->kill();
+    grid->removeAllObjects();
+    releaseAllItems();
 }
 
 void Player::update(char input)
 {
-    //std::string str;
-    //str += input;
-    //grid->setBottomMessageInfo(str);
-    //grid->update();
-    //grid->setBottomMessagePack();
     commandHistory.push(input);
 
     switch (commandHistory.front())

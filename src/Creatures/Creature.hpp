@@ -53,7 +53,7 @@ public:
     virtual void setMaxHit(int maxHit);
     virtual void addDeathAction(const std::shared_ptr<CreatureAction> deathAction);
     virtual void addHitAction(const std::shared_ptr<CreatureAction> hitAction);
-
+    virtual void getHit(const std::shared_ptr<Creature> attacker, int damage) = 0;
     virtual void initializeDisplay();
     
     virtual const std::string toString() const; 

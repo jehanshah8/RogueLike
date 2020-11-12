@@ -23,6 +23,9 @@ private:
     // Fields
     int hpMoves;
     std::vector<std::shared_ptr<Item>> items;
+    int swordBonus; 
+    int armorBonus;
+    int moveCount; 
     std::queue<char> commandHistory;
     std::shared_ptr<KeyboardListener> keyboardListener;
 
@@ -32,6 +35,8 @@ private:
     virtual void showPackContents();
     virtual void pickUpItem();
     virtual void dropItem(char itemNum);
+    virtual void endGame();
+    
 
 public:
     // Constructors
@@ -40,6 +45,8 @@ public:
     // Methods
     void setHpMoves(int hpMoves);
     virtual void addItem(const std::shared_ptr<Item> item);
+    virtual void getHit(const std::shared_ptr<Creature> attacker, int damage);
+    virtual void releaseAllItems();
     virtual const std::string toString() const;
     
     virtual void initializeDisplay();

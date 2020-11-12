@@ -26,6 +26,7 @@ public:
     
     // Methods
     virtual void setType(char type);
+    virtual void getHit(const std::shared_ptr<Creature> attacker, int damage);
 
     virtual const std::string toString() const;
 

@@ -107,13 +107,14 @@ void Dungeon::initializeGrid()
         it->setObjectDisplayGrid(grid);
         it->initializeDisplay();
     }
-    grid->setBottomMessageInfo("Game On!");
+
+    grid->setBottomMessage2("Info: Game On!");
     grid->update();
 }
 
 void Dungeon::getAllCommands()
 {
-    std::string str;
+    std::string str = "Info: ";
     for (auto &it : commandInfo)
     {
         str += it.first;
@@ -122,44 +123,45 @@ void Dungeon::getAllCommands()
     str.pop_back();
     str.pop_back();
 
-    grid->setBottomMessageInfo(str);
+    grid->setBottomMessage2(str);
     grid->update();
 }
 
 void Dungeon::getHelpOnCommand(char command)
 {
-    std::string str;
+    std::string str = "Info: ";
     std::unordered_map<char, std::string>::const_iterator it = commandInfo.find(command);
 
     if (it == commandInfo.end())
     {
-        str = "No command '";
+        str += "No command '";
         str += command;
         str += "'. Press '?' to see a list of all commands";
     }
     else
     {
-        str = it->second;
+        str += it->second;
     }
 
-    grid->setBottomMessageInfo(str);
+    grid->setBottomMessage2(str);
     grid->update();
 }
 
 void Dungeon::endGame()
 {
-    grid->setBottomMessageInfo("Game Over!");
+    grid->setBottomMessage2("Info: Game Over!");
     grid->update();
 
     keyboardListener->kill();
     grid->removeAllObjects();
+    player->releaseAllItems();
 }
 
 void Dungeon::update(char input)
 {
-    std::string str;
+    std::string str = "Info: ";
     str += input;
-    grid->setBottomMessageInfo(str);
+    grid->setBottomMessage1(str);
     grid->update();
 
     commandHistory.push(input);
@@ -193,7 +195,7 @@ void Dungeon::update(char input)
         }
         else
         {
-            grid->setBottomMessageInfo("Press 'Y' or 'y' to confirm.");
+            grid->setBottomMessage2("Info: Press 'Y' or 'y' to confirm.");
             grid->update();
         }
         break;

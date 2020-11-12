@@ -1,5 +1,5 @@
 #include "Creature.hpp"
-
+#include "../ObjectDisplayGrid.hpp"
 Creature::Creature(const std::string &name, char displayCode, int room, int serial) : Displayable(name, displayCode),
                                                                                       room(room),
                                                                                       serial(serial)
@@ -27,8 +27,8 @@ void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
     hitActions.push_back(hitAction);
 }
 
-void Creature::initializeDisplay() 
-{ 
+void Creature::initializeDisplay()
+{
     Displayable::initializeDisplay();
 }
 

@@ -417,7 +417,8 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
         if (creatureBeingParsed != nullptr && creatureBeingParsed->getDisplayCode() == '@')
         {
             std::dynamic_pointer_cast<Player>(creatureBeingParsed)->addItem(itemBeingParsed);
-            itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
+            //itemBeingParsed->equip();
+            //itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
         }
         else
         {
@@ -432,7 +433,8 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
         if (creatureBeingParsed != nullptr && creatureBeingParsed->getDisplayCode() == '@')
         {
             std::dynamic_pointer_cast<Player>(creatureBeingParsed)->addItem(itemBeingParsed);
-            itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
+            //itemBeingParsed->equip();
+            //itemBeingParsed->setOwner(std::dynamic_pointer_cast<Player>(creatureBeingParsed));
         }
         else
         {
