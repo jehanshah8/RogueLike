@@ -17,13 +17,14 @@ class Player;
 
 class Item : public Displayable
 {
-private:
+protected:
     // Fields
-    int room;
-    int serial;
     int itemIntValue;
+    char isEquipped; 
     std::shared_ptr<Player> owner;
 
+    int room;
+    int serial;
     // Methods
 
 public:
@@ -33,6 +34,9 @@ public:
     // Methods
     virtual void setItemIntValue(const int value);
     virtual void setOwner(const std::shared_ptr<Player> owner);
+    virtual void equip();
+    virtual void unequip();  
+    virtual const std::string getIsEquipped() const; 
     
     virtual const std::string toString(int indentation = 3) const; 
     // Operators

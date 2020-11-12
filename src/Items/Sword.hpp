@@ -15,7 +15,7 @@ public:
     Sword(const std::string &name, int room = -1, int serial = -1);
 
     // Methods
-
+    virtual void equip();
     // Operators
 
     // Destructor

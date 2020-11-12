@@ -55,7 +55,7 @@ private:
 
     virtual void getAllCommands();
     virtual void getHelpOnCommand(char command);
-    virtual void endGame();
+    
 
 public:
     // Constructors
@@ -63,6 +63,7 @@ public:
 
     // Methods
     virtual void startGame(); 
+    virtual void endGame();
     virtual int getGameHeight() const; 
     virtual int getGameWidth() const;
     virtual int getTopHeight() const;

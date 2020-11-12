@@ -25,7 +25,7 @@ private:
 
 public:
     // Constructors
-    ObjectDisplayGrid(const int gameHeight, const int gameWidth, const int topHeight, const int bottomHeight);
+    ObjectDisplayGrid(int gameHeight, int gameWidth, int topHeight, int bottomHeight);
 
     // Methods
     virtual void addObjectToDisplay(int x, int y, const std::shared_ptr<Displayable> displayable);
@@ -33,8 +33,8 @@ public:
     virtual const std::shared_ptr<Displayable> getDisplayable(int x, int y) const;
     virtual void update();
     virtual void setTopMessage(int hitPoints = 0, int score = 0);
-    virtual void setBottomMessagePack(const std::string &inventory = "");
-    virtual void setBottomMessageInfo(const std::string &message = "");
+    virtual void setBottomMessage1(const std::string &message = "");
+    virtual void setBottomMessage2(const std::string &message = "");
 
     virtual void removeAllObjects();
     

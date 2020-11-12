@@ -1,6 +1,6 @@
 #include "ObjectDisplayGrid.hpp"
 
-ObjectDisplayGrid::ObjectDisplayGrid(const int gameHeight, const int gameWidth, const int topHeight, const int bottomHeight) : gameHeight(gameHeight),
+ObjectDisplayGrid::ObjectDisplayGrid(int gameHeight, int gameWidth, int topHeight, int bottomHeight) : gameHeight(gameHeight),
 																															   gameWidth(gameWidth),
 																															   topHeight(topHeight),
 																															   bottomHeight(bottomHeight),
@@ -20,9 +20,9 @@ ObjectDisplayGrid::ObjectDisplayGrid(const int gameHeight, const int gameWidth, 
 
 void ObjectDisplayGrid::addObjectToDisplay(int x, int y, const std::shared_ptr<Displayable> displayable)
 {
-	if ((0 <= x) && (x < gameWidth))
+	if ((0 <= x) && (x <= gameWidth))
 	{
-		if ((0 <= y) && (y < gameHeight))
+		if ((0 <= y) && (y <= gameHeight))
 		{
 			objectGrid[x][y].push(displayable);
 			mvaddch(y, x, displayable->getDisplayCode());
@@ -32,9 +32,9 @@ void ObjectDisplayGrid::addObjectToDisplay(int x, int y, const std::shared_ptr<D
 
 void ObjectDisplayGrid::removeObjectFromDisplay(int x, int y)
 {
-	if ((0 <= x) && (x < gameWidth))
+	if ((0 <= x) && (x <= gameWidth))
 	{
-		if ((0 <= y) && (y < gameHeight))
+		if ((0 <= y) && (y <= gameHeight))
 		{
 			if (!objectGrid[x][y].empty())
 			{
@@ -70,16 +70,16 @@ void ObjectDisplayGrid::setTopMessage(int hitPoints, int score)
 	clrtoeol();
 }
 
-void ObjectDisplayGrid::setBottomMessagePack(const std::string &inventory)
+void ObjectDisplayGrid::setBottomMessage1(const std::string &message)
 {
-	std::string bottomMessage = "pack: " + inventory;
+	std::string bottomMessage = message;
 	mvaddstr(topHeight + gameHeight, 0, bottomMessage.c_str());
 	clrtoeol();
 }
 
-void ObjectDisplayGrid::setBottomMessageInfo(const std::string &message)
+void ObjectDisplayGrid::setBottomMessage2(const std::string &message)
 {
-	std::string bottomMessage = "info: " + message;
+	std::string bottomMessage = message;
 	mvaddstr(topHeight + gameHeight + bottomHeight / 2, 0, bottomMessage.c_str());
 	clrtoeol();
 }
