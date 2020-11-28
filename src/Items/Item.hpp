@@ -33,11 +33,12 @@ public:
 
     // Methods
     virtual void setItemIntValue(const int value);
+    virtual const int getIntValue() const; 
     virtual void setOwner(const std::shared_ptr<Player> owner);
     virtual void equip();
     virtual void unequip();  
-    virtual const std::string getIsEquipped() const; 
-    
+    virtual const std::string getIsEquippedStr() const; 
+    virtual const bool getIsEquipped() const; 
     virtual const std::string toString(int indentation = 3) const; 
     // Operators
 

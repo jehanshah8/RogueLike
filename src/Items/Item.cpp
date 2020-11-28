@@ -5,13 +5,18 @@ Item::Item(const std::string &name, char displayCode, int room, int serial) : Di
                                                                               isEquipped(0),
                                                                               room(room),
                                                                               serial(serial)
-                                                                              
+
 {
 }
 
 void Item::setItemIntValue(const int value)
 {
     itemIntValue = value;
+}
+
+const int Item::getIntValue() const
+{
+    return itemIntValue;
 }
 
 void Item::equip()
@@ -22,18 +27,23 @@ void Item::equip()
 void Item::unequip()
 {
     isEquipped = 0;
-} 
+}
 
-const std::string Item::getIsEquipped() const
+const bool Item::getIsEquipped() const
 {
-    std::string str = ""; 
+    return isEquipped != 0;
+}
+
+const std::string Item::getIsEquippedStr() const
+{
+    std::string str = "";
     if (isEquipped != 0)
     {
-        str += " ("; 
-        str += isEquipped; 
+        str += " (";
+        str += isEquipped;
         str += ")";
     }
-    return str; 
+    return str;
 }
 
 void Item::setOwner(const std::shared_ptr<Player> owner)

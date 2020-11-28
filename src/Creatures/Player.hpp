@@ -23,7 +23,11 @@ private:
     // Fields
     int hpMoves;
     std::vector<std::shared_ptr<Item>> items;
-    int swordBonus; 
+    //std::shared_ptr<Item> swordWeilded; 
+    //std::shared_ptr<Item> armorWorn; 
+    bool isWeildingSword;
+    int swordBonus;
+    bool isWearingArmor;
     int armorBonus;
     int moveCount; 
     std::queue<char> commandHistory;
@@ -35,6 +39,9 @@ private:
     virtual void showPackContents();
     virtual void pickUpItem();
     virtual void dropItem(char itemNum);
+    virtual void weildSword(char itemNum);
+    virtual void wearArmor(char itemNum);
+    virtual void takeOffArmor();
     virtual void endGame();
     
 

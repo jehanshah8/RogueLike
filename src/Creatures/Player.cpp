@@ -4,7 +4,9 @@
 Player::Player(const std::string &name, int room, int serial) : Creature(name, '@', room, serial),
                                                                 Observer(),
                                                                 hpMoves(-1),
+                                                                isWeildingSword(false),
                                                                 swordBonus(0),
+                                                                isWearingArmor(false),
                                                                 armorBonus(0),
                                                                 moveCount(0)
 {
@@ -69,7 +71,11 @@ void Player::initializeDisplay()
 
 void Player::getHit(const std::shared_ptr<Creature> attacker, int damage)
 {
-    hp -= damage;
+    damage -= armorBonus;
+    if (damage > 0)
+    {
+        hp -= damage;
+    }
     std::string str = "Info: Got hit. Damage: " + std::to_string(damage);
     grid->setBottomMessage2(str);
     grid->update();
@@ -106,7 +112,9 @@ void Player::move(int dx, int dy)
             moveCount++;
             if (moveCount % hpMoves == 0)
             {
-                //hp++;
+                hp++;
+                grid->setTopMessage(hp, 0);
+                grid->update();
             }
         }
     }
@@ -128,7 +136,7 @@ void Player::showPackContents()
     {
         for (long unsigned int i = 0; i < items.size(); i++)
         {
-            str += std::to_string(i) + ": " + items[i]->getName() + items[i]->getIsEquipped() + ", ";
+            str += std::to_string(i + 1) + ": " + items[i]->getName() + items[i]->getIsEquippedStr() + ", ";
         }
         str.pop_back();
         str.pop_back();
@@ -159,11 +167,25 @@ void Player::pickUpItem()
 
 void Player::dropItem(char itemNum)
 {
-    long unsigned int i = itemNum - '0';
+    long unsigned int i = itemNum - '0' - 1;
     if (i < items.size())
     {
         items[i]->setPosX(posX);
         items[i]->setPosY(posY);
+        if (items[i]->getIsEquipped())
+        {
+            std::shared_ptr<Sword> tempSword = std::dynamic_pointer_cast<Sword>(items[i]);
+            if (tempSword != nullptr)
+            {
+                isWeildingSword = false;
+                swordBonus = 0;
+            }
+            else
+            {
+                isWearingArmor = false;
+                armorBonus = 0;
+            }
+        }
         items[i]->unequip();
         items[i]->setOwner(nullptr);
         grid->removeObjectFromDisplay(posX, posY);
@@ -174,6 +196,78 @@ void Player::dropItem(char itemNum)
     else
     {
         grid->setBottomMessage2("Info: Invalid item number.");
+        grid->update();
+    }
+}
+
+void Player::weildSword(char itemNum)
+{
+    if (isWeildingSword)
+    {
+        grid->setBottomMessage2("Info: Already weilding a sword.");
+        grid->update();
+        return;
+    }
+    long unsigned int i = itemNum - '0' - 1;
+    std::shared_ptr<Sword> temp = std::dynamic_pointer_cast<Sword>(items[i]);
+
+    if (i < items.size() && temp != nullptr)
+    {
+        isWeildingSword = true;
+        swordBonus = temp->getIntValue();
+        temp->equip();
+    }
+    else
+    {
+        grid->setBottomMessage2("Info: Item selected is not a sword.");
+        grid->update();
+    }
+}
+
+void Player::wearArmor(char itemNum)
+{
+    if (isWearingArmor)
+    {
+        grid->setBottomMessage2("Info: Already wearing an armor.");
+        grid->update();
+        return;
+    }
+    long unsigned int i = itemNum - '0' - 1;
+    std::shared_ptr<Armor> temp = std::dynamic_pointer_cast<Armor>(items[i]);
+
+    if (i < items.size() && temp != nullptr)
+    {
+        isWearingArmor = true;
+        armorBonus = temp->getIntValue();
+        temp->equip();
+    }
+    else
+    {
+        grid->setBottomMessage2("Info: Item selected is not an armor.");
+        grid->update();
+    }
+}
+
+void Player::takeOffArmor()
+{
+    if (isWearingArmor)
+    {
+        for (long unsigned int i = 0; i < items.size(); i++)
+        {
+            std::shared_ptr<Armor> temp = std::dynamic_pointer_cast<Armor>(items[i]);
+
+            if (temp != nullptr && temp->getIsEquipped())
+            {
+                isWearingArmor = false;
+                armorBonus = 0;
+                temp->unequip();
+                break;
+            }
+        }
+    }
+    else
+    {
+        grid->setBottomMessage2("Info: No armor worn.");
         grid->update();
     }
 }
@@ -195,6 +289,8 @@ void Player::endGame()
 
 void Player::update(char input)
 {
+    grid->setBottomMessage2("Info: ");
+    grid->update();
     commandHistory.push(input);
 
     switch (commandHistory.front())
@@ -225,23 +321,18 @@ void Player::update(char input)
         showPackContents();
         commandHistory.pop();
         break;
-    //case 'c':
-    //    // Change, or take off armor ‘c’: armor that is being worn is taken off
-    //    // and placed in the pack. If not armor is being worn
-    //    // a message should be shown in the info area of the game display.
-    //    setArmor();
-    //    break;
     case 'd':
         // Drop ‘d’ <integer>: drop item <integer> from the pack.
         // If the <integer> does not refer to an item in the pack and
         // informational message is printed on the game display in the info area.
-
+        showPackContents();
         if (commandHistory.size() == 2)
         {
             commandHistory.pop();
             dropItem(commandHistory.front());
             commandHistory.pop();
         }
+        showPackContents();
         break;
     //case 'r':
     //    // Read an item ‘r’ <integer>: the item specified by the integer
@@ -254,19 +345,42 @@ void Player::update(char input)
         // If multiple items are in the location, only the top item is picked up.
         pickUpItem();
         commandHistory.pop();
+        showPackContents();
         break;
-    //case 'T':
-    //    // Take out a weapon ‘T’ <integer>: take the sword identified by <integer> from the pack.
-    //    // If the identified item is not a sword, or no such item exists,
-    //    // show a message in the info area of the game display.
-    //    player->weildSword(getchar());
-    //    break;
-    //case 'w':
-    //    // Wear item ‘w’ <integer>: take the armor identified by <integer> from the pack
-    //    // and make it the armor being worn. If the identified item is not armor,
-    //    // or no such item exists, show a message in the info area of the game display.
-    //    player->wearArmor(getchar());
-    //    break;
+    case 'T':
+        // Take out a weapon ‘T’ <integer>: take the sword identified by <integer> from the pack.
+        // If the identified item is not a sword, or no such item exists,
+        // show a message in the info area of the game display.
+        showPackContents();
+        if (commandHistory.size() == 2)
+        {
+            commandHistory.pop();
+            weildSword(commandHistory.front());
+            commandHistory.pop();
+        }
+        showPackContents();
+        break;
+    case 'w':
+        // Wear item ‘w’ <integer>: take the armor identified by <integer> from the pack
+        // and make it the armor being worn. If the identified item is not armor,
+        // or no such item exists, show a message in the info area of the game display.
+        showPackContents();
+        if (commandHistory.size() == 2)
+        {
+            commandHistory.pop();
+            wearArmor(commandHistory.front());
+            commandHistory.pop();
+        }
+        showPackContents();
+        break;
+    case 'c':
+        // Change, or take off armor ‘c’: armor that is being worn is taken off
+        // and placed in the pack. If not armor is being worn
+        // a message should be shown in the info area of the game display.
+        takeOffArmor();
+        commandHistory.pop();
+        showPackContents();
+        break;
     case 'H':
         // Help ‘H’ <command>give more detailed information about the specified
         //command in the info section ofthe display.
@@ -282,7 +396,6 @@ void Player::update(char input)
             commandHistory.pop();
             commandHistory.pop();
         }
-        break;
         break;
     default:
         commandHistory.pop();
