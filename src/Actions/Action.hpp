@@ -1,24 +1,33 @@
 #ifndef ACTION_H_
 #define ACTION_H_
 
-#include "../Creatures/Creature.hpp"
-
 #include <iostream>
 #include <string>
 
-class Action {
-    private:
+
+#include "../Creatures/Creature.hpp"
+#include "../Items/Item.hpp"
+
+class Action
+{
+protected:
     // Fields
+    std::string message;
+    int intValue;
+    char charValue;
+    std::shared_ptr<Displayable> owner;
 
     // Methods
-    public:
+public:
     // Constructors
     Action();
 
     // Methods
-    void setMessage(std::string message);
-    void setInValue(int value);
-    void setCharValue(char value);
+    virtual void execute() = 0;
+    virtual void setMessage(const std::string &message);
+    virtual void setInValue(int value);
+    virtual void setCharValue(char value);
+    virtual void setOwner(const std::shared_ptr<Displayable> owner);
 
     // Operators
 

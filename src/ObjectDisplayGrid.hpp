@@ -39,8 +39,8 @@ public:
     virtual void removeAllObjects();
     
     
-    //virtual int getGameHeight() const;
-    //virtual int getGameWidth() const;
+    virtual const int getGameHeight() const;
+    virtual const int getGameWidth() const;
     //virtual int getTopHeight() const;
     //virtual int getBottomHeight() const;
 

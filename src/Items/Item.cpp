@@ -1,4 +1,5 @@
 #include "Item.hpp"
+#include "../Actions/Action.hpp"
 
 Item::Item(const std::string &name, char displayCode, int room, int serial) : Displayable(name, displayCode),
                                                                               itemIntValue(0),
@@ -7,6 +8,11 @@ Item::Item(const std::string &name, char displayCode, int room, int serial) : Di
                                                                               serial(serial)
 
 {
+}
+
+void Item::setName(const std::string& name)
+{
+    this->name = name;
 }
 
 void Item::setItemIntValue(const int value)
@@ -51,6 +57,11 @@ void Item::setOwner(const std::shared_ptr<Player> owner)
     this->owner = owner;
 }
 
+const std::shared_ptr<Player> Item::getOwner() const
+{
+    return owner;
+}
+
 const std::string Item::toString(int indentation) const
 {
     std::string str = Displayable::toString(indentation);
@@ -71,4 +82,18 @@ const std::string Item::toString(int indentation) const
     str += "\t\t\tserial: " + std::to_string(serial) + "\n";
     //std::cout << str << std::endl;
     return str;
+}
+
+void Item::addAction(const std::shared_ptr<Action> action)
+{
+    actions.push_back(action);
+    action->setOwner(Displayable::downcasted_shared_from_this<Item>());
+}
+
+void Item::releaseAllActions()
+{
+    for (auto &it : actions)
+    {
+        it->setOwner(nullptr);
+    }
 }

@@ -29,18 +29,16 @@
 
 #include "Actions/Action.hpp"
 
-#include "Actions/CreatureActions/CreatureAction.hpp"
-#include "Actions/CreatureActions/Remove.hpp"
-#include "Actions/CreatureActions/YouWin.hpp"
-#include "Actions/CreatureActions/UpdateDisplay.hpp"
-#include "Actions/CreatureActions/Teleport.hpp"
-#include "Actions/CreatureActions/ChangeDisplayedType.hpp"
-#include "Actions/CreatureActions/EndGame.hpp"
-#include "Actions/CreatureActions/DropPack.hpp"
+#include "Actions/Remove.hpp"
+#include "Actions/YouWin.hpp"
+#include "Actions/UpdateDisplay.hpp"
+#include "Actions/Teleport.hpp"
+#include "Actions/ChangeDisplayedType.hpp"
+#include "Actions/EndGame.hpp"
+#include "Actions/DropPack.hpp"
 
-#include "Actions/ItemActions/ItemAction.hpp"
-#include "Actions/ItemActions/BlessCurseOwner.hpp"
-#include "Actions/ItemActions/Hallucinate.hpp"
+#include "Actions/BlessCurseOwner.hpp"
+#include "Actions/Hallucinate.hpp"
 
 #include <xercesc/sax2/SAX2XMLReader.hpp>
 #include <xercesc/sax2/XMLReaderFactory.hpp>
@@ -61,6 +59,7 @@ private:
     std::shared_ptr<Creature> creatureBeingParsed;
     std::shared_ptr<Item> itemBeingParsed;
     std::shared_ptr<Action> actionBeingParsed;
+    std::string ActionType;
 
     // Shared among Room, Passage, Monster, Player, Items
     bool bVisible = false;

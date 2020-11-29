@@ -121,3 +121,11 @@ const std::string Structure::toString() const
     return str;
 }
 
+void Structure::releaseAllItems()
+{
+    for (auto &it : items)
+    {
+        it->releaseAllActions();
+        //it->setOwner(nullptr);
+    }
+}

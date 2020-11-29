@@ -1,5 +1,7 @@
 #include "Player.hpp"
 #include "../ObjectDisplayGrid.hpp"
+#include "../Actions/Action.hpp"
+#include "../Dungeon.hpp"
 
 Player::Player(const std::string &name, int room, int serial) : Creature(name, '@', room, serial),
                                                                 Observer(),
@@ -8,7 +10,8 @@ Player::Player(const std::string &name, int room, int serial) : Creature(name, '
                                                                 swordBonus(0),
                                                                 isWearingArmor(false),
                                                                 armorBonus(0),
-                                                                moveCount(0)
+                                                                moveCount(0),
+                                                                score(0)
 {
     //std::cout << "creating player" << std::endl;
 }
@@ -16,6 +19,16 @@ Player::Player(const std::string &name, int room, int serial) : Creature(name, '
 void Player::setHpMoves(int hpMoves)
 {
     this->hpMoves = hpMoves;
+}
+
+void Player::setScore(int score)
+{
+    this->score = score;
+}
+
+const int Player::getScore() const
+{
+    return score;
 }
 
 void Player::addItem(const std::shared_ptr<Item> item)
@@ -64,7 +77,7 @@ void Player::initializeDisplay()
         it->setObjectDisplayGrid(grid);
     }
 
-    grid->setTopMessage(hp, 0);
+    grid->setTopMessage(hp, score);
     grid->setBottomMessage1("Pack: ");
     Creature::initializeDisplay();
 }
@@ -80,12 +93,26 @@ void Player::getHit(const std::shared_ptr<Creature> attacker, int damage)
     grid->setBottomMessage2(str);
     grid->update();
 
+    //
+    //grid->setBottomMessage1(std::to_string(deathActions.size()));
+    //grid->update();
+    //
+
     if (hp < 0)
     {
-        //grid->removeObjectFromDisplay(posX, posY);
-        grid->setBottomMessage2("Info: Player Killed. Game Over!");
-        grid->update();
+        isAlive = false;
+        for (auto &it : deathActions)
+        {
+            it->execute();
+        }
         endGame();
+    }
+    else
+    {
+        for (auto &it : hitActions)
+        {
+            it->execute();
+        }
     }
 }
 
@@ -96,7 +123,7 @@ void Player::move(int dx, int dy)
     // Is traversable?
     if (temp != nullptr && temp->getDisplayCode() != 'X')
     {
-        if (tempCreature != nullptr)
+        if (tempCreature != nullptr && tempCreature->getIsAlive())
         {
             int damage = (rand() % (maxHit + 1)) + swordBonus;
             tempCreature->getHit(Displayable::downcasted_shared_from_this<Player>(), damage);
@@ -187,6 +214,7 @@ void Player::dropItem(char itemNum)
             }
         }
         items[i]->unequip();
+        items[i]->releaseAllActions();
         items[i]->setOwner(nullptr);
         grid->removeObjectFromDisplay(posX, posY);
         items[i]->initializeDisplay();
@@ -272,19 +300,44 @@ void Player::takeOffArmor()
     }
 }
 
+void Player::readScroll(char itemNum)
+{
+    long unsigned int i = itemNum - '0' - 1;
+    std::shared_ptr<Scroll> temp = std::dynamic_pointer_cast<Scroll>(items[i]);
+
+    if (i < items.size() && temp != nullptr)
+    {
+        temp->activate();
+        items.erase(items.begin() + i);
+    }
+    else
+    {
+        grid->setBottomMessage2("Info: Item selected is not a scroll.");
+        grid->update();
+    }
+}
+
 void Player::releaseAllItems()
 {
     for (auto &it : items)
     {
+        it->releaseAllActions();
         it->setOwner(nullptr);
     }
 }
 
+void Player::setDungeon(const std::shared_ptr<Dungeon> dungeon)
+{
+    this->dungeon = dungeon;
+}
+
 void Player::endGame()
 {
-    keyboardListener->kill();
-    grid->removeAllObjects();
-    releaseAllItems();
+    dungeon->endGame();
+    //keyboardListener->kill();
+    //grid->removeAllObjects();
+    //releaseAllItems();
+    //Creature::releaseAllActions();
 }
 
 void Player::update(char input)
@@ -334,11 +387,18 @@ void Player::update(char input)
         }
         showPackContents();
         break;
-    //case 'r':
-    //    // Read an item ‘r’ <integer>: the item specified by the integer
-    //    // must be a scroll that is in the pack. It causes the scroll to perform its actions.
-    //    player->readScroll(getchar());
-    //    break;
+    case 'r':
+        // Read an item ‘r’ <integer>: the item specified by the integer
+        // must be a scroll that is in the pack. It causes the scroll to perform its actions.
+        showPackContents();
+        if (commandHistory.size() == 2)
+        {
+            commandHistory.pop();
+            readScroll(commandHistory.front());
+            commandHistory.pop();
+        }
+        //showPackContents();
+        break;
     case 'p':
         // Pick up an item from the dungeon floor ‘p’: pick up the visible item
         // on the dungeon floor location thatthe player is standing on.
@@ -406,4 +466,40 @@ void Player::run(std::shared_ptr<KeyboardListener> keyboardListener)
 {
     this->keyboardListener = keyboardListener;
     keyboardListener->registerObserver(Observer::downcasted_shared_from_this<Player>());
+}
+
+const std::shared_ptr<Sword> Player::getSwordWeilded() const
+{
+    if (!isWeildingSword)
+    {
+        return nullptr;
+    }
+
+    std::shared_ptr<Sword> swordWeilded = nullptr;
+    for (auto &it : items)
+    {
+        swordWeilded = std::dynamic_pointer_cast<Sword>(it);
+        if (swordWeilded != nullptr && swordWeilded->getIsEquipped())
+        {
+            return swordWeilded;
+        }
+    }
+}
+
+const std::shared_ptr<Armor> Player::getArmorWorn() const
+{
+    if (!isWearingArmor)
+    {
+        return nullptr;
+    }
+
+    std::shared_ptr<Armor> armorWorn = nullptr;
+    for (auto &it : items)
+    {
+        armorWorn = std::dynamic_pointer_cast<Armor>(it);
+        if (armorWorn != nullptr && armorWorn->getIsEquipped())
+        {
+            return armorWorn;
+        }
+    }
 }

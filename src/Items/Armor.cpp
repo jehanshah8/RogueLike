@@ -1,4 +1,5 @@
 #include "Armor.hpp"
+#include "../Actions/Action.hpp"
 
 Armor::Armor(const std::string &name, int room, int serial) : Item(name, ']', room, serial)
 {

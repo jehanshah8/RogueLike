@@ -15,7 +15,10 @@ CLASSES = XMLHandler.cpp Displayable.cpp Observer.cpp Subject.cpp \
 	Item.cpp Scroll.cpp Armor.cpp Sword.cpp \
 	Structure.cpp Room.cpp Passage.cpp Dungeon.cpp \
 	ObjectDisplayGrid.cpp KeyboardListener.cpp \
-	MultipleInheritableEnableSharedFromThis.cpp inheritable_enable_shared_from_this.cpp
+	MultipleInheritableEnableSharedFromThis.cpp inheritable_enable_shared_from_this.cpp \
+	Action.cpp ChangeDisplayedType.cpp Remove.cpp Teleport.cpp \
+	YouWin.cpp UpdateDisplay.cpp DropPack.cpp EndGame.cpp \
+	BlessCurseOwner.cpp Hallucinate.cpp \
 
 HEADERS = $(CLASSES:%.cpp=%.hpp) 
 SOURCES = RogueLike.cpp $(CLASSES)
@@ -36,7 +39,7 @@ $(EXECUTABLE) : $(OBJECTS)
 	#$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) -lxerces-c 
 	$(CXX) -g $(CXXFLAGS) -L $(LIBS) -o $(EXECUTABLE) $(OBJECTS) $(CURSES) -lxerces-c 
 
-VPATH = src src/Structures src/Creatures src/Items src/Magic src/Actions src/Actions/CreateActions src/Actions/ItemActions
+VPATH = src src/Structures src/Creatures src/Items src/Magic src/Actions
 
 $(OBJDIR)/%.o : %.cpp $(HEADERS)
 	$(CXX) -c $(CXXFLAGS) $< -o $@

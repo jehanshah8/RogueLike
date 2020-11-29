@@ -149,39 +149,37 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
     {
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-        std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
-        // todo
-        /**
-        if (name.compare("Print"))
+        ActionType = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
+
+        if (name.compare("ChangeDisplayedType") == 0)
         {
-            actionBeingParsed = std::make_shared<Print> ();
+            actionBeingParsed = std::make_shared<ChangeDisplayedType>();
         }
-        else if (name.compare("Teleport"))
+        else if (name.compare("Remove") == 0)
         {
-            actionBeingParsed = std::make_shared<Teleport> ();
+            actionBeingParsed = std::make_shared<Remove>();
         }
-        else if (name.compare("YouWin"))
+        else if (name.compare("Teleport") == 0)
         {
-            actionBeingParsed = std::make_shared<YouWin> ();
+            actionBeingParsed = std::make_shared<Teleport>();
         }
-        else if (name.compare("DropPack"))
+        else if (name.compare("UpdateDisplay") == 0)
         {
-            actionBeingParsed = std::make_shared<DropPack> ();
+            actionBeingParsed = std::make_shared<UpdateDisplay>();
         }
-        else if (name.compare("EmptyPack"))
+        else if (name.compare("YouWin") == 0)
         {
-            actionBeingParsed = std::make_shared<EmptyPack> ();
+            actionBeingParsed = std::make_shared<YouWin>();
+        }
+        else if (name.compare("DropPack") == 0)
+        {
+            actionBeingParsed = std::make_shared<DropPack>();
+        }
+        else if (name.compare("EndGame") == 0)
+        {
+            actionBeingParsed = std::make_shared<EndGame>();
         }
 
-        if (type.compare("death"))
-        {
-            creatureBeingParsed->addDeathAction(std::dynamic_pointer_cast<CreatureAction>(actionBeingParsed));
-        }
-        else if (type.compare("hit"))
-        {
-            creatureBeingParsed->addHitAction(std::dynamic_pointer_cast<CreatureAction>(actionBeingParsed));
-        }
-        */
         // printing for parsing and debugging only
         //std::string str = "CreatureAction: \n";
         //str += "   name: " + name + "\n";
@@ -192,9 +190,16 @@ void XMLHandler::startElement(const XMLCh *uri, const XMLCh *localName, const XM
     else if (case_insensitive_match(qNameStr, "ItemAction"))
     {
         std::string name = xmlChToString(getXMLChAttributeFromString(attributes, "name"));
-        std::string type = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
+        ActionType = xmlChToString(getXMLChAttributeFromString(attributes, "type"));
 
-        // todo
+        if (name.compare("BlessArmor") == 0)
+        {
+            actionBeingParsed = std::make_shared<BlessCurseOwner>();
+        }
+        else if (name.compare("Hallucinate") == 0)
+        {
+            actionBeingParsed = std::make_shared<Hallucinate>();
+        }
         // printing for parsing and debugging only
         //std::string str = "ItemAction: \n";
         //str += "   name: " + name + "\n";
@@ -313,19 +318,19 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
         itemBeingParsed->setItemIntValue(std::stoi(data));
         bItemIntValue = false;
     }
-    else if (bActionMessage) // todo
+    else if (bActionMessage)
     {
-        //actionBeingParsed->setMessage(data);
+        actionBeingParsed->setMessage(data);
         bActionMessage = false;
     }
-    else if (bActionIntValue) // todo
+    else if (bActionIntValue)
     {
-        //actionBeingParsed->setInValue(std::stoi(data));
+        actionBeingParsed->setInValue(std::stoi(data));
         bActionIntValue = false;
     }
-    else if (bActionCharValue) // todo
+    else if (bActionCharValue)
     {
-        //actionBeingParsed->setCharValue(std::stoi(data));
+        actionBeingParsed->setCharValue(data[0]);
         bActionCharValue = false;
     }
 
@@ -356,7 +361,7 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
         for (auto &structure_it : dungeonBeingParsed->getPassages())
         {
             structure_it->shiftPosY(dungeonBeingParsed->getTopHeight());
-            
+
             // convert things in structs to global pos
             if (structure_it->getPlayer() != nullptr)
             {
@@ -446,10 +451,20 @@ void XMLHandler::endElement(const XMLCh *uri, const XMLCh *localName, const XMLC
     }
     else if (case_insensitive_match(qNameStr, "CreatureAction"))
     {
+        if (ActionType.compare("hit") == 0)
+        {
+            creatureBeingParsed->addHitAction(actionBeingParsed);
+        }
+        else if (ActionType.compare("death") == 0)
+        {
+            creatureBeingParsed->addDeathAction(actionBeingParsed);
+        }
+        //ActionType = "other";
         actionBeingParsed = nullptr;
     }
     else if (case_insensitive_match(qNameStr, "ItemAction"))
     {
+        itemBeingParsed->addAction(actionBeingParsed);
         actionBeingParsed = nullptr;
     }
 

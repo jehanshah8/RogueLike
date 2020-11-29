@@ -4,15 +4,11 @@
 #include <memory>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <vector>
 
 #include "../Displayable.hpp"
-//#include "../Actions/Action.hpp"
-//#include "../Actions/ItemActions/ItemAction.hpp"
-//#include "../Actions/ItemActions/BlessCurseOwner.hpp"
-//#include "../Actions/ItemActions/Hallucinate.hpp"
 
-
+class Action;
 class Player;
 
 class Item : public Displayable
@@ -20,8 +16,9 @@ class Item : public Displayable
 protected:
     // Fields
     int itemIntValue;
-    char isEquipped; 
+    char isEquipped;
     std::shared_ptr<Player> owner;
+    std::vector<std::shared_ptr<Action>> actions;
 
     int room;
     int serial;
@@ -32,14 +29,18 @@ public:
     Item(const std::string &name, char displayCode, int room = -1, int serial = -1);
 
     // Methods
+    virtual void setName(const std::string& name);
     virtual void setItemIntValue(const int value);
-    virtual const int getIntValue() const; 
+    virtual const int getIntValue() const;
     virtual void setOwner(const std::shared_ptr<Player> owner);
+    virtual const std::shared_ptr<Player> getOwner() const;
     virtual void equip();
-    virtual void unequip();  
-    virtual const std::string getIsEquippedStr() const; 
-    virtual const bool getIsEquipped() const; 
-    virtual const std::string toString(int indentation = 3) const; 
+    virtual void unequip();
+    virtual const std::string getIsEquippedStr() const;
+    virtual const bool getIsEquipped() const;
+    virtual const std::string toString(int indentation = 3) const;
+    virtual void addAction(const std::shared_ptr<Action> action);
+    virtual void releaseAllActions();
     // Operators
 
     // Destructor

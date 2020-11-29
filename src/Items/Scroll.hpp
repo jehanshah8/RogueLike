@@ -15,7 +15,7 @@ public:
     Scroll(const std::string &name, int room = -1, int serial = -1); 
 
     // Methods
-
+    virtual void activate();
     // Operators
 
     // Destructor

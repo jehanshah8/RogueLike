@@ -155,6 +155,23 @@ void Dungeon::endGame()
     keyboardListener->kill();
     grid->removeAllObjects();
     player->releaseAllItems();
+    player->releaseAllActions();
+    player->setDungeon(nullptr);
+
+    for(auto &it : monsters)
+    {
+        it->releaseAllActions(); 
+    }
+
+    for(auto &it : rooms)
+    {
+        it->releaseAllItems(); 
+    }
+
+    for(auto &it : passages)
+    {
+        it->releaseAllItems(); 
+    }
 }
 
 void Dungeon::update(char input)
@@ -208,7 +225,7 @@ void Dungeon::startGame()
 {
     // Initialize the gird
     initializeGrid();
-
+    player->setDungeon(Observer::downcasted_shared_from_this<Dungeon>());
     keyboardListener->registerObserver(Observer::downcasted_shared_from_this<Dungeon>());
     player->run(keyboardListener);
     std::thread keyboardListenerThread(&KeyboardListener::run, keyboardListener);

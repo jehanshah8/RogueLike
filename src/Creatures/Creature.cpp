@@ -1,8 +1,11 @@
 #include "Creature.hpp"
 #include "../ObjectDisplayGrid.hpp"
+#include "../Actions/Action.hpp"
+
 Creature::Creature(const std::string &name, char displayCode, int room, int serial) : Displayable(name, displayCode),
                                                                                       room(room),
-                                                                                      serial(serial)
+                                                                                      serial(serial),
+                                                                                      isAlive(true)
 {
     //std::cout << "creating creature" << std::endl;
 }
@@ -17,14 +20,16 @@ void Creature::setMaxHit(int maxHit)
     this->maxHit = maxHit;
 }
 
-void Creature::addDeathAction(const std::shared_ptr<CreatureAction> deathAction)
+void Creature::addDeathAction(const std::shared_ptr<Action> action)
 {
-    deathActions.push_back(deathAction);
+    deathActions.push_back(action);
+    action->setOwner(Displayable::downcasted_shared_from_this<Creature>());
 }
 
-void Creature::addHitAction(const std::shared_ptr<CreatureAction> hitAction)
+void Creature::addHitAction(const std::shared_ptr<Action> action)
 {
-    hitActions.push_back(hitAction);
+    hitActions.push_back(action);
+    action->setOwner(Displayable::downcasted_shared_from_this<Creature>());
 }
 
 void Creature::initializeDisplay()
@@ -41,4 +46,27 @@ const std::string Creature::toString() const
     str += "\t\t\tmaxHit: " + std::to_string(maxHit) + "\n";
 
     return str;
+}
+
+void Creature::updateGrid()
+{
+    grid->update();
+}
+
+const bool Creature::getIsAlive() const
+{
+    return isAlive;
+}
+
+void Creature::releaseAllActions()
+{
+    for (auto &it : hitActions)
+    {
+        it->setOwner(nullptr);
+    }
+
+    for (auto &it : deathActions)
+    {
+        it->setOwner(nullptr);
+    }
 }

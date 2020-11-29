@@ -14,23 +14,7 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
-//#include "../Actions/Action.hpp"
-//#include "../Actions/CreatureActions/CreatureAction.hpp"
-//#include "../Actions/CreatureActions/Remove.hpp"
-//#include "../Actions/CreatureActions/YouWin.hpp"
-//#include "../Actions/CreatureActions/UpdateDisplay.hpp"
-//#include "../Actions/CreatureActions/Teleport.hpp"
-//#include "../Actions/CreatureActions/ChangeDisplayedType.hpp"
-//#include "../Actions/CreatureActions/EndGame.hpp"
-//#include "../Actions/CreatureActions/DropPack.hpp"
-
-//class Item;
-//class Scroll;
-//class Armor;
-//class Sword;
-
-//class Action;
-class CreatureAction;
+class Action;
 
 class Creature : public Displayable
 {
@@ -39,10 +23,11 @@ protected:
     int serial;
     int hp;
     int maxHit;
-    
+    bool isAlive;
+
     //std::unordered_map<std::string, std::shared_ptr<Item>> items;
-    std::vector<std::shared_ptr<CreatureAction>> deathActions;
-    std::vector<std::shared_ptr<CreatureAction>> hitActions;
+    std::vector<std::shared_ptr<Action>> deathActions;
+    std::vector<std::shared_ptr<Action>> hitActions;
 
 public:
     // Constructors
@@ -51,12 +36,16 @@ public:
     // Methods
     virtual void setHp(int hp);
     virtual void setMaxHit(int maxHit);
-    virtual void addDeathAction(const std::shared_ptr<CreatureAction> deathAction);
-    virtual void addHitAction(const std::shared_ptr<CreatureAction> hitAction);
+    virtual void addDeathAction(const std::shared_ptr<Action> action);
+    virtual void addHitAction(const std::shared_ptr<Action> action);
     virtual void getHit(const std::shared_ptr<Creature> attacker, int damage) = 0;
     virtual void initializeDisplay();
-    
-    virtual const std::string toString() const; 
+    virtual const std::string toString() const;
+    virtual const bool getIsAlive() const;
+    // for actions
+    virtual void releaseAllActions();
+    virtual void updateGrid();
+
     // Operators
 
     // Destructor

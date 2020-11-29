@@ -1,7 +1,7 @@
 #include "Displayable.hpp"
 #include "ObjectDisplayGrid.hpp"
 
-//std::shared_ptr<ObjectDisplayGrid> Displayable::grid; 
+//std::shared_ptr<ObjectDisplayGrid> Displayable::grid;
 
 Displayable::Displayable(const std::string &name, char displayCode) : displayCode(displayCode),
                                                                       name(name),
@@ -52,6 +52,11 @@ char Displayable::getDisplayCode() const
     return displayCode;
 }
 
+void Displayable::setDisplaycode(char displayCode)
+{
+    this->displayCode = displayCode;
+}
+
 const std::string Displayable::toString(int indentation) const
 {
     std::string str;
@@ -79,18 +84,35 @@ const std::string Displayable::toString(int indentation) const
     return str;
 }
 
-void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid) 
+void Displayable::setObjectDisplayGrid(const std::shared_ptr<ObjectDisplayGrid> grid)
 {
-    this->grid = grid; 
+    this->grid = grid;
 }
 
-void Displayable::initializeDisplay() 
+const std::shared_ptr<ObjectDisplayGrid> Displayable::getObjectDisplayGrid() const
 {
-    grid->addObjectToDisplay(posX, posY, shared_from_this()); 
+    return grid;
+}
+
+void Displayable::initializeDisplay()
+{
+    grid->addObjectToDisplay(posX, posY, shared_from_this());
     grid->update();
 }
 
+void Displayable::leaveGrid()
+{
+    grid->removeObjectFromDisplay(posX, posY);
+    grid->update();
+}
 //Displayable::~Displayable()
 //{
 //    grid->removeObjectFromDisplay(posX, posY);
 //}
+
+void Displayable::printMessage(const std::string &msg)
+{
+    std::string str = "Info: " + msg;
+    grid->setBottomMessage2(str);
+    grid->update();
+}

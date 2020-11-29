@@ -107,3 +107,13 @@ ObjectDisplayGrid::~ObjectDisplayGrid()
 	// free ncurses data
 	endwin();
 }
+
+const int ObjectDisplayGrid::getGameHeight() const
+{
+	return gameHeight;
+}
+
+const int ObjectDisplayGrid::getGameWidth() const
+{
+	return gameWidth;
+}
