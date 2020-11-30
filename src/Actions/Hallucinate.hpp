@@ -10,18 +10,29 @@
 #include "../Items/Armor.hpp"
 #include "../Items/Sword.hpp"
 
-class Hallucinate : public Action
+#include "../ObjectDisplayGrid.hpp"
+
+#include "../Observer.hpp"
+#include "../KeyboardListener.hpp"
+#include "../Creatures/Player.hpp"
+
+class Hallucinate : public Action, public Observer
 {
 private:
     // Fields
+    std::queue<char> commandHistory;
+    std::shared_ptr<ObjectDisplayGrid> grid;
+    std::shared_ptr<KeyboardListener> keyboardListener;
 
     // Methods
+    virtual void updateGrid();
 public:
     // Constructors
     Hallucinate();
-
+    
     // Methods
     virtual void execute();
+    virtual void update(char input);
     // Operators
 
     // Destructor

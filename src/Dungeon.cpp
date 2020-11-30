@@ -149,8 +149,8 @@ void Dungeon::getHelpOnCommand(char command)
 
 void Dungeon::endGame()
 {
-    grid->setBottomMessage2("Info: Game Over!");
-    grid->update();
+    //grid->setBottomMessage2("Info: Game Over!");
+    //grid->update();
 
     keyboardListener->kill();
     grid->removeAllObjects();

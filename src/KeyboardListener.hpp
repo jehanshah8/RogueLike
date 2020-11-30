@@ -10,6 +10,7 @@
 #include <atomic>
 #include <unordered_set>
 #include <queue>
+#include <algorithm>
 
 #include "Subject.hpp"
 #include "Observer.hpp"

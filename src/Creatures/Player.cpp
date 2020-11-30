@@ -503,3 +503,8 @@ const std::shared_ptr<Armor> Player::getArmorWorn() const
         }
     }
 }
+
+const std::shared_ptr<KeyboardListener> Player::getKeyboardListener() const
+{
+    return keyboardListener;
+}

@@ -48,6 +48,7 @@ public:
 
     // Destructor
     virtual ~ObjectDisplayGrid();
+    friend class Hallucinate;
 };
 
 #endif /* OBJECT_DISPLAY_GRID_H_ */

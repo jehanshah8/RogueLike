@@ -73,6 +73,7 @@ public:
     virtual const std::shared_ptr<Sword> getSwordWeilded() const;
     virtual const std::shared_ptr<Armor> getArmorWorn() const;
     virtual void setDungeon(const std::shared_ptr<Dungeon> dungeon);
+    virtual const std::shared_ptr<KeyboardListener> getKeyboardListener() const;
     // Operators
 
     // Destructor

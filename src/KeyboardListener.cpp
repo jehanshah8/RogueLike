@@ -13,9 +13,16 @@ void KeyboardListener::registerObserver(std::shared_ptr<Observer> observer)
 
 void KeyboardListener::removeObserver(std::shared_ptr<Observer> observer)
 {
-	//	//std::unordered_set<std::shared_ptr<Observer>>::const_iterator it = observers.find(observer);
-	//	observer.reset();
-	//observers.erase(observer);
+
+	observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
+	//int i = 0;
+	//for (auto &it : observers)
+	//{
+	//	if (it == observer)
+	//	{
+	//		observers.erase(observers.begin() + i);
+	//	}
+	//}
 }
 
 void KeyboardListener::notifyObservers()
